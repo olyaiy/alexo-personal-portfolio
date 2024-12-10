@@ -13,6 +13,7 @@ export const experiences: ExperienceItem[] = [
     ],
     tags: ["Full Stack", "Frontend", "Large Language Models", "Next.js", "React"],
     type: "experience",
+    link: "https://plugvancouver.ca"
   },
   {
     title: "Founder and Owner",
