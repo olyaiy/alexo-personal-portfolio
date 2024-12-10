@@ -8,12 +8,24 @@ import { ExperienceCard } from "@/components/sections/experience/experience-card
 
 export function Experience() {
   const [selectedFilters, setSelectedFilters] = useState<string[]>(["All"]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const filteredItems = experiences.filter(item => {
-    if (selectedFilters.includes("All")) return true;
-    if (selectedFilters.includes("Work Experience")) return item.type === "experience";
-    if (selectedFilters.includes("Personal Projects")) return item.type === "project";
-    return selectedFilters.every(filter => item.tags.includes(filter));
+    const matchesFilter = selectedFilters.includes("All") ||
+      (selectedFilters.includes("Work Experience") && item.type === "experience") ||
+      (selectedFilters.includes("Personal Projects") && item.type === "project") ||
+      selectedFilters.every(filter => item.tags.includes(filter));
+
+    const matchesSearch = searchQuery === "" || [
+      item.title,
+      item.company,
+      ...item.description,
+      ...item.tags
+    ].some(text => 
+      text.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    return matchesFilter && matchesSearch;
   });
 
   const handleFilterClick = (category: string) => {
@@ -40,7 +52,9 @@ export function Experience() {
       >
         <FilterTags 
           selectedFilters={selectedFilters} 
-          onFilterClick={handleFilterClick} 
+          onFilterClick={handleFilterClick}
+          searchQuery={searchQuery}
+          onSearchChange={(value) => setSearchQuery(value)}
         />
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
