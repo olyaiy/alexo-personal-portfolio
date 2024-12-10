@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { experiences } from "@/lib/data/experiences";
-import { FilterTagsClient } from "./filter-tags-client";
+
 
 export function FilterManager() {
   const [selectedFilters, setSelectedFilters] = useState<string[]>(["All"]);
