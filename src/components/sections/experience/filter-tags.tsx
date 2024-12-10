@@ -24,32 +24,14 @@ export function FilterTags({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="w-full space-y-6"
+      className="w-full"
     >
-      {/* Search Bar */}
-      <motion.div 
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="relative max-w-md mx-auto"
-      >
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
-          type="search"
-          placeholder="Search experiences..."
-          value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
-          className="pl-10 pr-4 h-10 bg-background/50 backdrop-blur-sm border-muted 
-            focus-visible:ring-primary/20 focus-visible:ring-offset-0 transition-all duration-300"
-        />
-      </motion.div>
-
-      {/* Filter Tags */}
+      {/* Combined Filter Tags and Search Bar Container */}
       <motion.div 
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="flex flex-wrap gap-2 justify-center"
+        className="flex flex-wrap gap-2 justify-center items-center"
       >
         {filterCategories.map((category, index) => (
           <motion.div
@@ -72,6 +54,24 @@ export function FilterTags({
             </Button>
           </motion.div>
         ))}
+
+        {/* Search Bar */}
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="relative w-full max-w-sm"
+        >
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            type="search"
+            placeholder="Search experiences..."
+            value={searchQuery}
+            onChange={(e) => onSearchChange(e.target.value)}
+            className="pl-10 pr-4 h-8 bg-background/50 backdrop-blur-sm border-muted rounded-1/2 p-4
+              focus-visible:ring-primary/20 focus-visible:ring-offset-0 transition-all duration-300"
+          />
+        </motion.div>
       </motion.div>
     </motion.div>
   );
