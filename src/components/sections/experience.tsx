@@ -44,29 +44,30 @@ export function Experience() {
 
   return (
     <section className="container mx-auto px-4 py-24 sm:px-6 lg:px-8 ">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="space-y-16"
-      >
-        <FilterTags 
-          selectedFilters={selectedFilters} 
-          onFilterClick={handleFilterClick}
-          searchQuery={searchQuery}
-          onSearchChange={(value) => setSearchQuery(value)}
-        />
+      <div className="space-y-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <FilterTags 
+            selectedFilters={selectedFilters} 
+            onFilterClick={handleFilterClick}
+            searchQuery={searchQuery}
+            onSearchChange={(value) => setSearchQuery(value)}
+          />
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {filteredItems.map((item, index) => (
-            <ExperienceCard 
-              key={`${item.title}-${index}`}
-              item={item}
-              index={index}
-            />
-          ))}
-        </div>
-      </motion.div>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {filteredItems.map((item, index) => (
+              <ExperienceCard 
+                key={`${item.title}-${index}`}
+                item={item}
+                index={index}
+              />
+            ))}
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 } 
