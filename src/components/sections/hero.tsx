@@ -72,48 +72,52 @@ export function Hero() {
         <RetroGrid className="opacity-40" angle={290} />
       </div>
 
-      <div className="container relative z-10 mx-auto px-4 py-12 sm:px-6 lg:px-8 flex items-center min-h-[calc(100vh-4rem)]">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-          {/* Left Content */}
-          <div className="space-y-10">
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
+      <div className="container relative z-10 mx-auto px-4 py-8 sm:py-12 sm:px-6 lg:px-8 flex items-center min-h-[calc(100vh-4rem)]">
+        <div className="grid gap-8 lg:gap-16 lg:grid-cols-2 items-center">
+          {/* Left Content - centered on mobile */}
+          <div className="space-y-8 sm:space-y-10 text-center lg:text-left">
+            <div className="space-y-4 sm:space-y-6">
+              {/* Top badges - moved below title on mobile */}
+              <div className="flex flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 flex-wrap order-2 sm:order-first mb-4 sm:mb-0">
                 <AnimatedAvailabilityBadge />
                 <Link 
                   href="https://www.hightidedigital.ca"
-                  className="inline-flex items-center px-6 py-2.5 bg-[#011025] text-[#60A5FA] rounded-full text-sm font-semibold transition-transform duration-300 hover:scale-105"
+                  className="inline-flex items-center px-3 py-2 sm:px-6 sm:py-2.5 bg-[#011025] text-[#60A5FA] rounded-full text-xs sm:text-sm font-semibold transition-transform duration-300 hover:scale-105"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ExternalLink className="mr-2 h-4 w-4" />
+                  <ExternalLink className="mr-1.5 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
                   High Tide Digital
                 </Link>
               </div>
               
-              <h1 className="text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
-                <span className="block bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text leading-tight">
-                  Alex Olyaiy
-                </span>
-                <div className="flex flex-wrap items-center gap-3 text-xl mt-4 text-gradient">
-                  {["Full Stack Developer", "Agency Owner", "AI/ML Enthusiast"].map((text, index) => (
-                    <span key={index} className="flex items-center">
-                      {index > 0 && <span className="mr-3 text-muted-foreground/30">•</span>}
-                      <span className="text-white hover:text-primary transition-colors duration-300">
-                        {text}
+              {/* Heading - adjusted order */}
+              <div className="order-1 sm:order-none">
+                <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight">
+                  <span className="block bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text leading-tight">
+                    Alex Olyaiy
+                  </span>
+                  <div className="flex flex-row flex-wrap justify-center lg:justify-start items-center gap-2 sm:gap-3 text-sm sm:text-lg lg:text-xl mt-3 sm:mt-4 text-gradient font-normal">
+                    {["Full Stack Developer", "Agency Owner", "AI/ML Enthusiast"].map((text, index) => (
+                      <span key={index} className="flex items-center whitespace-nowrap">
+                        {index > 0 && <span className="mx-2 text-muted-foreground/30">•</span>}
+                        <span className="text-white hover:text-primary transition-colors duration-300 font-bold">
+                          {text}
+                        </span>
                       </span>
-                    </span>
-                  ))}
-                </div>
-              </h1>
+                    ))}
+                  </div>
+                </h1>
+              </div>
               
-              <p className="text-xl text-muted-foreground/80 leading-relaxed max-w-xl">
+              <p className="text-lg sm:text-xl text-muted-foreground/80 leading-relaxed max-w-xl mx-auto lg:mx-0">
                 Computer Science student at UBC and co-founder of High Tide Digital. 
                 Building modern web experiences with cutting-edge technologies.
               </p>
             </div>
             
-            {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-5">
+            {/* Buttons - centered on mobile */}
+            <div className="flex flex-col items-center lg:items-start sm:flex-row gap-3 sm:gap-5">
               <Link href="#projects">
                 <Button size="lg" className="w-full sm:w-auto shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300">
                   View Projects
@@ -130,8 +134,8 @@ export function Hero() {
               </Link>
             </div>
 
-            {/* Social Links */}
-            <div className="flex flex-wrap items-center gap-4">
+            {/* Social Links - centered on mobile */}
+            <div className="flex flex-wrap justify-center lg:justify-start items-center gap-3 sm:gap-4">
               {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}
@@ -150,8 +154,10 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Right Content */}
-          <AnimatedHeroImage />
+          {/* Right Content - 4:3 aspect ratio on mobile */}
+          <div className="order-first lg:order-last w-full aspect-[4/3] lg:aspect-square">
+            <AnimatedHeroImage />
+          </div>
         </div>
       </div>
     </section>
