@@ -1,5 +1,4 @@
 import { SOCIAL_LINKS } from "@/components/sections/hero";
-import { HeartIcon } from "lucide-react";
 
 export function Footer() {
   return (
