@@ -66,7 +66,7 @@ export function ExperienceCard({ item, index }: ExperienceCardProps) {
                 {item.tags.map((tag) => (
                   <Badge
                     key={tag}
-                    className="bg-primary/10 text-primary"
+                    className="bg-primary/10 text-primary transition-transform hover:scale-110"
                   >
                     {tag}
                   </Badge>
@@ -119,7 +119,7 @@ export function ExperienceCard({ item, index }: ExperienceCardProps) {
               {item.tags.map((tag) => (
                 <Badge
                   key={tag}
-                  className="bg-primary/10 text-primary"
+                  className="bg-primary/10 text-primary transition-transform hover:scale-110"
                 >
                   {tag}
                 </Badge>

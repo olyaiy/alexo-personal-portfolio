@@ -98,7 +98,7 @@ export function Hero() {
                   {["Full Stack Developer", "Agency Owner", "AI/ML Enthusiast"].map((text, index) => (
                     <span key={index} className="flex items-center">
                       {index > 0 && <span className="mr-3 text-muted-foreground/30">•</span>}
-                      <span className="text-muted-foreground/90 hover:text-primary transition-colors duration-300">
+                      <span className="text-white hover:text-primary transition-colors duration-300">
                         {text}
                       </span>
                     </span>
@@ -138,10 +138,10 @@ export function Hero() {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 p-2 hover:bg-primary/10 rounded-full transition-all duration-300"
+                  className="group flex items-center gap-2 p-2 rounded-full transition-all duration-300"
                   aria-label={label}
                 >
-                  <Icon className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                  <Icon className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:drop-shadow-[0_0_6px_rgba(var(--primary),0.4)] transition-all duration-300" />
                   <span className="text-sm text-muted-foreground group-hover:text-primary transition-colors">
                     {label}
                   </span>
