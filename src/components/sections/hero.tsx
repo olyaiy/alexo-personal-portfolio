@@ -116,37 +116,37 @@ export function Hero() {
               </p>
             </div>
             
-            {/* Buttons - centered on mobile */}
-            <div className="flex flex-col items-center lg:items-start sm:flex-row gap-3 sm:gap-5">
+            {/* Buttons - single row on all screen sizes */}
+            <div className="flex flex-row items-center justify-center lg:justify-start gap-3 sm:gap-5">
               <Link href="#projects">
-                <Button size="lg" className="w-full sm:w-auto shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300">
+                <Button size="lg" className="shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300">
                   View Projects
                 </Button>
               </Link>
-              <Link href="#contact">
+              <a href="mailto:emailalexan@protonmail.com">
                 <Button 
                   size="lg" 
                   variant="secondary"
-                  className="w-full sm:w-auto hover:bg-secondary/90 hover:-translate-y-0.5 transition-all duration-300"
+                  className="hover:bg-secondary/90 hover:-translate-y-0.5 transition-all duration-300"
                 >
                   Get in Touch
                 </Button>
-              </Link>
+              </a>
             </div>
 
-            {/* Social Links - centered on mobile */}
-            <div className="flex flex-wrap justify-center lg:justify-start items-center gap-3 sm:gap-4">
+            {/* Social Links - single row with smaller icons on mobile */}
+            <div className="flex flex-row flex-nowrap justify-center lg:justify-start items-center gap-2 sm:gap-4">
               {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 p-2 rounded-full transition-all duration-300"
+                  className="group flex items-center gap-1 sm:gap-2 p-1.5 sm:p-2 rounded-full transition-all duration-300"
                   aria-label={label}
                 >
-                  <Icon className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:drop-shadow-[0_0_6px_rgba(var(--primary),0.4)] transition-all duration-300" />
-                  <span className="text-sm text-muted-foreground group-hover:text-primary transition-colors">
+                  <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground group-hover:text-primary group-hover:drop-shadow-[0_0_6px_rgba(var(--primary),0.4)] transition-all duration-300" />
+                  <span className="text-xs sm:text-sm text-muted-foreground group-hover:text-primary transition-colors">
                     {label}
                   </span>
                 </a>
