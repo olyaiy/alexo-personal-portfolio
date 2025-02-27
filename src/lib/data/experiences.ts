@@ -97,18 +97,18 @@ export const experiences: ExperienceItem[] = [
     link: "https://github.com/olyaiy/NN-From-Scratch-With-Backprop"
   },
   {
-    title: "AI Resume Customizer",
+    title: "ResumeLM - AI-Powered Resume Builder",
     company: "Personal Project",
     period: "2024",
     description: [
-      "Built a full-stack resume customization platform using Next.js 14 and OpenAI API",
-      "Implemented secure user authentication and data management with PocketBase",
-      "Developed responsive UI components using Tailwind CSS and Shadcn UI",
-      "Created protected routes and server-side authentication handling"
+      "Architected a full-stack resume optimization platform using Next.js 15 App Router and React Server Components",
+      "Implemented multi-model AI integration (OpenAI, Claude, Gemini) with RAG architecture for real-time content suggestions",
+      "Engineered PDF generation system with dynamic layout preservation and 98% Lighthouse performance score",
+      "Designed secure authentication flow with Supabase RLS and Prisma ORM for granular data access control",
     ],
-    tags: ["Full Stack", "Large Language Models", "Next.js", "React", "Authentication"],
+    tags: ["Next.js 15", "TypeScript", "LLM Integration", "Supabase", "Prisma", "Stripe"],
     type: "project",
-    link: "https://github.com/olyaiy/resume-ai"
+    link: "https://github.com/olyaiy/resume-lm"
   },
   {
     title: "Vancouver Housing Price Predictor",
