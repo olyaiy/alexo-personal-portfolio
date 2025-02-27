@@ -17,7 +17,7 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: "Alex Olyaiy | Developer",
-  description: "Full-stack developer and computer science student at UBC. Co-founder of High Tide Digital, specializing in modern web development.",
+  description: "Full-stack AI developer and computer science student at UBC. Co-founder of High Tide Digital, specializing in modern web development.",
   keywords: ["Alex Olyaiy", "Web Developer", "UBC", "Computer Science", "High Tide Digital", "Full Stack Developer", "Vancouver"],
   authors: [{ name: "Alex Olyaiy" }],
   creator: "Alex Olyaiy",
