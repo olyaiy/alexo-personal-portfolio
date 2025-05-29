@@ -62,35 +62,19 @@ const SHOWCASE_LINKS = [
     featured: true
   },
   {
-    title: "Portfolio Website",
-    description: "My personal portfolio and projects",
-    href: "/",
-    icon: Globe,
-    gradient: "from-purple-500 to-pink-500",
-    featured: false
-  },
-  {
-    title: "GitHub Profile",
-    description: "Open source projects and contributions",
-    href: "https://github.com/olyaiy",
+    title: "Agent Vendor",
+    description: "Marketplace to discover AI agents and get paid to make your own",
+    href: "https://agentvendor.ca/",
     icon: Code,
-    gradient: "from-gray-500 to-gray-700",
+    gradient: "from-purple-500 to-indigo-500",
     featured: false
   },
   {
-    title: "UBC Computer Science",
-    description: "Currently studying at University of British Columbia",
-    href: "https://www.cs.ubc.ca/",
-    icon: GraduationCap,
-    gradient: "from-green-500 to-teal-500",
-    featured: false
-  },
-  {
-    title: "Support My Work",
-    description: "Buy me a coffee to support my projects",
-    href: "https://buymeacoffee.com/alexolyaiy",
-    icon: Heart,
-    gradient: "from-red-500 to-pink-500",
+    title: "ResumeLM",
+    description: "AI resume builder that gets tech jobs",
+    href: "https://resumelm.ca/",
+    icon: Briefcase,
+    gradient: "from-emerald-500 to-teal-500",
     featured: false
   },
 ] as const
