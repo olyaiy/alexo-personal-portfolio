@@ -81,7 +81,7 @@ const SOCIAL_LINKS = [
 const SHOWCASE_LINKS = [
   {
     title: "High Tide Digital",
-    description: "Full-stack web development agency specializing in modern, scalable solutions",
+    description: "My full-stack web development agency",
     href: "https://www.hightidedigital.ca",
     icon: Briefcase,
     gradient: "from-primary to-primary/70",
@@ -91,7 +91,7 @@ const SHOWCASE_LINKS = [
   },
   {
     title: "Agent Vendor",
-    description: "AI agents marketplace for discovering and monetizing custom AI solutions",
+    description: "I built a marketplace to discover and sell your AI agents",
     href: "https://agentvendor.ca/",
     icon: Code,
     gradient: "from-purple-500 to-indigo-500",
@@ -101,7 +101,7 @@ const SHOWCASE_LINKS = [
   },
   {
     title: "ResumeLM",
-    description: "AI-powered resume builder that helped land my internship opportunities",
+    description: "Check out the AI-powered resume builder I built which landed me my internship",
     href: "https://resumelm.ca/",
     icon: Star,
     gradient: "from-emerald-500 to-teal-500",
@@ -187,7 +187,7 @@ export default function LinksPage() {
                 rel={href.startsWith('http') ? "noopener noreferrer" : undefined}
                 className="group block"
               >
-                <article className={`relative p-6 rounded-2xl border border-border/50 bg-card/30 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/10 ${featured ? 'ring-1 ring-primary/20' : ''}`}>
+                <article className={`relative p-4 rounded-2xl border border-border/50 bg-card/30 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/10 ${featured ? 'ring-1 ring-primary/20' : ''}`}>
                   {/* Gradient background for featured items */}
                   {featured && (
                     <div className={`absolute inset-0 bg-gradient-to-r ${gradient} opacity-5 rounded-2xl`}></div>
@@ -195,16 +195,16 @@ export default function LinksPage() {
                   
                   <div className="relative">
                     {/* Header */}
-                    <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-start justify-between mb-2">
                       <div className="flex items-center gap-3">
-                        <div className={`flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-r ${gradient} p-[1px]`}>
+                        <div className={`flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-r ${gradient} p-[1px]`}>
                           <div className="w-full h-full rounded-xl bg-background flex items-center justify-center">
-                            <Icon className="h-5 w-5 text-foreground" />
+                            <Icon className="h-4 w-4 text-foreground" />
                           </div>
                         </div>
                         <div>
-                          <div className="flex items-center gap-2 mb-1">
-                            <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+                          <div className="flex items-center gap-2 mb-0.5">
+                            <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors duration-300 text-sm">
                               {title}
                             </h3>
                             {featured && (
@@ -222,15 +222,9 @@ export default function LinksPage() {
                     </div>
                     
                     {/* Description */}
-                    <p className="text-sm text-muted-foreground/80 leading-relaxed mb-3">
+                    <p className="text-sm text-muted-foreground/80 leading-relaxed mb-2">
                       {description}
                     </p>
-                    
-                    {/* Metrics */}
-                    <div className="flex items-center gap-2">
-                      <Globe className="h-3 w-3 text-muted-foreground/50" />
-                      <span className="text-xs text-muted-foreground/60">{metrics}</span>
-                    </div>
                   </div>
                 </article>
               </Link>
