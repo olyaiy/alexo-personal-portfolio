@@ -1,4 +1,4 @@
-import { ExternalLink, Github, Linkedin, Twitter, Instagram, Code, Briefcase, Star, ArrowUpRight, Globe, MapPin } from "lucide-react"
+import { ExternalLink, Github, Linkedin, Twitter, Instagram, Code, Briefcase, Star, ArrowUpRight, Globe, MapPin, ArrowLeft } from "lucide-react"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import Link from "next/link"
 import { Metadata } from "next"
@@ -122,12 +122,23 @@ export default function LinksPage() {
       </div>
 
       <div className="relative container mx-auto px-4 py-8 max-w-md">
+        {/* Back to Full Site Button */}
+        <div className="absolute top-4 left-4">
+          <Link
+            href="/"
+            className="group flex items-center gap-2 px-3 py-2 text-sm text-muted-foreground/60 hover:text-foreground transition-colors duration-300"
+          >
+            <ArrowLeft className="h-4 w-4 group-hover:-translate-x-0.5 transition-transform duration-300" />
+            <span className="font-medium">Full Site</span>
+          </Link>
+        </div>
+
         {/* Header Section */}
-        <header className="text-center mb-12">
+        <header className="text-center mb-6">
           {/* Avatar with enhanced styling */}
-          <div className="relative w-28 h-28 mx-auto mb-6">
+          <div className="relative w-24 h-24 mx-auto mb-4">
             <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/70 rounded-full blur-sm opacity-50 animate-pulse" />
-            <Avatar className="relative z-10 w-28 h-28 ring-2 ring-primary/20 ring-offset-4 ring-offset-background">
+            <Avatar className="relative z-10 w-24 h-24 ring-2 ring-primary/20 ring-offset-4 ring-offset-background">
               <AvatarImage 
                 src="/alex.webp" 
                 alt="Alex Olyaiy"
@@ -135,25 +146,19 @@ export default function LinksPage() {
               />
               <AvatarFallback className="bg-primary/10 text-primary text-lg font-semibold">AO</AvatarFallback>
             </Avatar>
-            <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-background animate-pulse" />
           </div>
           
           {/* Enhanced header content */}
-          <div className="space-y-3">
+          <div className="space-y-2">
             <h1 className="text-2xl font-bold text-foreground">Alex Olyaiy</h1>
-            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-              <MapPin className="h-4 w-4" />
-              <span>Vancouver, BC</span>
-            </div>
             <p className="text-muted-foreground/80 text-sm leading-relaxed max-w-xs mx-auto">
-              Computer Science @ UBC • Co-founder @ High Tide Digital • Building the future with code
+              Computer Science @ UBC • Co-founder @ High Tide Digital • I get really excited about AI
             </p>
           </div>
         </header>
 
         {/* Social Media Links with enhanced design */}
-        <section className="mb-12">
-          <h2 className="text-sm font-semibold text-muted-foreground/60 uppercase tracking-wider mb-4 text-center">Connect</h2>
+        <section className="mb-8">
           <div className="flex justify-center items-center gap-4">
             {SOCIAL_LINKS.map(({ icon: Icon, href, label, color }) => (
               <a
@@ -256,7 +261,7 @@ export default function LinksPage() {
             </a>
             
             <a
-              href="/resume.pdf"
+              href="/alex-resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative p-4 rounded-2xl border border-border/50 bg-card/30 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/10 hover:bg-primary/5"
