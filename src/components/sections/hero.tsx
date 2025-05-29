@@ -58,11 +58,25 @@ function TwitterFilledIcon({ className }: { className?: string }) {
   )
 }
 
+function TikTokFilledIcon({ className }: { className?: string }) {
+  return (
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      viewBox="0 0 24 24"
+      className={className}
+      fill="currentColor"
+    >
+      <path d="M19.321 5.562a5.124 5.124 0 0 1-.443-.258 6.228 6.228 0 0 1-1.137-.966c-.849-.849-1.341-1.849-1.341-2.849V1h-3.073v13.57c0 2.006-1.635 3.641-3.641 3.641s-3.641-1.635-3.641-3.641 1.635-3.641 3.641-3.641c.378 0 .742.058 1.083.164V7.759a7.673 7.673 0 0 0-1.083-.076c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8V8.921a9.46 9.46 0 0 0 5.126 1.5v-3.073a5.997 5.997 0 0 1-3.49-1.786z"/>
+    </svg>
+  )
+}
+
 export const SOCIAL_LINKS = [
   { icon: GitHubFilledIcon, href: "https://github.com/olyaiy", label: "GitHub" },
   { icon: LinkedInFilledIcon, href: "https://www.linkedin.com/in/olyaiy/", label: "LinkedIn" },
   { icon: TwitterFilledIcon, href: "https://x.com/alexfromva", label: "Twitter" },
   { icon: InstagramFilledIcon, href: "https://www.instagram.com/m.alex_2002/", label: "Instagram" },
+  { icon: TikTokFilledIcon, href: "https://www.tiktok.com/@alexanfromvan", label: "TikTok" },
 ] as const
 
 export function Hero() {
