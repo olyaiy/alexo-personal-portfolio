@@ -43,12 +43,12 @@ export function Experience() {
   };
 
   return (
-    <section id="projects" className="container mx-auto px-4 py-24 sm:px-6 lg:px-8 ">
+    <section id="projects" className="container mx-auto px-4 py-12 sm:py-16 lg:py-24 sm:px-6 lg:px-8">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
-        className="space-y-16"
+        className="space-y-8 sm:space-y-12 lg:space-y-16"
       >
         <FilterTags 
           selectedFilters={selectedFilters} 
@@ -57,7 +57,7 @@ export function Experience() {
           onSearchChange={(value) => setSearchQuery(value)}
         />
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:gap-6 lg:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {filteredItems.map((item, index) => (
             <ExperienceCard 
               key={`${item.title}-${index}`}

@@ -1,4 +1,4 @@
-import { ExternalLink, Github, Linkedin, Twitter, Instagram, Code, Briefcase, Star, ArrowUpRight, Globe, MapPin, ArrowLeft } from "lucide-react"
+import { ExternalLink, Github, Linkedin, Twitter, Instagram, Code, Briefcase, Star, ArrowUpRight, ArrowLeft } from "lucide-react"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import Link from "next/link"
 import { Metadata } from "next"
