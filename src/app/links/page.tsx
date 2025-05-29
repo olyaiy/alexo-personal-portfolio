@@ -1,8 +1,25 @@
-import { ExternalLink, Github, Linkedin, Twitter, Instagram, Code, Briefcase } from "lucide-react"
+import { ExternalLink, Github, Linkedin, Twitter, Instagram, Code, Briefcase, Star, ArrowUpRight, Globe, MapPin } from "lucide-react"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import Link from "next/link"
+import { Metadata } from "next"
 
-// Custom TikTok icon component
+export const metadata: Metadata = {
+  title: "Alex Olyaiy - Links",
+  description: "Connect with Alex Olyaiy - Computer Science student at UBC and co-founder of High Tide Digital. Links to my projects, social media, and professional work.",
+  keywords: ["Alex Olyaiy", "links", "portfolio", "web developer", "computer science", "UBC", "High Tide Digital"],
+  openGraph: {
+    title: "Alex Olyaiy - Links",
+    description: "Connect with Alex Olyaiy - Computer Science student at UBC and co-founder of High Tide Digital",
+    type: "profile",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Alex Olyaiy - Links",
+    description: "Connect with Alex Olyaiy - Computer Science student at UBC and co-founder of High Tide Digital",
+  }
+}
+
+// Custom TikTok icon component with better styling
 function TikTokIcon({ className }: { className?: string }) {
   return (
     <svg 
@@ -16,163 +33,263 @@ function TikTokIcon({ className }: { className?: string }) {
   )
 }
 
-// Social media data - using the same icons pattern from hero
+// Social media data with enhanced styling
 const SOCIAL_LINKS = [
   { 
     icon: Github, 
     href: "https://github.com/olyaiy", 
     label: "GitHub",
-    color: "hover:text-gray-400"
+    username: "@olyaiy",
+    color: "hover:text-slate-300",
+    bgColor: "hover:bg-slate-900/50"
   },
   { 
     icon: Linkedin, 
     href: "https://www.linkedin.com/in/olyaiy/", 
     label: "LinkedIn",
-    color: "hover:text-blue-400"
+    username: "Alex Olyaiy",
+    color: "hover:text-blue-400",
+    bgColor: "hover:bg-blue-900/30"
   },
   { 
     icon: Twitter, 
     href: "https://x.com/alexfromvan", 
     label: "Twitter",
-    color: "hover:text-blue-400"
+    username: "@alexfromvan",
+    color: "hover:text-blue-400",
+    bgColor: "hover:bg-blue-900/30"
   },
   { 
     icon: Instagram, 
     href: "https://www.instagram.com/m.alex_2002/", 
     label: "Instagram",
-    color: "hover:text-pink-400"
+    username: "@m.alex_2002",
+    color: "hover:text-pink-400",
+    bgColor: "hover:bg-pink-900/30"
   },
   { 
     icon: TikTokIcon, 
     href: "https://www.tiktok.com/@alexanfromvan", 
     label: "TikTok",
-    color: "hover:text-red-400"
+    username: "@alexanfromvan",
+    color: "hover:text-red-400",
+    bgColor: "hover:bg-red-900/30"
   },
 ] as const
 
-// Showcase links data
+// Enhanced showcase links with better categorization
 const SHOWCASE_LINKS = [
   {
     title: "High Tide Digital",
-    description: "Full-stack web development agency",
+    description: "Full-stack web development agency specializing in modern, scalable solutions",
     href: "https://www.hightidedigital.ca",
     icon: Briefcase,
-    gradient: "from-blue-500 to-cyan-500",
-    featured: true
+    gradient: "from-primary to-primary/70",
+    category: "Business",
+    featured: true,
+    metrics: "Founded 2024"
   },
   {
     title: "Agent Vendor",
-    description: "Marketplace to discover AI agents and get paid to make your own",
+    description: "AI agents marketplace for discovering and monetizing custom AI solutions",
     href: "https://agentvendor.ca/",
     icon: Code,
     gradient: "from-purple-500 to-indigo-500",
-    featured: false
+    category: "AI Project",
+    featured: false,
+    metrics: "React • Next.js"
   },
   {
     title: "ResumeLM",
-    description: "AI resume builder that gets tech jobs",
+    description: "AI-powered resume builder that helped land my internship opportunities",
     href: "https://resumelm.ca/",
-    icon: Briefcase,
+    icon: Star,
     gradient: "from-emerald-500 to-teal-500",
-    featured: false
+    category: "AI Tool",
+    featured: false,
+    metrics: "TypeScript • AI"
   },
 ] as const
 
 export default function LinksPage() {
   return (
     <main className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-lg">
-        {/* Avatar Section */}
-        <div className="text-center mb-8">
-          <div className="relative w-24 h-24 mx-auto mb-4">
-            <Avatar className="relative z-10 w-24 h-24">
+      {/* Ambient background effects */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 -left-4 w-96 h-96 bg-primary/3 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 -right-4 w-96 h-96 bg-secondary/3 rounded-full blur-3xl animate-pulse delay-1000" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/2 rounded-full blur-2xl animate-float" />
+      </div>
+
+      <div className="relative container mx-auto px-4 py-8 max-w-md">
+        {/* Header Section */}
+        <header className="text-center mb-12">
+          {/* Avatar with enhanced styling */}
+          <div className="relative w-28 h-28 mx-auto mb-6">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/70 rounded-full blur-sm opacity-50 animate-pulse" />
+            <Avatar className="relative z-10 w-28 h-28 ring-2 ring-primary/20 ring-offset-4 ring-offset-background">
               <AvatarImage 
                 src="/alex.webp" 
                 alt="Alex Olyaiy"
                 className="object-cover"
               />
-              <AvatarFallback>AO</AvatarFallback>
+              <AvatarFallback className="bg-primary/10 text-primary text-lg font-semibold">AO</AvatarFallback>
             </Avatar>
+            <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-background animate-pulse" />
           </div>
           
-          <p className="text-muted-foreground/80 text-sm leading-relaxed">
-            Check out my links!
-          </p>
-        </div>
+          {/* Enhanced header content */}
+          <div className="space-y-3">
+            <h1 className="text-2xl font-bold text-foreground">Alex Olyaiy</h1>
+            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+              <MapPin className="h-4 w-4" />
+              <span>Vancouver, BC</span>
+            </div>
+            <p className="text-muted-foreground/80 text-sm leading-relaxed max-w-xs mx-auto">
+              Computer Science @ UBC • Co-founder @ High Tide Digital • Building the future with code
+            </p>
+          </div>
+        </header>
 
-        {/* Social Media Links Row */}
-        <div className="flex justify-center items-center gap-6 mb-8">
-          {SOCIAL_LINKS.map(({ icon: Icon, href, label, color }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`group flex items-center justify-center w-12 h-12 rounded-full border border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-primary/20 ${color}`}
-              aria-label={label}
-            >
-              <Icon className="h-5 w-5 text-muted-foreground group-hover:text-current transition-colors duration-300" />
-            </a>
-          ))}
-        </div>
+        {/* Social Media Links with enhanced design */}
+        <section className="mb-12">
+          <h2 className="text-sm font-semibold text-muted-foreground/60 uppercase tracking-wider mb-4 text-center">Connect</h2>
+          <div className="flex justify-center items-center gap-4">
+            {SOCIAL_LINKS.map(({ icon: Icon, href, label, color }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`group flex items-center justify-center w-12 h-12 rounded-full border border-border/50 bg-card/30 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-primary/10 ${color}`}
+                aria-label={label}
+              >
+                <Icon className="h-5 w-5 text-muted-foreground group-hover:text-current transition-colors duration-300" />
+              </a>
+            ))}
+          </div>
+        </section>
 
-        {/* Showcase Links Column */}
-        <div className="space-y-4">
-          {SHOWCASE_LINKS.map(({ title, description, href, icon: Icon, gradient, featured }) => (
-            <Link
-              key={title}
-              href={href}
-              target={href.startsWith('http') ? "_blank" : undefined}
-              rel={href.startsWith('http') ? "noopener noreferrer" : undefined}
-              className="group"
-            >
-              <div className={`relative p-6 rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/10 ${featured ? 'ring-1 ring-primary/20' : ''}`}>
-                {/* Gradient background for featured items */}
-                {featured && (
-                  <div className={`absolute inset-0 bg-gradient-to-r ${gradient} opacity-5 rounded-2xl`}></div>
-                )}
-                
-                <div className="relative flex items-center gap-4">
-                  {/* Icon */}
-                  <div className={`flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-r ${gradient} p-[1px]`}>
-                    <div className="w-full h-full rounded-xl bg-background flex items-center justify-center">
-                      <Icon className="h-5 w-5 text-foreground" />
-                    </div>
-                  </div>
+        {/* Featured Projects Section */}
+        <section className="mb-12">
+          <h2 className="text-sm font-semibold text-muted-foreground/60 uppercase tracking-wider mb-4 text-center">Check These Out</h2>
+          <div className="space-y-4">
+            {SHOWCASE_LINKS.map(({ title, description, href, icon: Icon, gradient, category, featured, metrics }) => (
+              <Link
+                key={title}
+                href={href}
+                target={href.startsWith('http') ? "_blank" : undefined}
+                rel={href.startsWith('http') ? "noopener noreferrer" : undefined}
+                className="group block"
+              >
+                <article className={`relative p-6 rounded-2xl border border-border/50 bg-card/30 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/10 ${featured ? 'ring-1 ring-primary/20' : ''}`}>
+                  {/* Gradient background for featured items */}
+                  {featured && (
+                    <div className={`absolute inset-0 bg-gradient-to-r ${gradient} opacity-5 rounded-2xl`}></div>
+                  )}
                   
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
-                        {title}
-                      </h3>
-                      {featured && (
-                        <span className="px-2 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full">
-                          Featured
-                        </span>
+                  <div className="relative">
+                    {/* Header */}
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className={`flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-r ${gradient} p-[1px]`}>
+                          <div className="w-full h-full rounded-xl bg-background flex items-center justify-center">
+                            <Icon className="h-5 w-5 text-foreground" />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2 mb-1">
+                            <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+                              {title}
+                            </h3>
+                            {featured && (
+                              <span className="px-2 py-0.5 text-xs font-medium bg-primary/10 text-primary rounded-full">
+                                Featured
+                              </span>
+                            )}
+                          </div>
+                          <span className="text-xs text-muted-foreground/60 font-medium">{category}</span>
+                        </div>
+                      </div>
+                      {href.startsWith('http') && (
+                        <ExternalLink className="h-4 w-4 text-muted-foreground/40 group-hover:text-primary transition-colors duration-300 flex-shrink-0" />
                       )}
                     </div>
-                    <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
+                    
+                    {/* Description */}
+                    <p className="text-sm text-muted-foreground/80 leading-relaxed mb-3">
                       {description}
                     </p>
+                    
+                    {/* Metrics */}
+                    <div className="flex items-center gap-2">
+                      <Globe className="h-3 w-3 text-muted-foreground/50" />
+                      <span className="text-xs text-muted-foreground/60">{metrics}</span>
+                    </div>
                   </div>
-                  
-                  {/* External link icon */}
-                  {href.startsWith('http') && (
-                    <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors duration-300 flex-shrink-0" />
-                  )}
+                </article>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Quick Actions */}
+        <section className="mb-12">
+          <h2 className="text-sm font-semibold text-muted-foreground/60 uppercase tracking-wider mb-4 text-center">Get in Touch</h2>
+          <div className="grid grid-cols-1 gap-3">
+            <a
+              href="mailto:emailalexan@protonmail.com"
+              className="group relative p-4 rounded-2xl border border-border/50 bg-card/30 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/10 hover:bg-primary/5"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10">
+                    <span className="text-lg">✉️</span>
+                  </div>
+                  <div>
+                    <p className="font-medium text-foreground text-sm">Email Me</p>
+                    <p className="text-xs text-muted-foreground/70">emailalexan@protonmail.com</p>
+                  </div>
                 </div>
+                <ArrowUpRight className="h-4 w-4 text-muted-foreground/40 group-hover:text-primary transition-colors duration-300" />
               </div>
-            </Link>
-          ))}
-        </div>
+            </a>
+            
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative p-4 rounded-2xl border border-border/50 bg-card/30 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-primary/10 hover:bg-primary/5"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10">
+                    <span className="text-lg">📄</span>
+                  </div>
+                  <div>
+                    <p className="font-medium text-foreground text-sm">Download Resume</p>
+                    <p className="text-xs text-muted-foreground/70">View my experience & skills</p>
+                  </div>
+                </div>
+                <ArrowUpRight className="h-4 w-4 text-muted-foreground/40 group-hover:text-primary transition-colors duration-300" />
+              </div>
+            </a>
+          </div>
+        </section>
 
         {/* Footer */}
-        <div className="text-center mt-12 pt-8 border-t border-border/50">
-          <p className="text-xs text-muted-foreground/60">
-            Built with Next.js & Tailwind CSS
-          </p>
-        </div>
+        <footer className="text-center pt-8 border-t border-border/20">
+          <div className="space-y-2">
+            <p className="text-xs text-muted-foreground/40">
+              Built with Next.js 15, TypeScript & Tailwind CSS
+            </p>
+            <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground/40">
+              <span>Made with</span>
+              <span className="text-red-400 animate-pulse">♥</span>
+              <span>in Vancouver</span>
+            </div>
+          </div>
+        </footer>
       </div>
     </main>
   )
