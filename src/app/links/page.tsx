@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button"
-import { ExternalLink, Github, Linkedin, Twitter, Instagram, Globe, Code, Briefcase, GraduationCap, Heart } from "lucide-react"
+import { ExternalLink, Github, Linkedin, Twitter, Instagram, Code, Briefcase } from "lucide-react"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import Link from "next/link"
 
@@ -33,7 +32,7 @@ const SOCIAL_LINKS = [
   },
   { 
     icon: Twitter, 
-    href: "https://x.com/alexfromva", 
+    href: "https://x.com/alexfromvan", 
     label: "Twitter",
     color: "hover:text-blue-400"
   },
