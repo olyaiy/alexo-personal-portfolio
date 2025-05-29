@@ -86,35 +86,36 @@ export function Hero() {
         <RetroGrid className="opacity-40" angle={290} />
       </div>
 
-      <div className="container relative z-10 mx-auto px-4 py-8 sm:py-12 sm:px-6 lg:px-8 flex items-center min-h-[calc(100vh-4rem)]">
-        <div className="grid gap-8 lg:gap-16 lg:grid-cols-2 items-center">
+      <div className="container relative z-10 mx-auto px-4 py-6 sm:py-8 lg:py-12 sm:px-6 lg:px-8 flex items-center min-h-[calc(100vh-4rem)]">
+        <div className="grid gap-6 sm:gap-8 lg:gap-16 lg:grid-cols-2 items-center w-full">
           {/* Left Content - centered on mobile */}
-          <div className="space-y-8 sm:space-y-10 text-center lg:text-left">
-            <div className="space-y-4 sm:space-y-6">
-              {/* Top badges - moved below title on mobile */}
-              <div className="flex flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 flex-wrap order-2 sm:order-first mb-4 sm:mb-0">
+          <div className="space-y-6 sm:space-y-8 lg:space-y-10 text-center lg:text-left">
+            <div className="space-y-3 sm:space-y-4 lg:space-y-6">
+              {/* Top badges - more compact on mobile */}
+              <div className="flex flex-row items-center justify-center lg:justify-start gap-2 sm:gap-3 lg:gap-4 flex-wrap order-2 sm:order-first mb-3 sm:mb-4">
                 <AnimatedAvailabilityBadge />
                 <Link 
                   href="https://www.hightidedigital.ca"
-                  className="inline-flex items-center px-3 py-2 sm:px-6 sm:py-2.5 bg-[#011025] text-[#60A5FA] rounded-full text-xs sm:text-sm font-semibold transition-transform duration-300 hover:scale-105"
+                  className="inline-flex items-center px-2.5 py-1.5 sm:px-3 sm:py-2 lg:px-6 lg:py-2.5 bg-[#011025] text-[#60A5FA] rounded-full text-xs sm:text-sm font-semibold transition-transform duration-300 hover:scale-105"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <ExternalLink className="mr-1.5 sm:mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                  High Tide Digital
+                  <ExternalLink className="mr-1 sm:mr-1.5 lg:mr-2 h-3 w-3 sm:h-3 sm:w-3 lg:h-4 lg:w-4" />
+                  <span className="hidden sm:inline">High Tide Digital</span>
+                  <span className="sm:hidden">HTD</span>
                 </Link>
               </div>
               
-              {/* Heading - adjusted order */}
+              {/* Heading - more compact on mobile */}
               <div className="order-1 sm:order-none">
-                <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-7xl font-bold tracking-tight">
                   <span className="block bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text leading-tight">
                     Alex Olyaiy
                   </span>
-                  <div className="flex flex-row flex-wrap justify-center lg:justify-start items-center gap-2 sm:gap-3 text-sm sm:text-lg lg:text-xl mt-3 sm:mt-4 text-gradient font-normal">
+                  <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center lg:justify-start items-center gap-1 sm:gap-2 lg:gap-3 text-xs sm:text-sm lg:text-lg xl:text-xl mt-2 sm:mt-3 lg:mt-4 text-gradient font-normal">
                     {["Full Stack Developer", "Agency Owner", "AI/ML Enthusiast"].map((text, index) => (
                       <span key={index} className="flex items-center whitespace-nowrap">
-                        {index > 0 && <span className="mx-2 text-muted-foreground/30">•</span>}
+                        {index > 0 && <span className="hidden sm:inline mx-1 lg:mx-2 text-muted-foreground/30">•</span>}
                         <span className="text-white hover:text-primary transition-colors duration-300 font-bold">
                           {text}
                         </span>
@@ -124,43 +125,43 @@ export function Hero() {
                 </h1>
               </div>
               
-              <p className="text-lg sm:text-xl text-muted-foreground/80 leading-relaxed max-w-xl mx-auto lg:mx-0">
+              <p className="text-sm sm:text-base lg:text-lg xl:text-xl text-muted-foreground/80 leading-relaxed max-w-sm sm:max-w-md lg:max-w-xl mx-auto lg:mx-0">
                 Computer Science student at UBC and co-founder of High Tide Digital. 
                 Building modern web experiences with cutting-edge technologies.
               </p>
             </div>
             
-            {/* Buttons - single row on all screen sizes */}
-            <div className="flex flex-row items-center justify-center lg:justify-start gap-3 sm:gap-5">
-              <Link href="#projects">
-                <Button size="lg" className="shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300">
+            {/* Buttons - responsive sizing */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 lg:gap-5">
+              <Link href="#projects" className="w-full sm:w-auto">
+                <Button size="default" className="w-full sm:w-auto shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 hover:-translate-y-0.5 transition-all duration-300">
                   View Projects
                 </Button>
               </Link>
-              <a href="mailto:emailalexan@protonmail.com">
+              <a href="mailto:emailalexan@protonmail.com" className="w-full sm:w-auto">
                 <Button 
-                  size="lg" 
+                  size="default" 
                   variant="secondary"
-                  className="hover:bg-secondary/90 hover:-translate-y-0.5 transition-all duration-300"
+                  className="w-full sm:w-auto hover:bg-secondary/90 hover:-translate-y-0.5 transition-all duration-300"
                 >
                   Get in Touch
                 </Button>
               </a>
             </div>
 
-            {/* Social Links - single row with smaller icons on mobile */}
-            <div className="flex flex-row flex-nowrap justify-center lg:justify-start items-center gap-2 sm:gap-4">
+            {/* Social Links - more compact on mobile */}
+            <div className="flex flex-row flex-wrap justify-center lg:justify-start items-center gap-1 sm:gap-2 lg:gap-4">
               {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-1 sm:gap-2 p-1.5 sm:p-2 rounded-full transition-all duration-300"
+                  className="group flex items-center gap-1 sm:gap-1.5 lg:gap-2 p-1 sm:p-1.5 lg:p-2 rounded-full transition-all duration-300"
                   aria-label={label}
                 >
-                  <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground group-hover:text-primary group-hover:drop-shadow-[0_0_6px_rgba(var(--primary),0.4)] transition-all duration-300" />
-                  <span className="text-xs sm:text-sm text-muted-foreground group-hover:text-primary transition-colors">
+                  <Icon className="h-3 w-3 sm:h-4 sm:w-4 lg:h-5 lg:w-5 text-muted-foreground group-hover:text-primary group-hover:drop-shadow-[0_0_6px_rgba(var(--primary),0.4)] transition-all duration-300" />
+                  <span className="text-xs lg:text-sm text-muted-foreground group-hover:text-primary transition-colors hidden sm:inline">
                     {label}
                   </span>
                 </a>
@@ -168,8 +169,8 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Right Content - 4:3 aspect ratio on mobile */}
-          <div className="order-first lg:order-last w-full aspect-[4/3] lg:aspect-square">
+          {/* Right Content - better aspect ratio on mobile */}
+          <div className="order-first lg:order-last w-full aspect-[4/3] sm:aspect-[3/2] lg:aspect-square max-w-sm sm:max-w-md lg:max-w-none mx-auto">
             <AnimatedHeroImage />
           </div>
         </div>
