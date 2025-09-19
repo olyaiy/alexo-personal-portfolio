@@ -59,19 +59,19 @@ const SOCIAL_LINKS = [
     color: "hover:text-blue-400",
     bgColor: "hover:bg-blue-900/30"
   },
-  { 
-    icon: Instagram, 
-    href: "https://www.instagram.com/m.alex_2002/", 
+  {
+    icon: Instagram,
+    href: "https://www.instagram.com/ai_with_alexan/",
     label: "Instagram",
-    username: "@m.alex_2002",
+    username: "@ai_with_alexan",
     color: "hover:text-pink-400",
     bgColor: "hover:bg-pink-900/30"
   },
-  { 
-    icon: TikTokIcon, 
-    href: "https://www.tiktok.com/@alexanfromvan", 
+  {
+    icon: TikTokIcon,
+    href: "https://www.tiktok.com/@alex.an595",
     label: "TikTok",
-    username: "@alexanfromvan",
+    username: "@alex.an595",
     color: "hover:text-red-400",
     bgColor: "hover:bg-red-900/30"
   },
