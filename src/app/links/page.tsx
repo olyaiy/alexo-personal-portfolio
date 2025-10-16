@@ -126,7 +126,7 @@ export default function LinksPage() {
   return (
     <main className="min-h-screen bg-black">
       {/* Hero Section - Editorial style with larger image */}
-      <div className="relative w-full aspect-[4/5] max-h-[85vh]">
+      <div className="relative w-full aspect-[4/5] max-h-[85vh] -mt-[env(safe-area-inset-top)] pt-[env(safe-area-inset-top)]">
         <div className="relative w-full h-full">
           <Image
             src="/alex.webp"
