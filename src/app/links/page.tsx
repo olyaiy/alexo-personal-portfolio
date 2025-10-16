@@ -113,56 +113,83 @@ const SHOWCASE_LINKS = [
 export default function LinksPage() {
   return (
     <main className="min-h-screen bg-black">
-      {/* Hero Section - Large square image that blends into black background */}
-      <div className="relative w-full aspect-square max-h-[100vh]">
-        {/* Hero Image with gradient fade to black */}
+      {/* Hero Section - Editorial style with larger image */}
+      <div className="relative w-full aspect-[4/5] max-h-[85vh]">
         <div className="relative w-full h-full">
           <img
             src="/alex.webp"
             alt="Alex Olyaiy"
             className="w-full h-full object-cover"
           />
-          {/* Gradient overlay that fades to black at the bottom */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black"></div>
         </div>
 
-        {/* Name and title overlay at the bottom of the image */}
-        <div className="absolute -bottom-16 left-0 right-0 z-10 p-6">
-          <div className="text-center space-y-2">
-            <h1 className="text-3xl font-bold text-white">Alex Olyaiy</h1>
-            <p className="text-white/80 text-sm leading-relaxed max-w-xs mx-auto">
-              Computer Science @ UBC • Co-founder @ High Tide Digital
-            </p>
+        {/* Editorial-style name overlay - positioned at bottom with magazine-style typography */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 px-6 pb-8">
+          <div className="max-w-2xl mx-auto">
+            <div className="space-y-4">
+              {/* Byline style tag */}
+              <div className="inline-block">
+                <span className="text-[10px] font-medium text-white/60 uppercase tracking-[0.2em] px-3 py-1 border border-white/20 rounded-full">
+                  Portfolio
+                </span>
+              </div>
+              
+              {/* Large editorial headline */}
+              <h1 className="text-5xl md:text-6xl font-light text-white tracking-tight leading-[0.95]">
+                Alex<br/>Olyaiy
+              </h1>
+              
+              {/* Subheading with editorial styling */}
+              <div className="flex items-center gap-3 text-white/70">
+                <div className="h-px w-8 bg-white/30"></div>
+                <p className="text-sm font-light tracking-wide">
+                  Computer Science @ UBC • Co-founder @ High Tide Digital
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Content Section - Black background */}
-      <div className="relative bg-black px-4 pb-8 max-w-md mx-auto">
+      {/* Content Section - Editorial layout with wider container */}
+      <div className="relative bg-black px-6 pb-16 max-w-2xl mx-auto">
 
-        {/* Social Media Links with enhanced design */}
-        <section className="mb-8 pt-20">
-          <div className="flex justify-center items-center gap-6">
-            {SOCIAL_LINKS.map(({ icon: Icon, href, label, color }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`group transition-all duration-300 hover:scale-110 ${color}`}
-                aria-label={label}
-              >
-                <Icon className="h-6 w-6 text-white/60 group-hover:text-white transition-colors duration-300" />
-              </a>
-            ))}
+        {/* Social Media - Minimal editorial placement */}
+        <section className="mb-16 pt-12">
+          <div className="flex items-center justify-center border-y border-white/10 py-6">
+            <div className="flex items-center gap-8">
+              {SOCIAL_LINKS.map(({ icon: Icon, href, label, color }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group transition-all duration-300 ${color}`}
+                  aria-label={label}
+                >
+                  <Icon className="h-5 w-5 text-white/40 group-hover:text-white transition-colors duration-300" />
+                </a>
+              ))}
+            </div>
           </div>
         </section>
 
-        {/* Featured Projects Section */}
-        <section className="mb-12">
-          <h2 className="text-sm font-semibold text-white/40 uppercase tracking-wider mb-4 text-center">Check These Out</h2>
-          <div className="space-y-3">
-            {SHOWCASE_LINKS.map(({ title, description, href, icon: Icon, gradient, category, featured, metrics }) => (
+        {/* Featured Work - Magazine-style layout with varied card sizes */}
+        <section className="mb-20">
+          {/* Section header with editorial styling */}
+          <div className="mb-10">
+            <div className="flex items-center gap-4 mb-3">
+              <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent"></div>
+              <h2 className="text-[10px] font-medium text-white/50 uppercase tracking-[0.3em]">
+                Featured Work
+              </h2>
+              <div className="h-px flex-1 bg-gradient-to-l from-white/20 to-transparent"></div>
+            </div>
+          </div>
+
+          <div className="space-y-8">
+            {SHOWCASE_LINKS.map(({ title, description, href, icon: Icon, gradient, category, featured, metrics }, index) => (
               <Link
                 key={title}
                 href={href}
@@ -170,44 +197,53 @@ export default function LinksPage() {
                 rel={href.startsWith('http') ? "noopener noreferrer" : undefined}
                 className="group block"
               >
-                <article className={`relative p-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-white/5 hover:border-white/20 ${featured ? 'ring-1 ring-white/20' : ''}`}>
-                  {/* Gradient background for featured items */}
-                  {featured && (
-                    <div className={`absolute inset-0 bg-gradient-to-r ${gradient} opacity-5 rounded-2xl`}></div>
-                  )}
+                <article className={`relative border-b border-white/10 pb-8 transition-all duration-500 hover:border-white/30 ${
+                  featured ? 'mb-4' : ''
+                }`}>
                   
-                  <div className="relative">
-                    {/* Header */}
-                    <div className="flex items-start justify-between mb-2">
+                  {/* Editorial card layout */}
+                  <div className="space-y-4">
+                    {/* Category and icon */}
+                    <div className="flex items-start justify-between">
                       <div className="flex items-center gap-3">
-                        <div className={`flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-r ${gradient} p-[1px]`}>
-                          <div className="w-full h-full rounded-xl bg-black flex items-center justify-center">
-                            <Icon className="h-4 w-4 text-white" />
-                          </div>
+                        <div className={`flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br ${gradient} opacity-80 group-hover:opacity-100 transition-opacity duration-300`}>
+                          <Icon className="h-5 w-5 text-white" />
                         </div>
                         <div>
-                          <div className="flex items-center gap-2 mb-0.5">
-                            <h3 className="font-semibold text-white group-hover:text-white/90 transition-colors duration-300 text-sm">
-                              {title}
-                            </h3>
-                            {featured && (
-                              <span className="px-2 py-0.5 text-xs font-medium bg-white/10 text-white/90 rounded-full">
-                                Featured
-                              </span>
-                            )}
-                          </div>
-                          <span className="text-xs text-white/40 font-medium">{category}</span>
+                          <span className="text-[10px] font-medium text-white/40 uppercase tracking-[0.2em] block mb-1">
+                            {category}
+                          </span>
+                          {featured && (
+                            <span className="text-[9px] font-medium text-white/60 uppercase tracking-wider px-2 py-0.5 border border-white/20 rounded-full">
+                              Editor's Pick
+                            </span>
+                          )}
                         </div>
                       </div>
                       {href.startsWith('http') && (
-                        <ExternalLink className="h-4 w-4 text-white/30 group-hover:text-white/60 transition-colors duration-300 flex-shrink-0" />
+                        <ArrowUpRight className="h-5 w-5 text-white/20 group-hover:text-white/60 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
                       )}
                     </div>
                     
-                    {/* Description */}
-                    <p className="text-sm text-white/60 leading-relaxed mb-2">
+                    {/* Title - Large editorial headline style */}
+                    <h3 className={`font-light text-white group-hover:text-white/90 transition-colors duration-300 ${
+                      featured ? 'text-3xl' : 'text-2xl'
+                    } tracking-tight leading-tight`}>
+                      {title}
+                    </h3>
+                    
+                    {/* Description - Editorial body text */}
+                    <p className="text-base text-white/60 leading-relaxed font-light max-w-xl">
                       {description}
                     </p>
+
+                    {/* Metrics - Small editorial detail */}
+                    {metrics && (
+                      <div className="flex items-center gap-2 text-[11px] text-white/40 font-light tracking-wide">
+                        <div className="h-px w-4 bg-white/20"></div>
+                        <span>{metrics}</span>
+                      </div>
+                    )}
                   </div>
                 </article>
               </Link>
@@ -215,25 +251,34 @@ export default function LinksPage() {
           </div>
         </section>
 
-        {/* Quick Actions */}
-        <section className="mb-12">
-          <h2 className="text-sm font-semibold text-white/40 uppercase tracking-wider mb-4 text-center">Get in Touch</h2>
-          <div className="grid grid-cols-1 gap-3">
+        {/* Contact Section - Editorial cards */}
+        <section className="mb-16">
+          <div className="mb-10">
+            <div className="flex items-center gap-4 mb-3">
+              <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent"></div>
+              <h2 className="text-[10px] font-medium text-white/50 uppercase tracking-[0.3em]">
+                Get in Touch
+              </h2>
+              <div className="h-px flex-1 bg-gradient-to-l from-white/20 to-transparent"></div>
+            </div>
+          </div>
+
+          <div className="space-y-6">
             <a
               href="mailto:emailalexan@protonmail.com"
-              className="group relative p-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/5 hover:border-white/20"
+              className="group block border-l-2 border-white/20 pl-6 py-4 hover:border-white/60 transition-all duration-300"
             >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/10">
-                    <span className="text-lg">✉️</span>
-                  </div>
-                  <div>
-                    <p className="font-medium text-white text-sm">Email Me</p>
-                    <p className="text-xs text-white/50">emailalexan@protonmail.com</p>
+              <div className="flex items-start justify-between">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">✉️</span>
+                    <div>
+                      <p className="font-light text-white text-lg">Email</p>
+                      <p className="text-sm text-white/50 font-light tracking-wide">emailalexan@protonmail.com</p>
+                    </div>
                   </div>
                 </div>
-                <ArrowUpRight className="h-4 w-4 text-white/30 group-hover:text-white/60 transition-colors duration-300" />
+                <ArrowUpRight className="h-5 w-5 text-white/20 group-hover:text-white/60 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 mt-1" />
               </div>
             </a>
             
@@ -241,34 +286,43 @@ export default function LinksPage() {
               href="/alex-resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative p-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-white/5 hover:border-white/20"
+              className="group block border-l-2 border-white/20 pl-6 py-4 hover:border-white/60 transition-all duration-300"
             >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/10">
-                    <span className="text-lg">📄</span>
-                  </div>
-                  <div>
-                    <p className="font-medium text-white text-sm">Download Resume</p>
-                    <p className="text-xs text-white/50">View my experience & skills</p>
+              <div className="flex items-start justify-between">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-3">
+                    <span className="text-2xl">📄</span>
+                    <div>
+                      <p className="font-light text-white text-lg">Resume</p>
+                      <p className="text-sm text-white/50 font-light tracking-wide">View my experience & skills</p>
+                    </div>
                   </div>
                 </div>
-                <ArrowUpRight className="h-4 w-4 text-white/30 group-hover:text-white/60 transition-colors duration-300" />
+                <ArrowUpRight className="h-5 w-5 text-white/20 group-hover:text-white/60 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 mt-1" />
               </div>
             </a>
           </div>
         </section>
 
-        {/* Footer */}
-        <footer className="text-center pt-8 border-t border-white/10">
-          <div className="space-y-2 pb-4">
-            <p className="text-xs text-white/30">
-              Built with Next.js 15, TypeScript & Tailwind CSS
-            </p>
-            <div className="flex items-center justify-center gap-1 text-xs text-white/30">
-              <span>Made with</span>
-              <span className="text-red-400 animate-pulse">♥</span>
-              <span>in Vancouver</span>
+        {/* Footer - Editorial colophon style */}
+        <footer className="pt-12 border-t border-white/10">
+          <div className="space-y-6 pb-8">
+            {/* Editorial separator */}
+            <div className="flex items-center justify-center gap-2">
+              <div className="h-px w-12 bg-white/10"></div>
+              <div className="w-1 h-1 rounded-full bg-white/20"></div>
+              <div className="h-px w-12 bg-white/10"></div>
+            </div>
+            
+            <div className="text-center space-y-3">
+              <p className="text-[10px] text-white/30 uppercase tracking-[0.25em] font-light">
+                Built with Next.js 15, TypeScript & Tailwind CSS
+              </p>
+              <div className="flex items-center justify-center gap-2 text-xs text-white/40 font-light">
+                <span>Crafted with</span>
+                <span className="text-red-400/60">♥</span>
+                <span>in Vancouver</span>
+              </div>
             </div>
           </div>
         </footer>
