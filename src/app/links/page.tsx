@@ -1,6 +1,7 @@
-import { ExternalLink, Github, Linkedin, Twitter, Instagram, Code, Briefcase, Star, ArrowUpRight } from "lucide-react"
+import { Github, Linkedin, Twitter, Instagram, Code, Briefcase, Star, ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 import { Metadata } from "next"
+import Image from "next/image"
 import { ContactForm } from "@/components/contact-form"
 
 export const metadata: Metadata = {
@@ -127,10 +128,12 @@ export default function LinksPage() {
       {/* Hero Section - Editorial style with larger image */}
       <div className="relative w-full aspect-[4/5] max-h-[85vh]">
         <div className="relative w-full h-full">
-          <img
+          <Image
             src="/alex.webp"
             alt="Alex Olyaiy"
-            className="w-full h-full object-cover"
+            fill
+            priority
+            className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black"></div>
         </div>
@@ -192,7 +195,7 @@ export default function LinksPage() {
           </div>
 
           <div className="space-y-8">
-            {SHOWCASE_LINKS.map(({ title, description, href, icon: Icon, gradient, category, featured, metrics }, index) => (
+            {SHOWCASE_LINKS.map(({ title, description, href, icon: Icon, gradient, category, featured, metrics }) => (
               <Link
                 key={title}
                 href={href}
