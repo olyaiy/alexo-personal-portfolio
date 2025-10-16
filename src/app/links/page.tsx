@@ -1,6 +1,7 @@
 import { ExternalLink, Github, Linkedin, Twitter, Instagram, Code, Briefcase, Star, ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 import { Metadata } from "next"
+import { ContactForm } from "@/components/contact-form"
 
 export const metadata: Metadata = {
   title: "Alex Olyaiy - Links",
@@ -60,17 +61,17 @@ const SOCIAL_LINKS = [
   },
   {
     icon: Instagram,
-    href: "https://www.instagram.com/ai_with_alexan/",
+    href: "https://www.instagram.com/alex_intelligence_/",
     label: "Instagram",
-    username: "@ai_with_alexan",
+    username: "@alex_intelligence_",
     color: "hover:text-pink-400",
     bgColor: "hover:bg-pink-900/30"
   },
   {
     icon: TikTokIcon,
-    href: "https://www.tiktok.com/@alex.an595",
+    href: "https://www.tiktok.com/@ai_with_alexan",
     label: "TikTok",
-    username: "@alex.an595",
+    username: "@ai_with_alexan",
     color: "hover:text-red-400",
     bgColor: "hover:bg-red-900/30"
   },
@@ -78,6 +79,16 @@ const SOCIAL_LINKS = [
 
 // Enhanced showcase links with better categorization
 const SHOWCASE_LINKS = [
+  {
+    title: "AI Educator",
+    description: "Teaching AI concepts and tools to over 1.5 million monthly viewers across TikTok and Instagram",
+    href: "https://www.tiktok.com/@ai_with_alexan",
+    icon: Star,
+    gradient: "from-pink-500 to-purple-500",
+    category: "Content Creation",
+    featured: true,
+    metrics: "1.5M+ Monthly Views"
+  },
   {
     title: "High Tide Digital",
     description: "My full-stack web development agency",
@@ -124,28 +135,20 @@ export default function LinksPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black"></div>
         </div>
 
-        {/* Editorial-style name overlay - positioned at bottom with magazine-style typography */}
-        <div className="absolute bottom-0 left-0 right-0 z-10 px-6 pb-8">
+        {/* Editorial-style name overlay - positioned lower with magazine-style typography */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 px-6 pb-0 -mb-8">
           <div className="max-w-2xl mx-auto">
             <div className="space-y-4">
-              {/* Byline style tag */}
-              <div className="inline-block">
-                <span className="text-[10px] font-medium text-white/60 uppercase tracking-[0.2em] px-3 py-1 border border-white/20 rounded-full">
-                  Portfolio
-                </span>
-              </div>
-              
               {/* Large editorial headline */}
               <h1 className="text-5xl md:text-6xl font-light text-white tracking-tight leading-[0.95]">
                 Alex<br/>Olyaiy
               </h1>
               
               {/* Subheading with editorial styling */}
-              <div className="flex items-center gap-3 text-white/70">
-                <div className="h-px w-8 bg-white/30"></div>
-                <p className="text-sm font-light tracking-wide">
-                  Computer Science @ UBC • Co-founder @ High Tide Digital
-                </p>
+              <div className="text-sm font-light tracking-wide space-y-1 text-white/70">
+                <p>Computer Science @ UBC</p>
+                <p>AI Educator</p>
+                <p>Founder @ High Tide Digital</p>
               </div>
             </div>
           </div>
@@ -156,8 +159,8 @@ export default function LinksPage() {
       <div className="relative bg-black px-6 pb-16 max-w-2xl mx-auto">
 
         {/* Social Media - Minimal editorial placement */}
-        <section className="mb-16 pt-12">
-          <div className="flex items-center justify-center border-y border-white/10 py-6">
+        <section className="mb-8 pt-8">
+          <div className="flex items-center justify-center  border-white/10 pt-6">
             <div className="flex items-center gap-8">
               {SOCIAL_LINKS.map(({ icon: Icon, href, label, color }) => (
                 <a
@@ -175,14 +178,14 @@ export default function LinksPage() {
           </div>
         </section>
 
-        {/* Featured Work - Magazine-style layout with varied card sizes */}
+        {/* My Projects - Magazine-style layout with varied card sizes */}
         <section className="mb-20">
           {/* Section header with editorial styling */}
           <div className="mb-10">
             <div className="flex items-center gap-4 mb-3">
               <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent"></div>
               <h2 className="text-[10px] font-medium text-white/50 uppercase tracking-[0.3em]">
-                Featured Work
+                My Projects
               </h2>
               <div className="h-px flex-1 bg-gradient-to-l from-white/20 to-transparent"></div>
             </div>
@@ -210,14 +213,9 @@ export default function LinksPage() {
                           <Icon className="h-5 w-5 text-white" />
                         </div>
                         <div>
-                          <span className="text-[10px] font-medium text-white/40 uppercase tracking-[0.2em] block mb-1">
+                          <span className="text-[10px] font-medium text-white/40 uppercase tracking-[0.2em] block">
                             {category}
                           </span>
-                          {featured && (
-                            <span className="text-[9px] font-medium text-white/60 uppercase tracking-wider px-2 py-0.5 border border-white/20 rounded-full">
-                              Editor's Pick
-                            </span>
-                          )}
                         </div>
                       </div>
                       {href.startsWith('http') && (
@@ -281,7 +279,7 @@ export default function LinksPage() {
                 <ArrowUpRight className="h-5 w-5 text-white/20 group-hover:text-white/60 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 mt-1" />
               </div>
             </a>
-            
+
             <a
               href="/alex-resume.pdf"
               target="_blank"
@@ -303,6 +301,9 @@ export default function LinksPage() {
             </a>
           </div>
         </section>
+
+        {/* Contact Form */}
+        <ContactForm />
 
         {/* Footer - Editorial colophon style */}
         <footer className="pt-12 border-t border-white/10">
