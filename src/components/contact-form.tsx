@@ -15,25 +15,44 @@ export function ContactForm() {
     setIsSubmitting(true);
     setResult("Sending...");
 
-    const formData = new FormData(event.currentTarget);
-    formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "");
+    try {
+      console.log("📤 Client: Preparing form submission");
+      const formData = new FormData(event.currentTarget);
+      
+      // access_key can be provided server-side; still append if present client-side
+      if (process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY) {
+        formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY);
+        console.log("🔑 Client: Added access key from env");
+      }
 
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: formData
-    });
+      console.log("📋 Client: FormData entries:", Array.from(formData.entries()));
+      console.log("🌐 Client: Sending to /api/contact");
 
-    const data = await response.json();
-    
-    if (data.success) {
-      setResult("Message sent successfully!");
-      event.currentTarget.reset();
-      setTimeout(() => setResult(""), 5000);
-    } else {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        body: formData
+      });
+
+      console.log("📡 Client: Response status:", response.status);
+      const data = await response.json();
+      console.log("📦 Client: Response data:", data);
+      
+      if (data.success) {
+        console.log("✅ Success!");
+        setResult("Message sent successfully!");
+        event.currentTarget.reset();
+        setTimeout(() => setResult(""), 5000);
+      } else {
+        console.error("❌ Submission failed:", data);
+        setResult(data.message || "Error sending message. Please try again.");
+      }
+    } catch (error) {
+      console.error("❌ Client error:", error);
+      console.error("❌ Error details:", error instanceof Error ? error.message : String(error));
       setResult("Error sending message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
-    
-    setIsSubmitting(false);
   }
 
   return (
