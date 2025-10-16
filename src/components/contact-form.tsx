@@ -7,13 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Send } from "lucide-react";
 
 export function ContactForm() {
-  const [result, setResult] = useState("");
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsSubmitting(true);
-    setResult("Sending...");
+    setStatus("sending");
+    setMessage("Sending...");
 
     try {
       console.log("📤 Client: Preparing form submission");
@@ -39,17 +41,20 @@ export function ContactForm() {
       
       if (data.success) {
         console.log("✅ Success!");
-        setResult("Message sent successfully!");
+        setStatus("success");
+        setMessage(data.message || "Message sent successfully!");
         event.currentTarget.reset();
-        setTimeout(() => setResult(""), 5000);
+        setTimeout(() => setMessage(""), 5000);
       } else {
         console.error("❌ Submission failed:", data);
-        setResult(data.message || "Error sending message. Please try again.");
+        setStatus("error");
+        setMessage(data.message || "Error sending message. Please try again.");
       }
     } catch (error) {
       console.error("❌ Client error:", error);
       console.error("❌ Error details:", error instanceof Error ? error.message : String(error));
-      setResult("Error sending message. Please try again.");
+      setStatus("error");
+      setMessage("Error sending message. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -110,11 +115,17 @@ export function ContactForm() {
           />
         </div>
 
-        {result && (
-          <div className={`text-sm font-light tracking-wide ${
-            result.includes("success") ? 'text-emerald-400' : result.includes("Error") ? 'text-red-400' : 'text-white/60'
-          }`}>
-            {result}
+        {message && (
+          <div
+            className={`text-sm font-light tracking-wide ${
+              status === "success"
+                ? "text-emerald-400"
+                : status === "error"
+                ? "text-red-400"
+                : "text-white/60"
+            }`}
+          >
+            {message}
           </div>
         )}
 

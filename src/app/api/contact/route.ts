@@ -24,15 +24,23 @@ export async function POST(request: Request) {
     });
 
     console.log("📡 Web3Forms response status:", upstreamResponse.status);
-    const data = await upstreamResponse.json();
-    console.log("📦 Web3Forms response data:", data);
-    
-    const status = upstreamResponse.ok ? 200 : upstreamResponse.status || 400;
+    const raw = await upstreamResponse.json();
+    console.log("📦 Web3Forms response data:", raw);
 
-    return new Response(JSON.stringify(data), {
-      status,
-      headers: { "Content-Type": "application/json" },
-    });
+    // Normalize the response shape for the client
+    const success = raw?.success === true || raw?.success === "true";
+    const message = typeof raw?.message === "string"
+      ? raw.message
+      : success
+      ? "Message sent successfully."
+      : "Error sending message.";
+
+    const status = success ? 200 : upstreamResponse.status || 400;
+
+    return new Response(
+      JSON.stringify({ success, message }),
+      { status, headers: { "Content-Type": "application/json" } }
+    );
   } catch (error) {
     console.error("❌ API Route Error:", error);
     console.error("❌ Error stack:", error instanceof Error ? error.stack : "No stack trace");
