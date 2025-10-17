@@ -75,8 +75,8 @@ export const SOCIAL_LINKS = [
   { icon: GitHubFilledIcon, href: "https://github.com/olyaiy", label: "GitHub" },
   { icon: LinkedInFilledIcon, href: "https://www.linkedin.com/in/olyaiy/", label: "LinkedIn" },
   { icon: TwitterFilledIcon, href: "https://x.com/alexfromvan", label: "Twitter" },
-  { icon: InstagramFilledIcon, href: "https://www.instagram.com/m.alex_2002/", label: "Instagram" },
-  { icon: TikTokFilledIcon, href: "https://www.tiktok.com/@alexanfromvan", label: "TikTok" },
+  { icon: InstagramFilledIcon, href: "https://www.instagram.com/alex_intelligence_/", label: "Instagram" },
+  { icon: TikTokFilledIcon, href: "https://www.tiktok.com/@ai_with_alexan", label: "TikTok" },
 ] as const
 
 export function Hero() {
