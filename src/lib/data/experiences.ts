@@ -3,15 +3,30 @@ import { ExperienceItem } from "../types";
 
 export const experiences: ExperienceItem[] = [
   {
+    title: "Full Stack Web Developer",
+    company: "Wireless PnC Inc.",
+    period: "May 2025 - December 2025",
+    description: [
+      "Designed and developed responsive Single Page Applications (SPAs) using Node.js, TypeScript, and React for cleantech wireless EV charging solutions",
+      "Integrated third-party APIs and implemented custom RESTful APIs with AWS-based backend infrastructure (API Gateway, Lambda, DynamoDB)",
+      "Managed relational and NoSQL databases with data integrity measures and performance optimizations",
+      "Optimized applications for maximum speed and performance across various devices and platforms",
+    ],
+    tags: ["Full Stack", "TypeScript", "React", "Node.js", "AWS", "REST APIs", "DynamoDB"],
+    type: "experience",
+    link: "https://wirelesspnc.com"
+  },
+  {
     title: "Full Stack Developer",
     company: "Plug Vancouver",
     period: "August 2022 - Present",
     description: [
-      "Architected and deployed a full-stack website using Next.js, React, and Tailwind CSS, achieving perfect Core Web Vitals scores",
-      "Engineered a custom CMS with PostgreSQL database, enabling non-technical staff to manage content",
-      "Developed an autonomous AI agent system using OpenAI's APIs for brand-aligned content generation",
+      "Architected and deployed multiple high-performance full-stack web applications using Next.js, React, and Tailwind CSS, achieving 100% Core Web Vitals scores with 40% load time reduction",
+      "Engineered scalable headless CMS integrations with Contentful, Sanity, and Payload CMS, implementing GraphQL queries resulting in 70% reduction in content update time",
+      "Developed AI content generation system using OpenAI's GPT-4 API with custom prompt engineering, increasing content production by 300% while maintaining 95% brand accuracy",
+      "Engineered scalable content management system with PostgreSQL (Supabase) featuring role-based access control",
     ],
-    tags: ["Full Stack", "Frontend", "Large Language Models", "Next.js", "React"],
+    tags: ["Full Stack", "Next.js", "React", "TypeScript", "GraphQL", "PostgreSQL", "Large Language Models", "Vercel"],
     type: "experience",
     link: "https://plugvancouver.ca"
   },
@@ -20,13 +35,28 @@ export const experiences: ExperienceItem[] = [
     company: "Hightide Digital",
     period: "July 2024 - Present",
     description: [
-      "Architected and deployed 12+ high-performance web applications with 90+ Lighthouse scores",
-      "Engineered custom headless CMS solutions with AWS S3 and Supabase",
-      "Orchestrated successful project deliveries while maintaining technical excellence",
+      "Architected and deployed 12+ high-performance web applications using Next.js and React, achieving sub-1s load times and 90+ Lighthouse scores",
+      "Engineered custom headless CMS solutions with Contentful, Sanity, and Payload CMS, reducing content management time by 60% for clients",
+      "Developed high-performance headless Shopify stores with GraphQL for efficient product data fetching and 35% increase in conversion rates",
+      "Orchestrated successful project deliveries with balanced timeline management while shipping production-ready code",
     ],
-    tags: ["Full Stack", "Frontend", "Next.js", "AWS", "React", "Supabase", "PostgreSQL"],
+    tags: ["Full Stack", "Next.js", "React", "TypeScript", "Shopify", "GraphQL", "AWS", "Vercel"],
     type: "experience",
     link: "https://www.hightidedigital.ca"
+  },
+  {
+    title: "ResumeLM - AI-Powered Resume Builder",
+    company: "Personal Project",
+    period: "2024",
+    description: [
+      "Architected production-grade AI resume builder using Next.js 15 and React 19 with enterprise-grade security via Supabase Row Level Security (RLS), achieving 95% user satisfaction",
+      "Engineered AI content recommendation engine using OpenAI's GPT-4 and Vercel AI SDK for streaming responses, improving resume quality scores by 60% with sub-200ms response times",
+      "Developed mobile-first design system using Shadcn UI and Tailwind CSS with responsive PDF generation for professional resume exports",
+      "Optimized and deployed on Vercel for global edge performance with 40% faster resume creation time",
+    ],
+    tags: ["Next.js 15", "React 19", "TypeScript", "Large Language Models", "Supabase", "Vercel AI SDK", "Shadcn UI", "PDF Generation"],
+    type: "project",
+    link: "https://github.com/olyaiy/resume-lm"
   },
   {
     title: "RAG-Powered AI PDF Analyzer",
@@ -53,6 +83,21 @@ export const experiences: ExperienceItem[] = [
     tags: ["Frontend", "Large Language Models", "AWS", "REST APIs", "React", "Javascript"],
     type: "project",
     link: "https://github.com/olyaiy/gemini-clone"
+  },
+  {
+    title: "TypeGPT - OS-Level LLM Integration",
+    company: "Open Source Project",
+    period: "2024",
+    description: [
+      "Built a Python application enabling system-wide AI model access with 138+ GitHub stars",
+      "Implemented support for multiple LLMs including GPT-4, Claude, Gemini, and Llama3",
+      "Engineered global keyboard shortcuts and clipboard integration for seamless AI interaction",
+      "Developed screenshot capability and image handling for multimodal AI interactions"
+    ],
+    tags: ["Python", "Large Language Models", "System Integration", "Open Source"],
+    type: "project",
+    link: "https://github.com/olyaiy/TypeGPT",
+    badge: "138+ Stars on GitHub"
   },
   {
     title: "Term Deposit Prediction Model",
@@ -97,20 +142,6 @@ export const experiences: ExperienceItem[] = [
     link: "https://github.com/olyaiy/NN-From-Scratch-With-Backprop"
   },
   {
-    title: "ResumeLM - AI-Powered Resume Builder",
-    company: "Personal Project",
-    period: "2024",
-    description: [
-      "Architected a full-stack resume optimization platform using Next.js 15 App Router and React Server Components",
-      "Implemented multi-model AI integration (OpenAI, Claude, Gemini) with RAG architecture for real-time content suggestions",
-      "Engineered PDF generation system with dynamic layout preservation and 98% Lighthouse performance score",
-      "Designed secure authentication flow with Supabase RLS and Prisma ORM for granular data access control",
-    ],
-    tags: ["Next.js 15", "TypeScript", "LLM Integration", "Supabase", "Prisma", "Stripe"],
-    type: "project",
-    link: "https://github.com/olyaiy/resume-lm"
-  },
-  {
     title: "Vancouver Housing Price Predictor",
     company: "Academic Project",
     period: "2024",
@@ -123,20 +154,5 @@ export const experiences: ExperienceItem[] = [
     tags: ["Machine Learning", "Python", "Data Analysis", "Statistics"],
     type: "project",
     link: "https://github.com/olyaiy/vancouver_housing_predictions"
-  },
-  {
-    title: "TypeGPT - OS-Level LLM Integration",
-    company: "Open Source Project",
-    period: "2024",
-    description: [
-      "Built a Python application enabling system-wide AI model access with 138+ GitHub stars",
-      "Implemented support for multiple LLMs including GPT-4, Claude, Gemini, and Llama3",
-      "Engineered global keyboard shortcuts and clipboard integration for seamless AI interaction",
-      "Developed screenshot capability and image handling for multimodal AI interactions"
-    ],
-    tags: ["Python", "Large Language Models", "System Integration", "Open Source"],
-    type: "project",
-    link: "https://github.com/olyaiy/TypeGPT",
-    badge: "138+ Stars on GitHub"
   },
 ]; 
