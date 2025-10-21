@@ -56,7 +56,8 @@ export const experiences: ExperienceItem[] = [
     ],
     tags: ["Next.js 15", "React 19", "TypeScript", "Large Language Models", "Supabase", "Vercel AI SDK", "Shadcn UI", "PDF Generation"],
     type: "project",
-    link: "https://github.com/olyaiy/resume-lm"
+    link: "https://github.com/olyaiy/resume-lm",
+    badge: "Over 1000 Users"
   },
   {
     title: "RAG-Powered AI PDF Analyzer",
