@@ -562,7 +562,7 @@ export function Terminal() {
 
               {/* Input Prompt */}
               {showPrompt && (
-                <div className="flex gap-2 flex-wrap">
+                <div className="flex gap-2">
                   <span className="text-blue-400">visitor@portfolio</span>
                   <span className="text-white">:</span>
                   <span className="text-purple-400">~</span>
@@ -577,11 +577,10 @@ export function Terminal() {
                         handleCommand(input)
                       }
                     }}
-                    className="flex-1 bg-transparent outline-none text-gray-300 min-w-[200px]"
+                    className="flex-1 bg-transparent outline-none text-gray-300 font-mono caret-green-400"
                     spellCheck={false}
                     autoComplete="off"
                   />
-                  <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity text-gray-300`}>▊</span>
                 </div>
               )}
 
