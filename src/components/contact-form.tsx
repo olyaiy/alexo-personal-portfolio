@@ -5,10 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Send } from "lucide-react";
+import { submitContactMessage } from "@/lib/contact";
+
+type ContactFormStatus = "idle" | "sending" | "success" | "error"
 
 export function ContactForm() {
   const [message, setMessage] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [status, setStatus] = useState<ContactFormStatus>("idle");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -18,43 +21,32 @@ export function ContactForm() {
     setMessage("Sending...");
 
     try {
-      console.log("📤 Client: Preparing form submission");
-      const formData = new FormData(event.currentTarget);
-      
-      // access_key can be provided server-side; still append if present client-side
-      if (process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY) {
-        formData.append("access_key", process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY);
-        console.log("🔑 Client: Added access key from env");
-      }
+      const form = event.currentTarget;
+      const formData = new FormData(form);
+      const payload = {
+        name: String(formData.get("name") ?? ""),
+        email: String(formData.get("email") ?? ""),
+        message: String(formData.get("message") ?? "")
+      };
 
-      console.log("📋 Client: FormData entries:", Array.from(formData.entries()));
-      console.log("🌐 Client: Sending to /api/contact");
+      const data = await submitContactMessage(payload);
 
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        body: formData
-      });
-
-      console.log("📡 Client: Response status:", response.status);
-      const data = await response.json();
-      console.log("📦 Client: Response data:", data);
-      
       if (data.success) {
-        console.log("✅ Success!");
         setStatus("success");
         setMessage(data.message || "Message sent successfully!");
-        event.currentTarget.reset();
+        form.reset();
         setTimeout(() => setMessage(""), 5000);
       } else {
-        console.error("❌ Submission failed:", data);
         setStatus("error");
         setMessage(data.message || "Error sending message. Please try again.");
       }
     } catch (error) {
-      console.error("❌ Client error:", error);
-      console.error("❌ Error details:", error instanceof Error ? error.message : String(error));
       setStatus("error");
-      setMessage("Error sending message. Please try again.");
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "Error sending message. Please try again."
+      );
     } finally {
       setIsSubmitting(false);
     }

@@ -4,10 +4,17 @@ import { useState, useEffect, useRef } from 'react'
 import { PERSONAL_INFO } from '@/lib/data/personal-info'
 import { SOCIAL_LINKS, EMAIL } from '@/lib/data/social-links'
 import { experiences } from '@/lib/data/experiences'
+import { submitContactMessage, type ContactMessageInput } from '@/lib/contact'
 
-interface CommandOutput {
-  command: string
-  output: React.ReactNode
+type HistoryEntry =
+  | { type: 'command'; command: string; output?: React.ReactNode }
+  | { type: 'system'; message: React.ReactNode }
+
+interface ContactFormState {
+  step: 'prompt' | 'name' | 'email' | 'message' | 'complete'
+  name: string
+  email: string
+  message: string
 }
 
 const ASCII_ART = `    ___    __             ____  __            _
@@ -142,7 +149,8 @@ Education:
 }
 
 function getContact() {
-  return `
+  return (
+    <pre className="text-gray-300">{`
 Contact Information:
 
   Email: ${EMAIL}
@@ -151,7 +159,8 @@ Contact Information:
   Website: ${PERSONAL_INFO.companyUrl}
 
 Type 'social' to see all social media links
-`
+`}</pre>
+  )
 }
 
 function getSocial() {
@@ -167,7 +176,7 @@ ${Object.entries(SOCIAL_LINKS).map(([key, { label, href }]) =>
 const AVAILABLE_COMMANDS = ['about', 'skills', 'experience', 'projects', 'education', 'contact', 'social', 'clear', 'help']
 
 export function Terminal() {
-  const [history, setHistory] = useState<CommandOutput[]>([])
+  const [history, setHistory] = useState<HistoryEntry[]>([])
   const [input, setInput] = useState('')
   const [suggestion, setSuggestion] = useState('')
   const [isMinimized, setIsMinimized] = useState(false)
@@ -184,10 +193,24 @@ export function Terminal() {
   const [typedSubtitle, setTypedSubtitle] = useState('')
   const [typedHelp, setTypedHelp] = useState('')
   const [showPrompt, setShowPrompt] = useState(false)
+  const [contactState, setContactState] = useState<ContactFormState | null>(null)
 
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const windowRef = useRef<HTMLDivElement>(null)
+
+  function pushCommand(command: string, output?: React.ReactNode) {
+    setHistory(prev => [...prev, { type: 'command', command, output }])
+  }
+
+  function pushSystem(message: React.ReactNode) {
+    setHistory(prev => [...prev, { type: 'system', message }])
+  }
+
+  function resetInput() {
+    setInput('')
+    setSuggestion('')
+  }
 
   // Center the window on mount
   useEffect(() => {
@@ -265,7 +288,7 @@ export function Terminal() {
     if (!isMinimized && showPrompt) {
       inputRef.current?.focus()
     }
-  }, [isMinimized, showPrompt])
+  }, [isMinimized, showPrompt, contactState])
 
   // Handle dragging
   useEffect(() => {
@@ -377,6 +400,11 @@ export function Terminal() {
   function handleInputChange(value: string) {
     setInput(value)
 
+    if (contactState) {
+      setSuggestion('')
+      return
+    }
+
     // Find matching command for autocomplete
     if (value.length > 0) {
       const match = AVAILABLE_COMMANDS.find(cmd =>
@@ -395,11 +423,159 @@ export function Terminal() {
     }
   }
 
-  function handleCommand(cmd: string) {
-    const trimmedCmd = cmd.trim().toLowerCase()
+  function handleContactFormSubmit(data: ContactMessageInput) {
+    return submitContactMessage(data)
+  }
+
+  async function handleContactConversation(rawCommand: string, normalizedCommand: string) {
+    if (!contactState) {
+      return
+    }
+
+    const trimmed = rawCommand.trim()
+    const step = contactState.step
+
+    if (normalizedCommand === 'cancel' || normalizedCommand === 'exit' || normalizedCommand === 'quit') {
+      pushSystem(
+        <div className="text-gray-400">
+          Conversation cancelled. Type <span className="text-green-400">'contact'</span> again whenever you're ready.
+        </div>
+      )
+      setContactState(null)
+      return
+    }
+
+    if (step === 'prompt') {
+      if (normalizedCommand === 'yes' || normalizedCommand === 'y') {
+        setContactState(prev => (prev ? { ...prev, step: 'name' } : prev))
+        pushSystem(
+          <div className="text-gray-300">Great! What's your name?</div>
+        )
+      } else if (normalizedCommand === 'no' || normalizedCommand === 'n') {
+        pushSystem(
+          <div className="text-gray-400">
+            No problem! You can always email Alex at{' '}
+            <span className="text-green-400">{EMAIL}</span>.
+          </div>
+        )
+        setContactState(null)
+      } else {
+        pushSystem(
+          <div className="text-yellow-400">Please answer with 'yes' or 'no'.</div>
+        )
+      }
+      return
+    }
+
+    if (step === 'name') {
+      if (!trimmed) {
+        pushSystem(
+          <div className="text-yellow-400">Please enter your name to continue.</div>
+        )
+        return
+      }
+
+      setContactState(prev => (prev ? { ...prev, name: trimmed, step: 'email' } : prev))
+      pushSystem(
+        <div className="text-gray-300">
+          Nice to meet you, <span className="text-green-400">{trimmed}</span>! What's your email address?
+        </div>
+      )
+      return
+    }
+
+    if (step === 'email') {
+      if (!trimmed) {
+        pushSystem(
+          <div className="text-yellow-400">Mind sharing your email so Alex can reply?</div>
+        )
+        return
+      }
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailPattern.test(trimmed)) {
+        pushSystem(
+          <div className="text-yellow-400">That email looks off. Please enter a valid email address.</div>
+        )
+        return
+      }
+
+      setContactState(prev => (prev ? { ...prev, email: trimmed, step: 'message' } : prev))
+      pushSystem(
+        <div className="text-gray-300">Awesome! What message would you like to send Alex?</div>
+      )
+      return
+    }
+
+    if (step === 'message') {
+      if (!trimmed) {
+        pushSystem(
+          <div className="text-yellow-400">Please enter the message you'd like Alex to receive.</div>
+        )
+        return
+      }
+
+      const payload: ContactMessageInput = {
+        name: contactState.name,
+        email: contactState.email,
+        message: trimmed
+      }
+
+      setContactState(null)
+      pushSystem(
+        <div className="text-gray-300">Sending your message to Alex...</div>
+      )
+
+      try {
+        const result = await handleContactFormSubmit(payload)
+        pushSystem(
+          <div className="space-y-2 text-green-400">
+            <div>✓ Message sent successfully!</div>
+            <div className="text-gray-400 text-sm">
+              {result.message || 'Alex will respond to you shortly.'}
+            </div>
+          </div>
+        )
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error ? error.message : 'Error sending message. Please try again.'
+        pushSystem(
+          <div className="text-red-400">
+            {errorMessage}
+          </div>
+        )
+      }
+
+      return
+    }
+  }
+
+  async function handleCommand(cmd: string) {
+    const trimmed = cmd.trim()
+    const normalized = trimmed.toLowerCase()
+
+    if (!trimmed) {
+      resetInput()
+      return
+    }
+
+    if (normalized === 'clear') {
+      setHistory([])
+      resetInput()
+      setContactState(null)
+      return
+    }
+
+    if (contactState) {
+      pushCommand(cmd)
+      await handleContactConversation(cmd, normalized)
+      resetInput()
+      return
+    }
+
     let output: React.ReactNode
 
-    switch (trimmedCmd) {
+    switch (normalized) {
       case 'help':
         output = <pre className="text-gray-300">{getHelp()}</pre>
         break
@@ -419,31 +595,32 @@ export function Terminal() {
         output = <pre className="text-gray-300">{getEducation()}</pre>
         break
       case 'contact':
-        output = <pre className="text-gray-300">{getContact()}</pre>
-        break
+        output = getContact()
+        pushCommand(cmd, output)
+        setContactState({ step: 'prompt', name: '', email: '', message: '' })
+        pushSystem(
+          <div className="text-gray-300">
+            Would you like to send a message to Alex?{' '}
+            <span className="text-gray-500">(yes/no)</span>
+          </div>
+        )
+        resetInput()
+        return
       case 'social':
         output = <pre className="text-gray-300">{getSocial()}</pre>
         break
-      case 'clear':
-        setHistory([])
-        setInput('')
-        setSuggestion('')
-        return
-      case '':
-        return
       default:
         output = (
           <div className="text-red-400">
-            Command not found: {trimmedCmd}
+            Command not found: {normalized}
             <br />
             Type 'help' to see available commands
           </div>
         )
     }
 
-    setHistory(prev => [...prev, { command: cmd, output }])
-    setInput('')
-    setSuggestion('')
+    pushCommand(cmd, output)
+    resetInput()
   }
 
   return (
@@ -555,13 +732,15 @@ export function Terminal() {
               )}
 
               {/* Quick Command Buttons */}
-              {showPrompt && (
+              {showPrompt && !contactState && (
                 <div className="flex flex-wrap gap-3 my-4 pb-3 border-b border-gray-700/20 text-sm">
                   <span className="text-gray-500">$</span>
                   {['about', 'projects', 'experience', 'contact', 'help'].map((cmd) => (
                     <button
                       key={cmd}
-                      onClick={() => handleCommand(cmd)}
+                      onClick={() => {
+                        void handleCommand(cmd)
+                      }}
                       className="text-gray-400 hover:text-green-400 transition-colors duration-150 underline decoration-dotted decoration-gray-600 hover:decoration-green-400 underline-offset-4"
                     >
                       {cmd}
@@ -571,20 +750,28 @@ export function Terminal() {
               )}
 
               {/* Command History */}
-              {history.map((item, i) => (
-                <div key={i}>
-                  {item.command && (
+              {history.map((entry, i) => {
+                if (entry.type === 'system') {
+                  return (
+                    <div key={i} className="text-gray-300">
+                      {entry.message}
+                    </div>
+                  )
+                }
+
+                return (
+                  <div key={i}>
                     <div className="flex gap-2 flex-wrap">
                       <span className="text-blue-400">visitor@portfolio</span>
                       <span className="text-white">:</span>
                       <span className="text-purple-400">~</span>
                       <span className="text-white">$</span>
-                      <span className="text-gray-300">{item.command}</span>
+                      <span className="text-gray-300">{entry.command}</span>
                     </div>
-                  )}
-                  <div className="mt-1">{item.output}</div>
-                </div>
-              ))}
+                    {entry.output && <div className="mt-1">{entry.output}</div>}
+                  </div>
+                )
+              })}
 
               {/* Input Prompt */}
               {showPrompt && (
@@ -601,7 +788,7 @@ export function Terminal() {
                       onChange={(e) => handleInputChange(e.target.value)}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter') {
-                          handleCommand(input)
+                          void handleCommand(input)
                         } else if (e.key === 'Tab' || e.key === 'ArrowRight') {
                           if (suggestion) {
                             e.preventDefault()
