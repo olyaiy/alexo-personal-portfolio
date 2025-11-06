@@ -196,7 +196,7 @@ export function Terminal() {
   const [contactState, setContactState] = useState<ContactFormState | null>(null)
 
   const bottomRef = useRef<HTMLDivElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
   const windowRef = useRef<HTMLDivElement>(null)
 
   function pushCommand(command: string, output?: React.ReactNode) {
@@ -425,6 +425,41 @@ export function Terminal() {
 
   function handleContactFormSubmit(data: ContactMessageInput) {
     return submitContactMessage(data)
+  }
+
+  function handlePromptKeyDown(e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    if (e.key === 'Enter') {
+      if (contactState?.step === 'message' && e.shiftKey) {
+        e.preventDefault()
+        const target = e.currentTarget
+        const start = target.selectionStart ?? input.length
+        const end = target.selectionEnd ?? input.length
+        const nextValue = `${input.slice(0, start)}\n${input.slice(end)}`
+
+        setInput(nextValue)
+
+        requestAnimationFrame(() => {
+          const ref = inputRef.current
+          if (ref) {
+            const newPos = start + 1
+            ref.selectionStart = newPos
+            ref.selectionEnd = newPos
+          }
+        })
+        return
+      }
+
+      if (!e.shiftKey) {
+        e.preventDefault()
+        void handleCommand(input)
+      }
+      return
+    }
+
+    if ((e.key === 'Tab' || e.key === 'ArrowRight') && suggestion && !contactState) {
+      e.preventDefault()
+      acceptSuggestion()
+    }
   }
 
   async function handleContactConversation(rawCommand: string, normalizedCommand: string) {
@@ -781,30 +816,36 @@ export function Terminal() {
                   <span className="text-purple-400">~</span>
                   <span className="text-white">$</span>
                   <div className="flex-1 relative">
-                    <input
-                      ref={inputRef}
-                      type="text"
-                      value={input}
-                      onChange={(e) => handleInputChange(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          void handleCommand(input)
-                        } else if (e.key === 'Tab' || e.key === 'ArrowRight') {
-                          if (suggestion) {
-                            e.preventDefault()
-                            acceptSuggestion()
-                          }
-                        }
-                      }}
-                      className="w-full bg-transparent outline-none text-gray-300 font-mono caret-green-400 relative z-10"
-                      spellCheck={false}
-                      autoComplete="off"
-                    />
-                    {suggestion && (
-                      <div className="absolute left-0 top-0 pointer-events-none font-mono text-gray-300">
-                        <span className="opacity-0">{input}</span>
-                        <span className="text-gray-500/40">{suggestion.slice(input.length)}</span>
-                      </div>
+                    {contactState?.step === 'message' ? (
+                      <textarea
+                        ref={inputRef as React.RefObject<HTMLTextAreaElement>}
+                        value={input}
+                        onChange={(e) => handleInputChange(e.target.value)}
+                        onKeyDown={handlePromptKeyDown}
+                        className="w-full bg-transparent outline-none text-gray-300 font-mono caret-green-400 relative z-10 resize-none"
+                        spellCheck={false}
+                        autoComplete="off"
+                        rows={Math.min(6, Math.max(1, input.split('\n').length))}
+                      />
+                    ) : (
+                      <>
+                        <input
+                          ref={inputRef as React.RefObject<HTMLInputElement>}
+                          type="text"
+                          value={input}
+                          onChange={(e) => handleInputChange(e.target.value)}
+                          onKeyDown={handlePromptKeyDown}
+                          className="w-full bg-transparent outline-none text-gray-300 font-mono caret-green-400 relative z-10"
+                          spellCheck={false}
+                          autoComplete="off"
+                        />
+                        {suggestion && (
+                          <div className="absolute left-0 top-0 pointer-events-none font-mono text-gray-300">
+                            <span className="opacity-0">{input}</span>
+                            <span className="text-gray-500/40">{suggestion.slice(input.length)}</span>
+                          </div>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>
