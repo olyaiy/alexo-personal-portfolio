@@ -194,92 +194,48 @@ export default function LinksPage() {
             </div>
           </div>
 
-          <div className="space-y-8">
-            {SHOWCASE_LINKS.map(({ title, description, href, icon: Icon, gradient, category, featured, metrics }) => (
+          <div className="space-y-3">
+            {SHOWCASE_LINKS.map(({ title, description, href, metrics }) => (
               <Link
                 key={title}
                 href={href}
                 target={href.startsWith('http') ? "_blank" : undefined}
                 rel={href.startsWith('http') ? "noopener noreferrer" : undefined}
-                className="group block"
+                className="group block py-4 border-b border-white/5 hover:border-white/10 transition-colors"
               >
-                <article className={`relative border-b border-white/10 pb-8 transition-all duration-500 hover:border-white/30 ${
-                  featured ? 'mb-4' : ''
-                }`}>
-                  
-                  {/* Editorial card layout */}
-                  <div className="space-y-4">
-                    {/* Category and icon */}
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className={`flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br ${gradient} opacity-80 group-hover:opacity-100 transition-opacity duration-300`}>
-                          <Icon className="h-5 w-5 text-white" />
-                        </div>
-                        <div>
-                          <span className="text-[10px] font-medium text-white/40 uppercase tracking-[0.2em] block">
-                            {category}
-                          </span>
-                        </div>
-                      </div>
-                      {href.startsWith('http') && (
-                        <ArrowUpRight className="h-5 w-5 text-white/20 group-hover:text-white/60 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
-                      )}
-                    </div>
-                    
-                    {/* Title - Large editorial headline style */}
-                    <h3 className={`font-light text-white group-hover:text-white/90 transition-colors duration-300 ${
-                      featured ? 'text-3xl' : 'text-2xl'
-                    } tracking-tight leading-tight`}>
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-base font-normal text-white mb-1 group-hover:text-white/80 transition-colors">
                       {title}
                     </h3>
-                    
-                    {/* Description - Editorial body text */}
-                    <p className="text-base text-white/60 leading-relaxed font-light max-w-xl">
+                    <p className="text-sm text-white/40 leading-relaxed">
                       {description}
                     </p>
-
-                    {/* Metrics - Small editorial detail */}
                     {metrics && (
-                      <div className="flex items-center gap-2 text-[11px] text-white/40 font-light tracking-wide">
-                        <div className="h-px w-4 bg-white/20"></div>
-                        <span>{metrics}</span>
-                      </div>
+                      <p className="text-xs text-white/30 mt-1.5">
+                        {metrics}
+                      </p>
                     )}
                   </div>
-                </article>
+                  <ArrowUpRight className="h-4 w-4 text-white/30 group-hover:text-white/50 transition-colors flex-shrink-0 mt-1" />
+                </div>
               </Link>
             ))}
-          </div>
-        </section>
 
-        {/* Contact Section - Editorial cards */}
-        <section className="mb-16">
-          <div className="mb-10">
-            <div className="flex items-center gap-4 mb-3">
-              <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent"></div>
-              <h2 className="text-[10px] font-medium text-white/50 uppercase tracking-[0.3em]">
-                Get in Touch
-              </h2>
-              <div className="h-px flex-1 bg-gradient-to-l from-white/20 to-transparent"></div>
-            </div>
-          </div>
-
-          <div className="space-y-6">
             <a
               href="mailto:emailalexan@protonmail.com"
-              className="group block border-l-2 border-white/20 pl-6 py-4 hover:border-white/60 transition-all duration-300"
+              className="group block py-4 border-b border-white/5 hover:border-white/10 transition-colors"
             >
-              <div className="flex items-start justify-between">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">✉️</span>
-                    <div>
-                      <p className="font-light text-white text-lg">Email</p>
-                      <p className="text-sm text-white/50 font-light tracking-wide">emailalexan@protonmail.com</p>
-                    </div>
-                  </div>
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base font-normal text-white mb-1 group-hover:text-white/80 transition-colors">
+                    Email
+                  </h3>
+                  <p className="text-sm text-white/40">
+                    emailalexan@protonmail.com
+                  </p>
                 </div>
-                <ArrowUpRight className="h-5 w-5 text-white/20 group-hover:text-white/60 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 mt-1" />
+                <ArrowUpRight className="h-4 w-4 text-white/30 group-hover:text-white/50 transition-colors flex-shrink-0 mt-1" />
               </div>
             </a>
 
@@ -287,48 +243,33 @@ export default function LinksPage() {
               href="/alex-resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group block border-l-2 border-white/20 pl-6 py-4 hover:border-white/60 transition-all duration-300"
+              className="group block py-4 border-b border-white/5 hover:border-white/10 transition-colors"
             >
-              <div className="flex items-start justify-between">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">📄</span>
-                    <div>
-                      <p className="font-light text-white text-lg">Resume</p>
-                      <p className="text-sm text-white/50 font-light tracking-wide">View my experience & skills</p>
-                    </div>
-                  </div>
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base font-normal text-white mb-1 group-hover:text-white/80 transition-colors">
+                    Resume
+                  </h3>
+                  <p className="text-sm text-white/40">
+                    View my experience & skills
+                  </p>
                 </div>
-                <ArrowUpRight className="h-5 w-5 text-white/20 group-hover:text-white/60 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 mt-1" />
+                <ArrowUpRight className="h-4 w-4 text-white/30 group-hover:text-white/50 transition-colors flex-shrink-0 mt-1" />
               </div>
             </a>
           </div>
         </section>
 
         {/* Contact Form */}
-        <ContactForm />
+        <div className="mt-12">
+          <ContactForm />
+        </div>
 
-        {/* Footer - Editorial colophon style */}
-        <footer className="pt-12 border-t border-white/10">
-          <div className="space-y-6 pb-8">
-            {/* Editorial separator */}
-            <div className="flex items-center justify-center gap-2">
-              <div className="h-px w-12 bg-white/10"></div>
-              <div className="w-1 h-1 rounded-full bg-white/20"></div>
-              <div className="h-px w-12 bg-white/10"></div>
-            </div>
-            
-            <div className="text-center space-y-3">
-              <p className="text-[10px] text-white/30 uppercase tracking-[0.25em] font-light">
-                Built with Next.js 15, TypeScript & Tailwind CSS
-              </p>
-              <div className="flex items-center justify-center gap-2 text-xs text-white/40 font-light">
-                <span>Crafted with</span>
-                <span className="text-red-400/60">♥</span>
-                <span>in Vancouver</span>
-              </div>
-            </div>
-          </div>
+        {/* Footer */}
+        <footer className="mt-16 pt-6 border-t border-white/5 text-center">
+          <p className="text-xs text-white/30">
+            Built with Next.js, TypeScript & Tailwind CSS
+          </p>
         </footer>
       </div>
     </main>
