@@ -12,6 +12,9 @@ const REDIRECT_MAP: Record<string, string> = {
   'gh': SOCIAL_LINKS.github.href,
   'twitter': SOCIAL_LINKS.twitter.href,
   'x': SOCIAL_LINKS.twitter.href,
+  'resume': '/alex-resume.pdf',
+  'resumes': '/alex-resume.pdf',
+  'cv': '/alex-resume.pdf',
 }
 
 export default async function CatchAllRedirect({ params }: { params: Promise<{ slug: string }> }) {
