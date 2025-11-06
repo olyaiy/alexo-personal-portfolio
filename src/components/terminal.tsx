@@ -10,15 +10,15 @@ interface CommandOutput {
   output: React.ReactNode
 }
 
-const WELCOME_MESSAGE = `
-╔═══════════════════════════════════════════════════════════╗
-║                                                           ║
-║   Welcome to ${PERSONAL_INFO.name}'s Portfolio Terminal        ║
-║                                                           ║
-╚═══════════════════════════════════════════════════════════╝
+const ASCII_ART = `    ___    __             ____  __            _
+   /   |  / /__  _  __   / __ \\/ /_  ______ _(_)_  __
+  / /| | / / _ \\| |/_/  / / / / / / / / __ \`/ / / / /
+ / ___ |/ /  __/>  <   / /_/ / / /_/ / /_/ / / /_/ /
+/_/  |_/_/\\___/_/|_|   \\____/_/\\__, /\\__,_/_/\\__, /
+                              /____/        /____/`
 
-Type 'help' to see available commands
-`
+const SUBTITLE_TEXT = PERSONAL_INFO.titles.join(' • ')
+const HELP_TEXT = "Type 'help' to see available commands"
 
 function getHelp() {
   return `
@@ -165,18 +165,92 @@ ${Object.entries(SOCIAL_LINKS).map(([key, { label, href }]) =>
 }
 
 export function Terminal() {
-  const [history, setHistory] = useState<CommandOutput[]>([
-    { command: '', output: <pre className="text-green-400">{WELCOME_MESSAGE}</pre> }
-  ])
+  const [history, setHistory] = useState<CommandOutput[]>([])
   const [input, setInput] = useState('')
   const [isMinimized, setIsMinimized] = useState(false)
-  const [position, setPosition] = useState({ x: 100, y: 100 })
+  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const [size, setSize] = useState({ width: 900, height: 600 })
   const [isDragging, setIsDragging] = useState(false)
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 })
+  const [isResizing, setIsResizing] = useState(false)
+  const [resizeDirection, setResizeDirection] = useState<string>('')
+  const [resizeStart, setResizeStart] = useState({ x: 0, y: 0, width: 0, height: 0, posX: 0, posY: 0 })
+  const [showWindow, setShowWindow] = useState(false)
+  const [showContent, setShowContent] = useState(false)
+  const [showCursor, setShowCursor] = useState(true)
+  const [typedSubtitle, setTypedSubtitle] = useState('')
+  const [typedHelp, setTypedHelp] = useState('')
+  const [showPrompt, setShowPrompt] = useState(false)
 
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const windowRef = useRef<HTMLDivElement>(null)
+
+  // Center the window on mount
+  useEffect(() => {
+    function centerWindow() {
+      const windowWidth = Math.min(900, window.innerWidth - 100)
+      const windowHeight = Math.min(600, window.innerHeight - 100)
+      setSize({ width: windowWidth, height: windowHeight })
+      setPosition({
+        x: (window.innerWidth - windowWidth) / 2,
+        y: (window.innerHeight - windowHeight) / 2
+      })
+    }
+    centerWindow()
+  }, [])
+
+  // Staggered animation sequence
+  useEffect(() => {
+    // Window appears first
+    const windowTimer = setTimeout(() => setShowWindow(true), 100)
+    // Content fades in after window
+    const contentTimer = setTimeout(() => setShowContent(true), 400)
+
+    return () => {
+      clearTimeout(windowTimer)
+      clearTimeout(contentTimer)
+    }
+  }, [])
+
+  // Typewriter effect for subtitle and help text
+  useEffect(() => {
+    if (!showContent) return
+
+    let subtitleIndex = 0
+    const subtitleTimer = setInterval(() => {
+      if (subtitleIndex <= SUBTITLE_TEXT.length) {
+        setTypedSubtitle(SUBTITLE_TEXT.slice(0, subtitleIndex))
+        subtitleIndex++
+      } else {
+        clearInterval(subtitleTimer)
+        // Start help text after subtitle is done
+        setTimeout(() => {
+          let helpIndex = 0
+          const helpTimer = setInterval(() => {
+            if (helpIndex <= HELP_TEXT.length) {
+              setTypedHelp(HELP_TEXT.slice(0, helpIndex))
+              helpIndex++
+            } else {
+              clearInterval(helpTimer)
+              // Show prompt after typing is done
+              setTimeout(() => setShowPrompt(true), 100)
+            }
+          }, 10)
+        }, 100)
+      }
+    }, 10)
+
+    return () => clearInterval(subtitleTimer)
+  }, [showContent])
+
+  // Cursor blink effect
+  useEffect(() => {
+    const blinkInterval = setInterval(() => {
+      setShowCursor(prev => !prev)
+    }, 530)
+    return () => clearInterval(blinkInterval)
+  }, [])
 
   useEffect(() => {
     if (!isMinimized) {
@@ -185,11 +259,12 @@ export function Terminal() {
   }, [history, isMinimized])
 
   useEffect(() => {
-    if (!isMinimized) {
+    if (!isMinimized && showPrompt) {
       inputRef.current?.focus()
     }
-  }, [isMinimized])
+  }, [isMinimized, showPrompt])
 
+  // Handle dragging
   useEffect(() => {
     function handleMouseMove(e: MouseEvent) {
       if (isDragging) {
@@ -215,6 +290,61 @@ export function Terminal() {
     }
   }, [isDragging, dragOffset])
 
+  // Handle resizing
+  useEffect(() => {
+    function handleMouseMove(e: MouseEvent) {
+      if (isResizing) {
+        const deltaX = e.clientX - resizeStart.x
+        const deltaY = e.clientY - resizeStart.y
+
+        let newWidth = resizeStart.width
+        let newHeight = resizeStart.height
+        let newX = resizeStart.posX
+        let newY = resizeStart.posY
+
+        // Handle horizontal resizing
+        if (resizeDirection.includes('e')) {
+          newWidth = Math.max(400, Math.min(window.innerWidth - resizeStart.posX - 50, resizeStart.width + deltaX))
+        } else if (resizeDirection.includes('w')) {
+          const proposedWidth = resizeStart.width - deltaX
+          if (proposedWidth >= 400) {
+            newWidth = proposedWidth
+            newX = resizeStart.posX + deltaX
+          }
+        }
+
+        // Handle vertical resizing
+        if (resizeDirection.includes('s')) {
+          newHeight = Math.max(300, Math.min(window.innerHeight - resizeStart.posY - 50, resizeStart.height + deltaY))
+        } else if (resizeDirection.includes('n')) {
+          const proposedHeight = resizeStart.height - deltaY
+          if (proposedHeight >= 300) {
+            newHeight = proposedHeight
+            newY = resizeStart.posY + deltaY
+          }
+        }
+
+        setSize({ width: newWidth, height: newHeight })
+        setPosition({ x: newX, y: newY })
+      }
+    }
+
+    function handleMouseUp() {
+      setIsResizing(false)
+      setResizeDirection('')
+    }
+
+    if (isResizing) {
+      window.addEventListener('mousemove', handleMouseMove)
+      window.addEventListener('mouseup', handleMouseUp)
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+    }
+  }, [isResizing, resizeStart, resizeDirection])
+
   function handleMouseDown(e: React.MouseEvent<HTMLDivElement>) {
     if (windowRef.current) {
       const rect = windowRef.current.getBoundingClientRect()
@@ -224,6 +354,21 @@ export function Terminal() {
       })
       setIsDragging(true)
     }
+  }
+
+  function handleResizeStart(e: React.MouseEvent, direction: string) {
+    e.preventDefault()
+    e.stopPropagation()
+    setResizeDirection(direction)
+    setResizeStart({
+      x: e.clientX,
+      y: e.clientY,
+      width: size.width,
+      height: size.height,
+      posX: position.x,
+      posY: position.y
+    })
+    setIsResizing(true)
   }
 
   function handleCommand(cmd: string) {
@@ -256,10 +401,36 @@ export function Terminal() {
         output = <pre className="text-gray-300">{getSocial()}</pre>
         break
       case 'clear':
-        setHistory([
-          { command: '', output: <pre className="text-green-400">{WELCOME_MESSAGE}</pre> }
-        ])
+        setHistory([])
         setInput('')
+        // Reset typing animation
+        setTypedSubtitle('')
+        setTypedHelp('')
+        setShowPrompt(false)
+        // Restart typing
+        setTimeout(() => {
+          let subtitleIndex = 0
+          const subtitleTimer = setInterval(() => {
+            if (subtitleIndex <= SUBTITLE_TEXT.length) {
+              setTypedSubtitle(SUBTITLE_TEXT.slice(0, subtitleIndex))
+              subtitleIndex++
+            } else {
+              clearInterval(subtitleTimer)
+              setTimeout(() => {
+                let helpIndex = 0
+                const helpTimer = setInterval(() => {
+                  if (helpIndex <= HELP_TEXT.length) {
+                    setTypedHelp(HELP_TEXT.slice(0, helpIndex))
+                    helpIndex++
+                  } else {
+                    clearInterval(helpTimer)
+                    setTimeout(() => setShowPrompt(true), 100)
+                  }
+                }, 10)
+              }, 100)
+            }
+          }, 10)
+        }, 100)
         return
       case '':
         return
@@ -281,13 +452,15 @@ export function Terminal() {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8 overflow-hidden">
       <div
         ref={windowRef}
-        className="fixed rounded-xl overflow-hidden shadow-2xl backdrop-blur-xl bg-black/40 border border-white/10"
+        className="fixed rounded-xl overflow-hidden shadow-2xl backdrop-blur-xl bg-black/80 border border-white/10 transition-all duration-500 ease-out"
         style={{
           left: `${position.x}px`,
           top: `${position.y}px`,
-          width: isMinimized ? '300px' : 'min(900px, calc(100vw - 100px))',
-          height: isMinimized ? 'auto' : 'min(600px, calc(100vh - 100px))',
-          transition: isDragging ? 'none' : 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+          width: isMinimized ? '300px' : `${size.width}px`,
+          height: isMinimized ? 'auto' : `${size.height}px`,
+          opacity: showWindow ? 1 : 0,
+          transform: showWindow ? 'translateY(0) scale(1)' : 'translateY(-20px) scale(0.98)',
+          transitionProperty: isDragging || isResizing ? 'none' : 'opacity, transform, width, height',
         }}
       >
         {/* Window Title Bar */}
@@ -331,7 +504,75 @@ export function Terminal() {
             onClick={() => inputRef.current?.focus()}
             style={{ height: 'calc(100% - 48px)' }}
           >
-            <div className="space-y-4">
+            <div
+              className="space-y-4 transition-all duration-700 ease-out"
+              style={{
+                opacity: showContent ? 1 : 0,
+                transform: showContent ? 'translateY(0)' : 'translateY(10px)',
+              }}
+            >
+              {/* Welcome Message with Typewriter */}
+              {showContent && (
+                <div className="relative space-y-2">
+                  {/* Social Links - Top Right */}
+                  <div className="absolute top-0 right-0 flex gap-3 text-sm">
+                    <a
+                      href={SOCIAL_LINKS.github.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-500 hover:text-green-400 transition-colors duration-150 flex items-center gap-1"
+                      title="GitHub"
+                    >
+                      github
+                      <span className="text-xs">↗</span>
+                    </a>
+                    <a
+                      href={SOCIAL_LINKS.linkedin.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-500 hover:text-green-400 transition-colors duration-150 flex items-center gap-1"
+                      title="LinkedIn"
+                    >
+                      linkedin
+                      <span className="text-xs">↗</span>
+                    </a>
+                  </div>
+
+                  <pre className="text-green-400">{ASCII_ART}</pre>
+                  <div className="text-gray-300 mt-4">
+                    {typedSubtitle}
+                    {/* {typedSubtitle.length < SUBTITLE_TEXT.length && (
+                      <span className="text-green-400">▊</span>
+                    )} */}
+                  </div>
+                  {typedSubtitle.length === SUBTITLE_TEXT.length && (
+                    <div className="text-gray-400 text-sm mt-2">
+                      {typedHelp}
+                      {/* {typedHelp.length < HELP_TEXT.length && (
+                        <span className="text-green-400">▊</span>
+                      )} */}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Quick Command Buttons */}
+              {showPrompt && (
+                <div className="flex flex-wrap gap-3 my-4 pb-3 border-b border-gray-700/20 text-sm">
+                  <span className="text-gray-500">$</span>
+                  {['about', 'projects', 'experience', 'contact', 'help'].map((cmd) => (
+                    <button
+                      key={cmd}
+                      onClick={() => handleCommand(cmd)}
+                      className="text-gray-400 hover:text-green-400 transition-colors duration-150 underline decoration-dotted decoration-gray-600 hover:decoration-green-400 underline-offset-4"
+                    >
+                      {cmd}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Command History */}
               {history.map((item, i) => (
                 <div key={i}>
                   {item.command && (
@@ -347,30 +588,82 @@ export function Terminal() {
                 </div>
               ))}
 
-              <div className="flex gap-2 flex-wrap">
-                <span className="text-blue-400">visitor@portfolio</span>
-                <span className="text-white">:</span>
-                <span className="text-purple-400">~</span>
-                <span className="text-white">$</span>
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      handleCommand(input)
-                    }
-                  }}
-                  className="flex-1 bg-transparent outline-none text-gray-300 min-w-[200px]"
-                  spellCheck={false}
-                  autoComplete="off"
-                />
-              </div>
+              {/* Input Prompt */}
+              {showPrompt && (
+                <div className="flex gap-2 flex-wrap">
+                  <span className="text-blue-400">visitor@portfolio</span>
+                  <span className="text-white">:</span>
+                  <span className="text-purple-400">~</span>
+                  <span className="text-white">$</span>
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        handleCommand(input)
+                      }
+                    }}
+                    className="flex-1 bg-transparent outline-none text-gray-300 min-w-[200px]"
+                    spellCheck={false}
+                    autoComplete="off"
+                  />
+                  <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity text-gray-300`}>▊</span>
+                </div>
+              )}
 
               <div ref={bottomRef} />
             </div>
           </div>
+        )}
+
+        {/* Resize Handles - Edges */}
+        {!isMinimized && (
+          <>
+            {/* Top edge */}
+            <div
+              className="absolute top-0 left-0 right-0 h-1 cursor-n-resize hover:bg-white/10"
+              onMouseDown={(e) => handleResizeStart(e, 'n')}
+            />
+            {/* Bottom edge */}
+            <div
+              className="absolute bottom-0 left-0 right-0 h-1 cursor-s-resize hover:bg-white/10"
+              onMouseDown={(e) => handleResizeStart(e, 's')}
+            />
+            {/* Left edge */}
+            <div
+              className="absolute top-0 bottom-0 left-0 w-1 cursor-w-resize hover:bg-white/10"
+              onMouseDown={(e) => handleResizeStart(e, 'w')}
+            />
+            {/* Right edge */}
+            <div
+              className="absolute top-0 bottom-0 right-0 w-1 cursor-e-resize hover:bg-white/10"
+              onMouseDown={(e) => handleResizeStart(e, 'e')}
+            />
+
+            {/* Corners */}
+            {/* Top-left */}
+            <div
+              className="absolute top-0 left-0 w-3 h-3 cursor-nw-resize hover:bg-white/20"
+              onMouseDown={(e) => handleResizeStart(e, 'nw')}
+            />
+            {/* Top-right */}
+            <div
+              className="absolute top-0 right-0 w-3 h-3 cursor-ne-resize hover:bg-white/20"
+              onMouseDown={(e) => handleResizeStart(e, 'ne')}
+            />
+            {/* Bottom-left */}
+            <div
+              className="absolute bottom-0 left-0 w-3 h-3 cursor-sw-resize hover:bg-white/20"
+              onMouseDown={(e) => handleResizeStart(e, 'sw')}
+            />
+            {/* Bottom-right */}
+            <div
+              className="absolute bottom-0 right-0 w-3 h-3 cursor-se-resize hover:bg-white/20"
+              onMouseDown={(e) => handleResizeStart(e, 'se')}
+            />
+          </>
         )}
       </div>
     </div>
