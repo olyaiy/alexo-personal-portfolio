@@ -3,7 +3,7 @@ export const PERSONAL_INFO = {
   name: "Alex Olyaiy",
   titles: [
     "Full Stack Developer",
-    "Agency Owner",
+    "Content Creator",
     "AI/ML Enthusiast"
   ],
   bio: "Computer Science student at UBC and co-founder of High Tide Digital. Building modern web experiences with cutting-edge technologies.",

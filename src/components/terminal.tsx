@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
-import type { KeyboardEvent, MouseEvent as ReactMouseEvent, ReactNode } from 'react'
+import type { KeyboardEvent, MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent, ReactNode } from 'react'
 import { PERSONAL_INFO } from '@/lib/data/personal-info'
 import { SOCIAL_LINKS, EMAIL } from '@/lib/data/social-links'
 import { experiences } from '@/lib/data/experiences'
@@ -25,6 +25,7 @@ const ASCII_ART = `    ___    __             ____  __            _
 /_/  |_/_/\\___/_/|_|   \\____/_/\\__, /\\__,_/_/\\__, /
                               /____/        /____/`
 
+const WELCOME_TEXT = "Welcome to my website!"
 const SUBTITLE_TEXT = PERSONAL_INFO.titles.join(' • ')
 const HELP_TEXT = "Type 'help' to see available commands"
 
@@ -191,10 +192,13 @@ export function Terminal() {
   const [showWindow, setShowWindow] = useState(false)
   const [showContent, setShowContent] = useState(false)
   const [showCursor, setShowCursor] = useState(true)
+  const [typedWelcome, setTypedWelcome] = useState('')
   const [typedSubtitle, setTypedSubtitle] = useState('')
   const [typedHelp, setTypedHelp] = useState('')
   const [showPrompt, setShowPrompt] = useState(false)
   const [contactState, setContactState] = useState<ContactFormState | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+  const [keyboardHeight, setKeyboardHeight] = useState(0)
 
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
@@ -216,36 +220,53 @@ export function Terminal() {
     setSuggestion('')
   }
 
-  // Center the window on mount
+  // Detect mobile and center window on mount
   useEffect(() => {
-    function centerWindow() {
-      const windowWidth = Math.min(900, window.innerWidth - 100)
-      const windowHeight = Math.min(600, window.innerHeight - 100)
-      setSize({ width: windowWidth, height: windowHeight })
-      setPosition({
-        x: (window.innerWidth - windowWidth) / 2,
-        y: (window.innerHeight - windowHeight) / 2
-      })
+    function handleResize() {
+      const mobile = window.innerWidth <= 768
+      setIsMobile(mobile)
+
+      if (mobile) {
+        // Mobile: fullscreen
+        setSize({ width: window.innerWidth, height: window.innerHeight })
+        setPosition({ x: 0, y: 0 })
+      } else {
+        // Desktop: centered window
+        const windowWidth = Math.min(900, window.innerWidth - 100)
+        const windowHeight = Math.min(600, window.innerHeight - 100)
+        setSize({ width: windowWidth, height: windowHeight })
+        setPosition({
+          x: (window.innerWidth - windowWidth) / 2,
+          y: (window.innerHeight - windowHeight) / 2
+        })
+      }
     }
-    centerWindow()
+
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Staggered animation sequence
+  // Staggered animation sequence (faster on mobile)
   useEffect(() => {
-    // Window appears first
-    const windowTimer = setTimeout(() => setShowWindow(true), 100)
-    // Content fades in after window
-    const contentTimer = setTimeout(() => setShowContent(true), 400)
+    const delay = isMobile ? 50 : 100
+    const contentDelay = isMobile ? 200 : 400
+
+    const windowTimer = setTimeout(() => setShowWindow(true), delay)
+    const contentTimer = setTimeout(() => setShowContent(true), contentDelay)
 
     return () => {
       clearTimeout(windowTimer)
       clearTimeout(contentTimer)
     }
-  }, [])
+  }, [isMobile])
 
-  // Typewriter effect for subtitle and help text
+  // Typewriter effect for subtitle, welcome, and help text (faster on mobile)
   useEffect(() => {
     if (!showContent) return
+
+    const speed = isMobile ? 5 : 10
+    const pause = isMobile ? 50 : 100
 
     let subtitleIndex = 0
     const subtitleTimer = setInterval(() => {
@@ -254,25 +275,34 @@ export function Terminal() {
         subtitleIndex++
       } else {
         clearInterval(subtitleTimer)
-        // Start help text after subtitle is done
         setTimeout(() => {
-          let helpIndex = 0
-          const helpTimer = setInterval(() => {
-            if (helpIndex <= HELP_TEXT.length) {
-              setTypedHelp(HELP_TEXT.slice(0, helpIndex))
-              helpIndex++
+          let welcomeIndex = 0
+          const welcomeTimer = setInterval(() => {
+            if (welcomeIndex <= WELCOME_TEXT.length) {
+              setTypedWelcome(WELCOME_TEXT.slice(0, welcomeIndex))
+              welcomeIndex++
             } else {
-              clearInterval(helpTimer)
-              // Show prompt after typing is done
-              setTimeout(() => setShowPrompt(true), 100)
+              clearInterval(welcomeTimer)
+              setTimeout(() => {
+                let helpIndex = 0
+                const helpTimer = setInterval(() => {
+                  if (helpIndex <= HELP_TEXT.length) {
+                    setTypedHelp(HELP_TEXT.slice(0, helpIndex))
+                    helpIndex++
+                  } else {
+                    clearInterval(helpTimer)
+                    setTimeout(() => setShowPrompt(true), pause)
+                  }
+                }, speed)
+              }, pause)
             }
-          }, 10)
-        }, 100)
+          }, speed)
+        }, pause)
       }
-    }, 10)
+    }, speed)
 
     return () => clearInterval(subtitleTimer)
-  }, [showContent])
+  }, [showContent, isMobile])
 
   // Cursor blink effect
   useEffect(() => {
@@ -284,9 +314,10 @@ export function Terminal() {
 
   useEffect(() => {
     if (!isMinimized) {
-      bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+      const behavior = isMobile ? 'auto' : 'smooth'
+      bottomRef.current?.scrollIntoView({ behavior })
     }
-  }, [history, isMinimized])
+  }, [history, isMinimized, isMobile])
 
   useEffect(() => {
     if (!isMinimized && showPrompt) {
@@ -294,8 +325,30 @@ export function Terminal() {
     }
   }, [isMinimized, showPrompt, contactState])
 
-  // Handle dragging
+  // Handle virtual keyboard on mobile
   useEffect(() => {
+    if (!isMobile || typeof window === 'undefined' || !window.visualViewport) return
+
+    function handleViewportResize() {
+      if (window.visualViewport) {
+        const viewport = window.visualViewport
+        const keyboardOpen = viewport.height < window.innerHeight
+        if (keyboardOpen) {
+          setKeyboardHeight(window.innerHeight - viewport.height)
+        } else {
+          setKeyboardHeight(0)
+        }
+      }
+    }
+
+    window.visualViewport.addEventListener('resize', handleViewportResize)
+    return () => window.visualViewport?.removeEventListener('resize', handleViewportResize)
+  }, [isMobile])
+
+  // Handle dragging (disabled on mobile)
+  useEffect(() => {
+    if (isMobile) return
+
     function handleMouseMove(e: MouseEvent) {
       if (isDragging) {
         setPosition({
@@ -318,10 +371,12 @@ export function Terminal() {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseup', handleMouseUp)
     }
-  }, [isDragging, dragOffset])
+  }, [isDragging, dragOffset, isMobile])
 
-  // Handle resizing
+  // Handle resizing (disabled on mobile)
   useEffect(() => {
+    if (isMobile) return
+
     function handleMouseMove(e: MouseEvent) {
       if (isResizing) {
         const deltaX = e.clientX - resizeStart.x
@@ -373,9 +428,10 @@ export function Terminal() {
       window.removeEventListener('mousemove', handleMouseMove)
       window.removeEventListener('mouseup', handleMouseUp)
     }
-  }, [isResizing, resizeStart, resizeDirection])
+  }, [isResizing, resizeStart, resizeDirection, isMobile])
 
   function handleMouseDown(e: ReactMouseEvent<HTMLDivElement>) {
+    if (isMobile) return
     if (windowRef.current) {
       const rect = windowRef.current.getBoundingClientRect()
       setDragOffset({
@@ -387,6 +443,7 @@ export function Terminal() {
   }
 
   function handleResizeStart(e: ReactMouseEvent, direction: string) {
+    if (isMobile) return
     e.preventDefault()
     e.stopPropagation()
     setResizeDirection(direction)
@@ -666,10 +723,12 @@ export function Terminal() {
   }
 
   return (
-    <div className="min-h-screen p-8 overflow-hidden">
+    <div className={isMobile ? "min-h-screen overflow-hidden" : "min-h-screen p-8 overflow-hidden"}>
       <div
         ref={windowRef}
-        className="fixed rounded-xl overflow-hidden shadow-2xl backdrop-blur-xl bg-black/80 border border-white/10 transition-all duration-500 ease-out"
+        className={`fixed overflow-hidden shadow-2xl backdrop-blur-xl bg-black/80 border border-white/10 transition-all duration-500 ease-out ${
+          isMobile ? 'rounded-none' : 'rounded-xl'
+        }`}
         style={{
           left: `${position.x}px`,
           top: `${position.y}px`,
@@ -682,44 +741,50 @@ export function Terminal() {
       >
         {/* Window Title Bar */}
         <div
-          className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-gray-800/90 to-gray-900/90 border-b border-white/10 cursor-move select-none"
+          className={`flex items-center justify-between px-4 bg-gradient-to-r from-gray-800/90 to-gray-900/90 border-b border-white/10 select-none ${
+            isMobile ? 'py-2' : 'py-3 cursor-move'
+          }`}
           onMouseDown={handleMouseDown}
         >
           <div className="flex items-center gap-2">
-            <div className="flex gap-2">
-              <button
-                className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  // Could add close functionality
-                }}
-              />
-              <button
-                className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setIsMinimized(!isMinimized)
-                }}
-              />
-              <button
-                className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  // Could add maximize functionality
-                }}
-              />
-            </div>
-            <span className="text-sm text-gray-300 ml-2 font-mono">portfolio.terminal</span>
+            {!isMobile && (
+              <div className="flex gap-2">
+                <button
+                  className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                  }}
+                />
+                <button
+                  className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setIsMinimized(!isMinimized)
+                  }}
+                />
+                <button
+                  className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                  }}
+                />
+              </div>
+            )}
+            <span className={`text-gray-300 font-mono ${isMobile ? 'text-xs' : 'text-sm ml-2'}`}>portfolio.terminal</span>
           </div>
-          <div className="text-xs text-gray-500 font-mono">bash</div>
+          <div className={`text-gray-500 font-mono ${isMobile ? 'text-[10px]' : 'text-xs'}`}>bash</div>
         </div>
 
         {/* Terminal Content */}
         {!isMinimized && (
           <div
-            className="h-full overflow-y-auto font-mono text-sm p-4 cursor-text"
+            className={`h-full overflow-y-auto font-mono cursor-text ${
+              isMobile ? 'text-base px-4 py-4 pb-safe' : 'text-sm p-4'
+            }`}
             onClick={() => inputRef.current?.focus()}
-            style={{ height: 'calc(100% - 48px)' }}
+            style={{
+              height: isMobile ? `calc(100% - 40px - ${keyboardHeight}px)` : 'calc(100% - 48px)',
+            }}
           >
             <div
               className="space-y-4 transition-all duration-700 ease-out"
@@ -731,53 +796,87 @@ export function Terminal() {
               {/* Welcome Message with Typewriter */}
               {showContent && (
                 <div className="relative space-y-2">
-                  {/* Social Links - Top Right */}
-                  <div className="absolute top-0 right-0 flex gap-3 text-sm">
-                    <a
-                      href="/alex-resume.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-500 hover:text-green-400 transition-colors duration-150 flex items-center gap-1"
-                      title="Resume"
-                    >
-                      resume
-                      <span className="text-xs">↗</span>
-                    </a>
-                    <a
-                      href={SOCIAL_LINKS.github.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-500 hover:text-green-400 transition-colors duration-150 flex items-center gap-1"
-                      title="GitHub"
-                    >
-                      github
-                      <span className="text-xs">↗</span>
-                    </a>
-                    <a
-                      href={SOCIAL_LINKS.linkedin.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-gray-500 hover:text-green-400 transition-colors duration-150 flex items-center gap-1"
-                      title="LinkedIn"
-                    >
-                      linkedin
-                      <span className="text-xs">↗</span>
-                    </a>
-                  </div>
+                  {/* Social Links - Mobile: above ASCII art, Desktop: top right */}
+                  {isMobile ? (
+                    <div className="flex gap-3 text-xs mb-3 justify-center">
+                      <a
+                        href="/alex-resume.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-500 hover:text-green-400 active:text-green-300 transition-colors duration-150 flex items-center gap-1"
+                        title="Resume"
+                      >
+                        resume
+                        <span className="text-xs">↗</span>
+                      </a>
+                      <a
+                        href={SOCIAL_LINKS.github.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-500 hover:text-green-400 active:text-green-300 transition-colors duration-150 flex items-center gap-1"
+                        title="GitHub"
+                      >
+                        github
+                        <span className="text-xs">↗</span>
+                      </a>
+                      <a
+                        href={SOCIAL_LINKS.linkedin.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-500 hover:text-green-400 active:text-green-300 transition-colors duration-150 flex items-center gap-1"
+                        title="LinkedIn"
+                      >
+                        linkedin
+                        <span className="text-xs">↗</span>
+                      </a>
+                    </div>
+                  ) : (
+                    <div className="absolute top-0 right-0 flex gap-3 text-sm">
+                      <a
+                        href="/alex-resume.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-500 hover:text-green-400 transition-colors duration-150 flex items-center gap-1"
+                        title="Resume"
+                      >
+                        resume
+                        <span className="text-xs">↗</span>
+                      </a>
+                      <a
+                        href={SOCIAL_LINKS.github.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-500 hover:text-green-400 transition-colors duration-150 flex items-center gap-1"
+                        title="GitHub"
+                      >
+                        github
+                        <span className="text-xs">↗</span>
+                      </a>
+                      <a
+                        href={SOCIAL_LINKS.linkedin.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-gray-500 hover:text-green-400 transition-colors duration-150 flex items-center gap-1"
+                        title="LinkedIn"
+                      >
+                        linkedin
+                        <span className="text-xs">↗</span>
+                      </a>
+                    </div>
+                  )}
 
-                  <pre className="text-green-400">{ASCII_ART}</pre>
-                  <div className="text-gray-300 mt-4">
+                  <pre className={`text-green-400 ${isMobile ? 'text-[10px] leading-tight' : ''}`}>{ASCII_ART}</pre>
+                  <div className={`text-gray-300 mt-4 ${isMobile ? 'text-sm' : ''}`}>
                     {typedSubtitle}
-                    {/* {typedSubtitle.length < SUBTITLE_TEXT.length && (
-                      <span className="text-green-400">▊</span>
-                    )} */}
                   </div>
                   {typedSubtitle.length === SUBTITLE_TEXT.length && (
-                    <div className="text-gray-400 text-sm mt-2">
+                    <div className={`text-green-400 mt-2 ${isMobile ? 'text-sm' : ''}`}>
+                      {typedWelcome}
+                    </div>
+                  )}
+                  {typedWelcome.length === WELCOME_TEXT.length && (
+                    <div className={`text-gray-400 mt-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>
                       {typedHelp}
-                      {/* {typedHelp.length < HELP_TEXT.length && (
-                        <span className="text-green-400">▊</span>
-                      )} */}
                     </div>
                   )}
                 </div>
@@ -785,7 +884,7 @@ export function Terminal() {
 
               {/* Quick Command Buttons */}
               {showPrompt && !contactState && (
-                <div className="flex flex-wrap gap-3 my-4 pb-3 border-b border-gray-700/20 text-sm">
+                <div className={`flex flex-wrap my-4 pb-3 border-b border-gray-700/20 ${isMobile ? 'gap-2 text-xs' : 'gap-3 text-sm'}`}>
                   <span className="text-gray-500">$</span>
                   {['about', 'projects', 'experience', 'contact', 'help'].map((cmd) => (
                     <button
@@ -793,7 +892,9 @@ export function Terminal() {
                       onClick={() => {
                         void handleCommand(cmd)
                       }}
-                      className="text-gray-400 hover:text-green-400 transition-colors duration-150 underline decoration-dotted decoration-gray-600 hover:decoration-green-400 underline-offset-4"
+                      className={`text-gray-400 hover:text-green-400 active:text-green-300 transition-colors duration-150 underline decoration-dotted decoration-gray-600 hover:decoration-green-400 active:decoration-green-300 underline-offset-4 ${
+                        isMobile ? 'py-2 px-3 min-h-[44px] flex items-center' : ''
+                      }`}
                     >
                       {cmd}
                     </button>
@@ -840,6 +941,7 @@ export function Terminal() {
                         onChange={(e) => handleInputChange(e.target.value)}
                         onKeyDown={handlePromptKeyDown}
                         className="w-full bg-transparent outline-none text-gray-300 font-mono caret-green-400 relative z-10 resize-none"
+                        style={{ fontSize: isMobile ? '16px' : undefined }}
                         spellCheck={false}
                         autoComplete="off"
                         rows={Math.min(6, Math.max(1, input.split('\n').length))}
@@ -853,10 +955,11 @@ export function Terminal() {
                           onChange={(e) => handleInputChange(e.target.value)}
                           onKeyDown={handlePromptKeyDown}
                           className="w-full bg-transparent outline-none text-gray-300 font-mono caret-green-400 relative z-10"
+                          style={{ fontSize: isMobile ? '16px' : undefined }}
                           spellCheck={false}
                           autoComplete="off"
                         />
-                        {suggestion && (
+                        {suggestion && !isMobile && (
                           <div className="absolute left-0 top-0 pointer-events-none font-mono text-gray-300">
                             <span className="opacity-0">{input}</span>
                             <span className="text-gray-500/40">{suggestion.slice(input.length)}</span>
@@ -873,8 +976,8 @@ export function Terminal() {
           </div>
         )}
 
-        {/* Resize Handles - Edges */}
-        {!isMinimized && (
+        {/* Resize Handles - Edges (Desktop only) */}
+        {!isMinimized && !isMobile && (
           <>
             {/* Top edge */}
             <div
