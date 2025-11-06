@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
-import type { KeyboardEvent, MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent, ReactNode } from 'react'
+import type { KeyboardEvent, MouseEvent as ReactMouseEvent, ReactNode } from 'react'
 import { PERSONAL_INFO } from '@/lib/data/personal-info'
 import { SOCIAL_LINKS, EMAIL } from '@/lib/data/social-links'
 import { experiences } from '@/lib/data/experiences'
@@ -169,7 +169,7 @@ function getSocial() {
   return `
 Social Media:
 
-${Object.entries(SOCIAL_LINKS).map(([key, { label, href }]) =>
+${Object.entries(SOCIAL_LINKS).map(([, { label, href }]) =>
   `  ${label.padEnd(10)} → ${href}`
 ).join('\n')}
 `
@@ -191,7 +191,6 @@ export function Terminal() {
   const [resizeStart, setResizeStart] = useState({ x: 0, y: 0, width: 0, height: 0, posX: 0, posY: 0 })
   const [showWindow, setShowWindow] = useState(false)
   const [showContent, setShowContent] = useState(false)
-  const [showCursor, setShowCursor] = useState(true)
   const [typedWelcome, setTypedWelcome] = useState('')
   const [typedSubtitle, setTypedSubtitle] = useState('')
   const [typedHelp, setTypedHelp] = useState('')
@@ -303,14 +302,6 @@ export function Terminal() {
 
     return () => clearInterval(subtitleTimer)
   }, [showContent, isMobile])
-
-  // Cursor blink effect
-  useEffect(() => {
-    const blinkInterval = setInterval(() => {
-      setShowCursor(prev => !prev)
-    }, 530)
-    return () => clearInterval(blinkInterval)
-  }, [])
 
   useEffect(() => {
     if (!isMinimized) {
@@ -537,7 +528,7 @@ export function Terminal() {
     if (normalizedCommand === 'cancel' || normalizedCommand === 'exit' || normalizedCommand === 'quit') {
       pushSystem(
         <div className="text-gray-400">
-          Conversation cancelled. Type <span className="text-green-400">'contact'</span> again whenever you're ready.
+          Conversation cancelled. Type <span className="text-green-400">&apos;contact&apos;</span> again whenever you&apos;re ready.
         </div>
       )
       setContactState(null)
@@ -548,7 +539,7 @@ export function Terminal() {
       if (normalizedCommand === 'yes' || normalizedCommand === 'y') {
         setContactState(prev => (prev ? { ...prev, step: 'name' } : prev))
         pushSystem(
-          <div className="text-gray-300">Great! What's your name?</div>
+          <div className="text-gray-300">Great! What&apos;s your name?</div>
         )
       } else if (normalizedCommand === 'no' || normalizedCommand === 'n') {
         pushSystem(
@@ -560,7 +551,7 @@ export function Terminal() {
         setContactState(null)
       } else {
         pushSystem(
-          <div className="text-yellow-400">Please answer with 'yes' or 'no'.</div>
+          <div className="text-yellow-400">Please answer with &apos;yes&apos; or &apos;no&apos;.</div>
         )
       }
       return
@@ -577,7 +568,7 @@ export function Terminal() {
       setContactState(prev => (prev ? { ...prev, name: trimmed, step: 'email' } : prev))
       pushSystem(
         <div className="text-gray-300">
-          Nice to meet you, <span className="text-green-400">{trimmed}</span>! What's your email address?
+          Nice to meet you, <span className="text-green-400">{trimmed}</span>! What&apos;s your email address?
         </div>
       )
       return
@@ -609,7 +600,7 @@ export function Terminal() {
     if (step === 'message') {
       if (!trimmed) {
         pushSystem(
-          <div className="text-yellow-400">Please enter the message you'd like Alex to receive.</div>
+          <div className="text-yellow-400">Please enter the message you&apos;d like Alex to receive.</div>
         )
         return
       }
@@ -713,7 +704,7 @@ export function Terminal() {
           <div className="text-red-400">
             Command not found: {normalized}
             <br />
-            Type 'help' to see available commands
+            Type &apos;help&apos; to see available commands
           </div>
         )
     }
