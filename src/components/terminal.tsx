@@ -1,14 +1,15 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
+import type { KeyboardEvent, MouseEvent as ReactMouseEvent, ReactNode } from 'react'
 import { PERSONAL_INFO } from '@/lib/data/personal-info'
 import { SOCIAL_LINKS, EMAIL } from '@/lib/data/social-links'
 import { experiences } from '@/lib/data/experiences'
 import { submitContactMessage, type ContactMessageInput } from '@/lib/contact'
 
 type HistoryEntry =
-  | { type: 'command'; command: string; output?: React.ReactNode }
-  | { type: 'system'; message: React.ReactNode }
+  | { type: 'command'; command: string; output?: ReactNode }
+  | { type: 'system'; message: ReactNode }
 
 interface ContactFormState {
   step: 'prompt' | 'name' | 'email' | 'message' | 'complete'
@@ -198,12 +199,15 @@ export function Terminal() {
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
   const windowRef = useRef<HTMLDivElement>(null)
+  const assignInputRef = useCallback((element: HTMLInputElement | HTMLTextAreaElement | null) => {
+    inputRef.current = element
+  }, [])
 
-  function pushCommand(command: string, output?: React.ReactNode) {
+  function pushCommand(command: string, output?: ReactNode) {
     setHistory(prev => [...prev, { type: 'command', command, output }])
   }
 
-  function pushSystem(message: React.ReactNode) {
+  function pushSystem(message: ReactNode) {
     setHistory(prev => [...prev, { type: 'system', message }])
   }
 
@@ -371,7 +375,7 @@ export function Terminal() {
     }
   }, [isResizing, resizeStart, resizeDirection])
 
-  function handleMouseDown(e: React.MouseEvent<HTMLDivElement>) {
+  function handleMouseDown(e: ReactMouseEvent<HTMLDivElement>) {
     if (windowRef.current) {
       const rect = windowRef.current.getBoundingClientRect()
       setDragOffset({
@@ -382,7 +386,7 @@ export function Terminal() {
     }
   }
 
-  function handleResizeStart(e: React.MouseEvent, direction: string) {
+  function handleResizeStart(e: ReactMouseEvent, direction: string) {
     e.preventDefault()
     e.stopPropagation()
     setResizeDirection(direction)
@@ -427,24 +431,27 @@ export function Terminal() {
     return submitContactMessage(data)
   }
 
-  function handlePromptKeyDown(e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handlePromptKeyDown(e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) {
     if (e.key === 'Enter') {
       if (contactState?.step === 'message' && e.shiftKey) {
         e.preventDefault()
         const target = e.currentTarget
-        const start = target.selectionStart ?? input.length
-        const end = target.selectionEnd ?? input.length
-        const nextValue = `${input.slice(0, start)}\n${input.slice(end)}`
+        const valueLength = target.value.length
+        const start = target.selectionStart ?? valueLength
+        const end = target.selectionEnd ?? valueLength
+        setInput(prev => {
+          const nextValue = `${prev.slice(0, start)}\n${prev.slice(end)}`
 
-        setInput(nextValue)
+          requestAnimationFrame(() => {
+            const ref = inputRef.current
+            if (ref) {
+              const newPos = start + 1
+              ref.selectionStart = newPos
+              ref.selectionEnd = newPos
+            }
+          })
 
-        requestAnimationFrame(() => {
-          const ref = inputRef.current
-          if (ref) {
-            const newPos = start + 1
-            ref.selectionStart = newPos
-            ref.selectionEnd = newPos
-          }
+          return nextValue
         })
         return
       }
@@ -608,7 +615,7 @@ export function Terminal() {
       return
     }
 
-    let output: React.ReactNode
+    let output: ReactNode
 
     switch (normalized) {
       case 'help':
@@ -659,7 +666,7 @@ export function Terminal() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8 overflow-hidden">
+    <div className="min-h-screen p-8 overflow-hidden">
       <div
         ref={windowRef}
         className="fixed rounded-xl overflow-hidden shadow-2xl backdrop-blur-xl bg-black/80 border border-white/10 transition-all duration-500 ease-out"
@@ -726,6 +733,16 @@ export function Terminal() {
                 <div className="relative space-y-2">
                   {/* Social Links - Top Right */}
                   <div className="absolute top-0 right-0 flex gap-3 text-sm">
+                    <a
+                      href="/alex-resume.pdf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-500 hover:text-green-400 transition-colors duration-150 flex items-center gap-1"
+                      title="Resume"
+                    >
+                      resume
+                      <span className="text-xs">↗</span>
+                    </a>
                     <a
                       href={SOCIAL_LINKS.github.href}
                       target="_blank"
@@ -801,7 +818,7 @@ export function Terminal() {
                       <span className="text-white">:</span>
                       <span className="text-purple-400">~</span>
                       <span className="text-white">$</span>
-                      <span className="text-gray-300">{entry.command}</span>
+                      <span className="text-gray-300 whitespace-pre-wrap break-words">{entry.command}</span>
                     </div>
                     {entry.output && <div className="mt-1">{entry.output}</div>}
                   </div>
@@ -818,7 +835,7 @@ export function Terminal() {
                   <div className="flex-1 relative">
                     {contactState?.step === 'message' ? (
                       <textarea
-                        ref={inputRef as React.RefObject<HTMLTextAreaElement>}
+                        ref={assignInputRef}
                         value={input}
                         onChange={(e) => handleInputChange(e.target.value)}
                         onKeyDown={handlePromptKeyDown}
@@ -830,7 +847,7 @@ export function Terminal() {
                     ) : (
                       <>
                         <input
-                          ref={inputRef as React.RefObject<HTMLInputElement>}
+                          ref={assignInputRef}
                           type="text"
                           value={input}
                           onChange={(e) => handleInputChange(e.target.value)}
