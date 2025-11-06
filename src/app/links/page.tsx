@@ -83,7 +83,7 @@ const SHOWCASE_LINKS = [
   {
     title: "AI Educator",
     description: "Teaching AI concepts and tools to over 1.5 million monthly viewers across TikTok and Instagram",
-    href: "https://www.tiktok.com/@ai_with_alexan",
+    href: "https://www.instagram.com/alex_intelligence_/",
     icon: Star,
     gradient: "from-pink-500 to-purple-500",
     category: "Content Creation",

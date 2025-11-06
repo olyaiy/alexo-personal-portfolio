@@ -53,63 +53,44 @@ export function ContactForm() {
   }
 
   return (
-    <section className="mb-16">
-      <div className="mb-10">
-        <div className="flex items-center gap-4 mb-3">
-          <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent"></div>
-          <h2 className="text-[10px] font-medium text-white/50 uppercase tracking-[0.3em]">
-            Send a Message
-          </h2>
-          <div className="h-px flex-1 bg-gradient-to-l from-white/20 to-transparent"></div>
-        </div>
-      </div>
-
-      <form onSubmit={onSubmit} className="space-y-6">
-        <div className="space-y-2">
-          <label htmlFor="name" className="text-sm font-light text-white/60 tracking-wide">
-            Name
-          </label>
+    <section className="border-t border-white/5 pt-8">
+      <form onSubmit={onSubmit} className="space-y-4">
+        <div>
           <Input
             type="text"
             name="name"
             id="name"
             required
-            className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus-visible:ring-white/20 focus-visible:border-white/30"
-            placeholder="Your name"
+            className="bg-transparent border-white/5 text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:border-white/10 h-12"
+            placeholder="Name"
           />
         </div>
 
-        <div className="space-y-2">
-          <label htmlFor="email" className="text-sm font-light text-white/60 tracking-wide">
-            Email
-          </label>
+        <div>
           <Input
             type="email"
             name="email"
             id="email"
             required
-            className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus-visible:ring-white/20 focus-visible:border-white/30"
-            placeholder="your.email@example.com"
+            className="bg-transparent border-white/5 text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:border-white/10 h-12"
+            placeholder="Email"
           />
         </div>
 
-        <div className="space-y-2">
-          <label htmlFor="message" className="text-sm font-light text-white/60 tracking-wide">
-            Message
-          </label>
+        <div>
           <Textarea
             name="message"
             id="message"
             required
-            rows={5}
-            className="bg-white/5 border-white/10 text-white placeholder:text-white/30 focus-visible:ring-white/20 focus-visible:border-white/30 resize-none"
-            placeholder="Tell me about your project or just say hi..."
+            rows={4}
+            className="bg-transparent border-white/5 text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:border-white/10 resize-none"
+            placeholder="Message"
           />
         </div>
 
         {message && (
           <div
-            className={`text-sm font-light tracking-wide ${
+            className={`text-sm ${
               status === "success"
                 ? "text-emerald-400"
                 : status === "error"
@@ -124,8 +105,7 @@ export function ContactForm() {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/30 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-          size="lg"
+          className="w-full bg-white text-black hover:bg-white/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed h-12"
         >
           {isSubmitting ? (
             "Sending..."
