@@ -403,34 +403,6 @@ export function Terminal() {
       case 'clear':
         setHistory([])
         setInput('')
-        // Reset typing animation
-        setTypedSubtitle('')
-        setTypedHelp('')
-        setShowPrompt(false)
-        // Restart typing
-        setTimeout(() => {
-          let subtitleIndex = 0
-          const subtitleTimer = setInterval(() => {
-            if (subtitleIndex <= SUBTITLE_TEXT.length) {
-              setTypedSubtitle(SUBTITLE_TEXT.slice(0, subtitleIndex))
-              subtitleIndex++
-            } else {
-              clearInterval(subtitleTimer)
-              setTimeout(() => {
-                let helpIndex = 0
-                const helpTimer = setInterval(() => {
-                  if (helpIndex <= HELP_TEXT.length) {
-                    setTypedHelp(HELP_TEXT.slice(0, helpIndex))
-                    helpIndex++
-                  } else {
-                    clearInterval(helpTimer)
-                    setTimeout(() => setShowPrompt(true), 100)
-                  }
-                }, 10)
-              }, 100)
-            }
-          }, 10)
-        }, 100)
         return
       case '':
         return
