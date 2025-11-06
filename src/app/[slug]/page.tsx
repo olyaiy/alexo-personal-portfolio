@@ -14,14 +14,9 @@ const REDIRECT_MAP: Record<string, string> = {
   'x': SOCIAL_LINKS.twitter.href,
 }
 
-interface PageProps {
-  params: {
-    slug: string
-  }
-}
-
-export default function CatchAllRedirect({ params }: PageProps) {
-  const url = REDIRECT_MAP[params.slug.toLowerCase()]
+export default async function CatchAllRedirect({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const url = REDIRECT_MAP[slug.toLowerCase()]
 
   if (url) {
     redirect(url)
