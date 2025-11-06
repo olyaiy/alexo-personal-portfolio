@@ -76,11 +76,11 @@ function getExperience() {
     <div className="space-y-6">
       {workExperience.map((exp, i) => (
         <div key={i} className="border-l-2 border-green-500/30 pl-4">
-          <div className="text-green-400 font-bold">{exp.title}</div>
-          <div className="text-blue-400">{exp.company} | {exp.period}</div>
+          <div className="text-green-400 font-bold break-words">{exp.title}</div>
+          <div className="text-blue-400 break-words">{exp.company} | {exp.period}</div>
           <ul className="mt-2 space-y-1 text-gray-300">
             {exp.description.map((desc, j) => (
-              <li key={j} className="text-sm">→ {desc}</li>
+              <li key={j} className="text-sm break-words">→ {desc}</li>
             ))}
           </ul>
           {exp.link && (
@@ -88,7 +88,7 @@ function getExperience() {
               href={exp.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-cyan-400 hover:text-cyan-300 text-sm mt-2 inline-block"
+              className="text-cyan-400 hover:text-cyan-300 text-sm mt-2 inline-block break-all"
             >
               🔗 {exp.link}
             </a>
@@ -106,12 +106,12 @@ function getProjects() {
     <div className="space-y-6">
       {projects.map((proj, i) => (
         <div key={i} className="border-l-2 border-cyan-500/30 pl-4">
-          <div className="text-cyan-400 font-bold">{proj.title}</div>
-          {proj.badge && <span className="text-yellow-400 text-sm">⭐ {proj.badge}</span>}
-          <div className="text-gray-400 text-sm">{proj.period}</div>
+          <div className="text-cyan-400 font-bold break-words">{proj.title}</div>
+          {proj.badge && <span className="text-yellow-400 text-sm break-words">⭐ {proj.badge}</span>}
+          <div className="text-gray-400 text-sm break-words">{proj.period}</div>
           <ul className="mt-2 space-y-1 text-gray-300">
             {proj.description.map((desc, j) => (
-              <li key={j} className="text-sm">→ {desc}</li>
+              <li key={j} className="text-sm break-words">→ {desc}</li>
             ))}
           </ul>
           <div className="flex flex-wrap gap-2 mt-2">
@@ -124,7 +124,7 @@ function getProjects() {
               href={proj.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-cyan-400 hover:text-cyan-300 text-sm mt-2 inline-block"
+              className="text-cyan-400 hover:text-cyan-300 text-sm mt-2 inline-block break-all"
             >
               🔗 {proj.link}
             </a>
