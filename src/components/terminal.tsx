@@ -70,7 +70,7 @@ ${Array.from(allTags).sort().map(skill => `  • ${skill}`).join('\n')}
 }
 
 function getExperience() {
-  const workExperience = experiences.filter(exp => exp.type === 'experience')
+  const workExperience = experiences.filter(exp => exp.type === 'experience').reverse()
 
   return (
     <div className="space-y-6">
@@ -100,7 +100,7 @@ function getExperience() {
 }
 
 function getProjects() {
-  const projects = experiences.filter(exp => exp.type === 'project')
+  const projects = experiences.filter(exp => exp.type === 'project').reverse()
 
   return (
     <div className="space-y-6">

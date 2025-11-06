@@ -268,7 +268,7 @@ export default function LinksPage() {
         {/* Footer */}
         <footer className="mt-16 pt-6 border-t border-white/5 text-center">
           <p className="text-xs text-white/30">
-            Built with Next.js, TypeScript & Tailwind CSS
+            Made with ❤️ in Vancouver, BC
           </p>
         </footer>
       </div>
