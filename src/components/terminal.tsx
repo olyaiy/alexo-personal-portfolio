@@ -164,9 +164,12 @@ ${Object.entries(SOCIAL_LINKS).map(([key, { label, href }]) =>
 `
 }
 
+const AVAILABLE_COMMANDS = ['about', 'skills', 'experience', 'projects', 'education', 'contact', 'social', 'clear', 'help']
+
 export function Terminal() {
   const [history, setHistory] = useState<CommandOutput[]>([])
   const [input, setInput] = useState('')
+  const [suggestion, setSuggestion] = useState('')
   const [isMinimized, setIsMinimized] = useState(false)
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [size, setSize] = useState({ width: 900, height: 600 })
@@ -371,6 +374,27 @@ export function Terminal() {
     setIsResizing(true)
   }
 
+  function handleInputChange(value: string) {
+    setInput(value)
+
+    // Find matching command for autocomplete
+    if (value.length > 0) {
+      const match = AVAILABLE_COMMANDS.find(cmd =>
+        cmd.startsWith(value.toLowerCase()) && cmd !== value.toLowerCase()
+      )
+      setSuggestion(match || '')
+    } else {
+      setSuggestion('')
+    }
+  }
+
+  function acceptSuggestion() {
+    if (suggestion) {
+      setInput(suggestion)
+      setSuggestion('')
+    }
+  }
+
   function handleCommand(cmd: string) {
     const trimmedCmd = cmd.trim().toLowerCase()
     let output: React.ReactNode
@@ -403,6 +427,7 @@ export function Terminal() {
       case 'clear':
         setHistory([])
         setInput('')
+        setSuggestion('')
         return
       case '':
         return
@@ -418,6 +443,7 @@ export function Terminal() {
 
     setHistory(prev => [...prev, { command: cmd, output }])
     setInput('')
+    setSuggestion('')
   }
 
   return (
@@ -567,20 +593,33 @@ export function Terminal() {
                   <span className="text-white">:</span>
                   <span className="text-purple-400">~</span>
                   <span className="text-white">$</span>
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        handleCommand(input)
-                      }
-                    }}
-                    className="flex-1 bg-transparent outline-none text-gray-300 font-mono caret-green-400"
-                    spellCheck={false}
-                    autoComplete="off"
-                  />
+                  <div className="flex-1 relative">
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      value={input}
+                      onChange={(e) => handleInputChange(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          handleCommand(input)
+                        } else if (e.key === 'Tab' || e.key === 'ArrowRight') {
+                          if (suggestion) {
+                            e.preventDefault()
+                            acceptSuggestion()
+                          }
+                        }
+                      }}
+                      className="w-full bg-transparent outline-none text-gray-300 font-mono caret-green-400 relative z-10"
+                      spellCheck={false}
+                      autoComplete="off"
+                    />
+                    {suggestion && (
+                      <div className="absolute left-0 top-0 pointer-events-none font-mono text-gray-300">
+                        <span className="opacity-0">{input}</span>
+                        <span className="text-gray-500/40">{suggestion.slice(input.length)}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
 
