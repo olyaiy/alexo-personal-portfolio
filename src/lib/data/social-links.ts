@@ -27,5 +27,5 @@ export const SOCIAL_LINKS: Record<string, SocialLink> = {
   }
 } as const
 
-export const EMAIL = "emailalexan@protonmail.com"
+export const EMAIL = "hi@alexo.ca"
 export const RESUME_PATH = "/alex-resume.pdf"

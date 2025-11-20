@@ -223,7 +223,7 @@ export default function LinksPage() {
             ))}
 
             <a
-              href="mailto:emailalexan@protonmail.com"
+              href="mailto:hi@alexo.ca"
               className="group block py-4 border-b border-white/5 hover:border-white/10 transition-colors"
             >
               <div className="flex items-start justify-between gap-4">
@@ -232,7 +232,7 @@ export default function LinksPage() {
                     Email
                   </h3>
                   <p className="text-sm text-white/40">
-                    emailalexan@protonmail.com
+                    hi@alexo.ca
                   </p>
                 </div>
                 <ArrowUpRight className="h-4 w-4 text-white/30 group-hover:text-white/50 transition-colors flex-shrink-0 mt-1" />

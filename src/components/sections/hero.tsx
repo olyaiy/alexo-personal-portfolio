@@ -138,7 +138,7 @@ export function Hero() {
                   View Projects
                 </Button>
               </Link>
-              <a href="mailto:emailalexan@protonmail.com" className="w-full sm:w-auto">
+              <a href="mailto:hi@alexo.ca" className="w-full sm:w-auto">
                 <Button 
                   size="default" 
                   variant="secondary"
