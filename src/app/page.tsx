@@ -29,6 +29,7 @@ export default function Home() {
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_0%,rgba(255,100,0,0.05),transparent_50%)]" />
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full" />
+        <div className="grain-overlay opacity-20" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-24">
@@ -39,8 +40,8 @@ export default function Home() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="flex justify-between items-center mb-24 md:mb-32"
         >
-          <div className="text-xl font-bold tracking-tighter">
-            ALEX<span className="text-primary">.</span>
+          <div className="text-xl font-bold tracking-tighter font-serif italic">
+            ALEX<span className="text-primary not-italic">.</span>
           </div>
           <nav className="hidden md:flex gap-8 text-sm font-medium text-muted-foreground">
             <Link href="#about" className="hover:text-primary transition-colors">ABOUT</Link>
@@ -55,110 +56,90 @@ export default function Home() {
           </Link>
         </motion.header>
 
-        {/* Hero Section */}
-        {/* Hero Section - Bento Grid */}
+        {/* Hero Section - Editorial Split */}
         <motion.section
           variants={container}
           initial="hidden"
           animate="show"
-          className="mb-32 md:mb-48"
+          className="mb-32 md:mb-48 flex flex-col md:flex-row gap-12 md:gap-24 items-center"
         >
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
-            {/* Name Card - Top Left */}
-            <motion.div
-              variants={item}
-              className="col-span-1 md:col-span-8 bg-secondary/20 rounded-3xl p-8 md:p-12 flex flex-col justify-between min-h-[300px] md:min-h-[400px] border border-white/5 relative overflow-hidden group"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest">Available for work</span>
-                </div>
-                <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.9]">
-                  ALEX <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-600">OLYAIY</span>
-                </h1>
-              </div>
-
-              <div className="relative z-10 max-w-md mt-8">
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  Building digital products & sharing the journey.
-                  Co-founder of <span className="text-foreground font-medium">High Tide Digital</span>.
-                </p>
-              </div>
+          {/* Text Content */}
+          <div className="flex-1 space-y-8 md:space-y-12 relative z-10">
+            <motion.div variants={item}>
+              <h1 className="text-8xl md:text-[10rem] leading-[0.8] font-serif italic text-muted-foreground/20 select-none absolute -top-20 -left-10 -z-10 blur-sm">
+                Hello
+              </h1>
+              <h2 className="text-6xl md:text-8xl font-bold tracking-tighter leading-[0.9]">
+                I'm <span className="font-serif italic text-primary">Alex</span>. <br />
+                <span className="text-4xl md:text-6xl font-light text-muted-foreground">
+                  I build for the web.
+                </span>
+              </h2>
             </motion.div>
 
-            {/* Image Card - Right Column */}
-            <motion.div
-              variants={item}
-              className="col-span-1 md:col-span-4 md:row-span-2 bg-secondary/20 rounded-3xl relative overflow-hidden min-h-[400px] md:min-h-full border border-white/5 group"
-            >
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 z-10" />
-
-              {/* Placeholder for Image */}
-              <div className="absolute inset-0 bg-secondary/50 flex items-center justify-center">
-                <div className="text-center space-y-2 opacity-50">
-                  <div className="w-16 h-16 border-2 border-dashed border-foreground/20 rounded-full mx-auto flex items-center justify-center">
-                    <span className="text-2xl">📸</span>
-                  </div>
-                  <p className="font-mono text-xs uppercase tracking-widest">Your Image Here</p>
-                </div>
-              </div>
-
-              {/* Floating Label */}
-              <div className="absolute bottom-6 left-6 z-20">
-                <div className="bg-background/80 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
-                  <span className="font-mono text-xs font-bold">VANCOUVER, BC</span>
-                </div>
-              </div>
+            <motion.div variants={item} className="space-y-6 max-w-lg">
+              <p className="text-xl md:text-2xl leading-relaxed font-light">
+                A <span className="font-medium text-foreground">Full Stack Developer</span> and <span className="font-medium text-foreground">Content Creator</span> based in Vancouver, BC.
+              </p>
+              <p className="text-muted-foreground leading-relaxed">
+                I combine technical expertise with storytelling to build digital products that connect with people. Currently studying CS at UBC and building High Tide Digital.
+              </p>
             </motion.div>
 
-            {/* Stats/Bio Card - Bottom Left */}
-            <motion.div
-              variants={item}
-              className="col-span-1 md:col-span-5 bg-secondary/20 rounded-3xl p-8 border border-white/5 flex flex-col justify-center relative overflow-hidden group"
-            >
-              <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative z-10 flex justify-between items-end">
-                <div className="space-y-1">
-                  <span className="text-4xl md:text-5xl font-bold tabular-nums">1.5M+</span>
-                  <p className="font-mono text-xs text-muted-foreground uppercase tracking-widest">Monthly Views</p>
-                </div>
-                <div className="flex gap-2">
-                  <Link href="https://tiktok.com" target="_blank" className="p-3 bg-background/50 rounded-full hover:bg-background hover:text-primary transition-colors">
-                    <ArrowUpRight className="w-5 h-5" />
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Action Card - Bottom Center */}
-            <motion.div
-              variants={item}
-              className="col-span-1 md:col-span-3"
-            >
-              <Link
-                href="#work"
-                className="block h-full bg-primary text-primary-foreground rounded-3xl p-8 flex flex-col justify-between group hover:bg-primary/90 transition-colors relative overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 p-8 opacity-50 group-hover:opacity-100 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all">
-                  <ArrowUpRight className="w-8 h-8" />
-                </div>
-                <div className="mt-auto">
-                  <span className="font-mono text-xs uppercase tracking-widest opacity-80">Portfolio</span>
-                  <p className="text-2xl font-bold">View Work</p>
-                </div>
+            <motion.div variants={item} className="flex items-center gap-8">
+              <Link href="#work" className="group flex items-center gap-2 text-lg font-medium hover:text-primary transition-colors">
+                View Projects
+                <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </Link>
+              <div className="h-px w-12 bg-border" />
+              <div className="flex gap-4">
+                <Link href="https://github.com" target="_blank" className="hover:text-primary transition-colors">
+                  <Github className="w-5 h-5" />
+                </Link>
+                <Link href="https://linkedin.com" target="_blank" className="hover:text-primary transition-colors">
+                  <Linkedin className="w-5 h-5" />
+                </Link>
+              </div>
             </motion.div>
           </div>
+
+          {/* Visual */}
+          <motion.div variants={item} className="flex-1 w-full relative">
+            <div className="relative aspect-[3/4] w-full max-w-md mx-auto md:ml-auto">
+              {/* Decorative Elements */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-orange-500/10 rounded-full blur-3xl" />
+
+              {/* Image Container */}
+              <div className="relative h-full w-full overflow-hidden rounded-sm border border-white/5 bg-secondary/20">
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-transparent" />
+
+                {/* Placeholder */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground/30">
+                  <div className="w-20 h-20 border border-dashed border-current rounded-full flex items-center justify-center mb-4">
+                    <span className="text-3xl">📸</span>
+                  </div>
+                  <span className="font-mono text-xs uppercase tracking-widest">Portrait</span>
+                </div>
+              </div>
+
+              {/* Floating Badge */}
+              <div className="absolute bottom-8 -left-8 bg-background/80 backdrop-blur-md border border-white/10 p-6 rounded-sm shadow-2xl max-w-[200px]">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Community</span>
+                </div>
+                <p className="text-3xl font-serif italic font-bold text-foreground">1.5M+</p>
+                <p className="text-xs text-muted-foreground mt-1">Monthly views across social platforms</p>
+              </div>
+            </div>
+          </motion.div>
         </motion.section>
 
         {/* About / Stack */}
         <section id="about" className="mb-32 grid grid-cols-1 md:grid-cols-12 gap-12">
           <div className="md:col-span-4">
-            <h2 className="text-3xl font-bold mb-6 sticky top-24">ABOUT ME</h2>
+            <h2 className="text-3xl font-bold mb-6 sticky top-24 font-serif italic">About Me</h2>
           </div>
           <div className="md:col-span-8 space-y-12">
             <div className="prose prose-invert prose-lg">
@@ -203,7 +184,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="flex items-end justify-between mb-24 border-b border-border/40 pb-6"
           >
-            <h2 className="text-4xl md:text-6xl font-bold tracking-tighter">SELECTED WORK</h2>
+            <h2 className="text-4xl md:text-6xl font-bold tracking-tighter font-serif italic">Selected Work</h2>
             <span className="hidden md:block font-mono text-primary/60">01 — 04</span>
           </motion.div>
 

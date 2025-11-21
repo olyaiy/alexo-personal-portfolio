@@ -15,6 +15,13 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
+import { Playfair_Display } from "next/font/google";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+});
+
 export const metadata: Metadata = {
   title: "Alex Olyaiy | Developer",
   description: "Full-stack AI developer and computer science student at UBC. Co-founder of High Tide Digital, specializing in modern web development.",
@@ -47,7 +54,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex min-h-screen flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased flex min-h-screen flex-col`}
       >
         <ThemeProvider
           attribute="class"
