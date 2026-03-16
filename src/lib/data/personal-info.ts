@@ -17,10 +17,11 @@ export const PERSONAL_INFO = {
 export const SHOWCASE_PROJECTS = [
   {
     title: "AI Educator",
-    description: "Teaching AI concepts and tools to over 1.5 million monthly viewers across TikTok and Instagram",
-    href: "https://www.tiktok.com/@ai_with_alexan",
+    description: "Breaking down AI tools, models, and workflows for 1.5M+ monthly viewers on TikTok and Instagram.",
+    href: "https://www.tiktok.com/@alex_intelligence",
     category: "Content Creation",
-    metrics: "1.5M+ Monthly Views",
+    metrics: "Partnered with Cursor, Replit, Kimi AI",
+    partners: ["Cursor", "Replit", "Kimi AI"],
     featured: true
   },
   {
@@ -29,6 +30,7 @@ export const SHOWCASE_PROJECTS = [
     href: "https://www.hightidedigital.ca",
     category: "Business",
     metrics: "Founded 2024",
+    partners: [],
     featured: true
   },
   {
@@ -37,6 +39,7 @@ export const SHOWCASE_PROJECTS = [
     href: "https://agentvendor.ca/",
     category: "AI Project",
     metrics: "React • Next.js",
+    partners: [],
     featured: false
   },
   {
@@ -45,6 +48,7 @@ export const SHOWCASE_PROJECTS = [
     href: "https://resumelm.ca/",
     category: "AI Tool",
     metrics: "TypeScript • AI",
+    partners: [],
     featured: false
   }
 ] as const

@@ -48,33 +48,36 @@ export function ContactForm() {
     }
   }
 
+  const inputClass =
+    "w-full bg-transparent text-[15px] text-[#f5f5f7] placeholder:text-[#48484a] border-0 border-b border-[#222] py-3 outline-none focus:border-[#86868b] transition-colors duration-200"
+
   return (
-    <form onSubmit={onSubmit} className="space-y-3">
+    <form onSubmit={onSubmit} className="space-y-2">
       <input
         type="text"
         name="name"
         required
         placeholder="Name"
-        className="w-full h-11 px-4 rounded-xl bg-[#2c2c2e] text-[15px] text-[#f5f5f7] placeholder:text-[#636366] border-0 outline-none focus:ring-2 focus:ring-[#0a84ff] transition-shadow duration-200"
+        className={inputClass}
       />
       <input
         type="email"
         name="email"
         required
         placeholder="Email"
-        className="w-full h-11 px-4 rounded-xl bg-[#2c2c2e] text-[15px] text-[#f5f5f7] placeholder:text-[#636366] border-0 outline-none focus:ring-2 focus:ring-[#0a84ff] transition-shadow duration-200"
+        className={inputClass}
       />
       <textarea
         name="message"
         required
-        rows={4}
+        rows={3}
         placeholder="Message"
-        className="w-full px-4 py-3 rounded-xl bg-[#2c2c2e] text-[15px] text-[#f5f5f7] placeholder:text-[#636366] border-0 outline-none focus:ring-2 focus:ring-[#0a84ff] resize-none transition-shadow duration-200"
+        className={`${inputClass} resize-none`}
       />
 
       {message && (
         <p
-          className={`text-[13px] ${
+          className={`text-[13px] pt-2 ${
             status === "success"
               ? "text-[#30d158]"
               : status === "error"
@@ -86,13 +89,15 @@ export function ContactForm() {
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="w-full h-11 rounded-xl bg-[#0a84ff] text-[15px] font-medium text-white hover:bg-[#0a84ff]/90 active:bg-[#0a84ff]/80 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-150"
-      >
-        {isSubmitting ? "Sending..." : "Send Message"}
-      </button>
+      <div className="pt-4">
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full h-11 rounded-full bg-[#f5f5f7] text-[15px] font-medium text-black hover:bg-[#e8e8ed] active:bg-[#d1d1d6] disabled:opacity-40 disabled:cursor-not-allowed transition-colors duration-150"
+        >
+          {isSubmitting ? "Sending..." : "Send Message"}
+        </button>
+      </div>
     </form>
   );
 }

@@ -1,10 +1,45 @@
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowUpRight } from "lucide-react"
+import { ChevronRight } from "lucide-react"
 import { PERSONAL_INFO, SHOWCASE_PROJECTS } from "@/lib/data/personal-info"
 import { EMAIL, RESUME_PATH } from "@/lib/data/social-links"
 import { ContactForm } from "@/components/contact-form"
 import { SocialIcons } from "@/components/social-icons"
+
+
+
+const PARTNER_LOGOS: Record<string, React.ReactNode> = {
+  "Cursor": (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 text-[#636366]">
+      <path d="M11.503.131 1.891 5.678a.84.84 0 0 0-.42.726v11.188c0 .3.162.575.42.724l9.609 5.55a1 1 0 0 0 .998 0l9.61-5.55a.84.84 0 0 0 .42-.724V6.404a.84.84 0 0 0-.42-.726L12.497.131a1.01 1.01 0 0 0-.996 0M2.657 6.338h18.55c.263 0 .43.287.297.515L12.23 22.918c-.062.107-.229.064-.229-.06V12.335a.59.59 0 0 0-.295-.51l-9.11-5.257c-.109-.063-.064-.23.061-.23" />
+    </svg>
+  ),
+  "Replit": (
+    <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 text-[#636366]">
+      <path d="M2 1.5A1.5 1.5 0 0 1 3.5 0h7A1.5 1.5 0 0 1 12 1.5V8H3.5A1.5 1.5 0 0 1 2 6.5ZM12 8h8.5A1.5 1.5 0 0 1 22 9.5v5a1.5 1.5 0 0 1-1.5 1.5H12ZM2 17.5A1.5 1.5 0 0 1 3.5 16H12v6.5a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 2 22.5Z" />
+    </svg>
+  ),
+  "Kimi AI": (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="https://statics.moonshot.cn/kimi-web-seo/favicon.ico"
+      alt="Kimi AI"
+      width={16}
+      height={16}
+      className="h-4 w-4 rounded-sm opacity-70"
+    />
+  ),
+}
+
+function PartnerLogo({ name }: { name: string }) {
+  const logo = PARTNER_LOGOS[name]
+  return (
+    <span className="flex items-center gap-1.5">
+      {logo}
+      <span className="text-[12px] font-medium text-[#636366]">{name}</span>
+    </span>
+  )
+}
 
 export default function Home() {
   return (
@@ -54,87 +89,85 @@ export default function Home() {
         </section>
 
         {/* Projects */}
-        <section className="mb-16">
-          <h2 className="text-[13px] font-medium text-[#86868b] uppercase tracking-wider mb-6">
+        <section className="mb-20">
+          <h2 className="text-[13px] font-medium text-[#86868b] uppercase tracking-wider mb-8">
             Projects
           </h2>
 
-          <div className="rounded-2xl bg-[#1c1c1e] overflow-hidden divide-y divide-[#38383a]">
-            {SHOWCASE_PROJECTS.map(({ title, description, href, metrics }) => (
+          <div>
+            {SHOWCASE_PROJECTS.map(({ title, description, href, metrics, partners, featured }) => (
               <Link
                 key={title}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center justify-between gap-4 px-5 py-4 hover:bg-[#2c2c2e] transition-colors duration-150"
+                className={`group flex items-center justify-between gap-4 border-b border-[#222] transition-colors duration-150 ${
+                  featured ? "py-6" : "py-5"
+                }`}
               >
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-[15px] font-medium text-[#f5f5f7] group-hover:text-white transition-colors duration-150">
+                  <h3 className={`font-medium text-[#f5f5f7] ${
+                    featured ? "text-[19px]" : "text-[15px]"
+                  }`}>
                     {title}
                   </h3>
-                  <p className="text-[13px] text-[#86868b] mt-0.5 leading-relaxed">
+                  <p className={`text-[#86868b] leading-relaxed ${
+                    featured ? "text-[14px] mt-1.5" : "text-[13px] mt-1"
+                  }`}>
                     {description}
                   </p>
-                  {metrics && (
-                    <p className="text-[12px] text-[#48484a] mt-1">
+                  {partners && partners.length > 0 && (
+                    <div className="flex items-center gap-3 mt-3 flex-wrap">
+                      <span className="text-[11px] text-[#3a3a3c] uppercase tracking-wider">
+                        Partnered with
+                      </span>
+                      <div className="flex items-center gap-3">
+                        {partners.map((partner) => (
+                          <PartnerLogo key={partner} name={partner} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {(!partners || partners.length === 0) && metrics && (
+                    <p className={`text-[#48484a] ${
+                      featured ? "text-[13px] mt-2" : "text-[12px] mt-1.5"
+                    }`}>
                       {metrics}
                     </p>
                   )}
                 </div>
-                <ArrowUpRight className="h-4 w-4 text-[#48484a] group-hover:text-[#86868b] transition-colors duration-150 flex-shrink-0" />
+                <ChevronRight className="h-4 w-4 text-[#48484a] flex-shrink-0" />
               </Link>
             ))}
           </div>
-        </section>
 
-        {/* Quick Links */}
-        <section className="mb-16">
-          <h2 className="text-[13px] font-medium text-[#86868b] uppercase tracking-wider mb-6">
-            Connect
-          </h2>
-
-          <div className="rounded-2xl bg-[#1c1c1e] overflow-hidden divide-y divide-[#38383a]">
-            {/* Email */}
+          {/* Quick links */}
+          <div className="flex items-center gap-3 mt-8">
             <a
               href={`mailto:${EMAIL}`}
-              className="group flex items-center justify-between gap-4 px-5 py-4 hover:bg-[#2c2c2e] transition-colors duration-150"
+              className="text-[13px] text-[#86868b] hover:text-[#f5f5f7] transition-colors duration-150"
             >
-              <div className="flex-1 min-w-0">
-                <h3 className="text-[15px] font-medium text-[#f5f5f7]">
-                  Email
-                </h3>
-                <p className="text-[13px] text-[#86868b] mt-0.5">{EMAIL}</p>
-              </div>
-              <ArrowUpRight className="h-4 w-4 text-[#48484a] group-hover:text-[#86868b] transition-colors duration-150 flex-shrink-0" />
+              {EMAIL}
             </a>
-
-            {/* Resume */}
+            <span className="text-[#38383a]">/</span>
             <a
               href={RESUME_PATH}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-between gap-4 px-5 py-4 hover:bg-[#2c2c2e] transition-colors duration-150"
+              className="text-[13px] text-[#86868b] hover:text-[#f5f5f7] transition-colors duration-150"
             >
-              <div className="flex-1 min-w-0">
-                <h3 className="text-[15px] font-medium text-[#f5f5f7]">
-                  Resume
-                </h3>
-                <p className="text-[13px] text-[#86868b] mt-0.5">View my experience &amp; skills</p>
-              </div>
-              <ArrowUpRight className="h-4 w-4 text-[#48484a] group-hover:text-[#86868b] transition-colors duration-150 flex-shrink-0" />
+              Resume
             </a>
           </div>
         </section>
 
         {/* Contact */}
-        <section className="mb-16">
-          <h2 className="text-[13px] font-medium text-[#86868b] uppercase tracking-wider mb-6">
+        <section className="mb-20">
+          <h2 className="text-[13px] font-medium text-[#86868b] uppercase tracking-wider mb-8">
             Send a message
           </h2>
 
-          <div className="rounded-2xl bg-[#1c1c1e] p-5">
-            <ContactForm />
-          </div>
+          <ContactForm />
         </section>
 
         {/* Footer */}
