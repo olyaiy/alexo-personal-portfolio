@@ -29,6 +29,26 @@ const PARTNER_LOGOS: Record<string, React.ReactNode> = {
       className="h-4 w-4 rounded-sm opacity-70"
     />
   ),
+  "TestSprite": (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="https://www.testsprite.com/image/favicon-dark.png"
+      alt="TestSprite"
+      width={16}
+      height={16}
+      className="h-4 w-4 rounded-sm opacity-70"
+    />
+  ),
+  "Vibe Code": (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="https://pub-67eda34f2fee48b4bf83b0147e740c6b.r2.dev/vibe-icon-transparent.png"
+      alt="Vibe Code"
+      width={16}
+      height={16}
+      className="h-4 w-4 rounded-sm opacity-70"
+    />
+  ),
 }
 
 function PartnerLogo({ name }: { name: string }) {
@@ -36,7 +56,7 @@ function PartnerLogo({ name }: { name: string }) {
   return (
     <span className="flex items-center gap-1.5">
       {logo}
-      <span className="text-[12px] font-medium text-[#636366]">{name}</span>
+      <span className="text-[13px] text-[#636366]">{name}</span>
     </span>
   )
 }
@@ -52,8 +72,10 @@ export default function Home() {
             hi 👋🏽 I&apos;m alex
           </h1>
           <p className="text-lg md:text-xl text-[#86868b] leading-relaxed">
-            Engineer &amp; AI Educator.{" "}
-            <span className="text-[#a1a1a6]">Building software and teaching AI to 1.5M people.</span>
+            Software Engineer. Content Creator. AI Educator.
+          </p>
+          <p className="text-base text-[#48484a] mt-2">
+            Building software and teaching AI to 1.5M people.
           </p>
 
           <SocialIcons />
@@ -117,11 +139,11 @@ export default function Home() {
                     {description}
                   </p>
                   {partners && partners.length > 0 && (
-                    <div className="flex items-center gap-3 mt-3 flex-wrap">
-                      <span className="text-[11px] text-[#3a3a3c] uppercase tracking-wider">
-                        Partnered with
-                      </span>
-                      <div className="flex items-center gap-3">
+                    <div className="mt-4">
+                      <p className="text-[10px] text-[#3a3a3c] uppercase tracking-widest mb-2">
+                        Brands I&apos;ve worked with
+                      </p>
+                      <div className="flex items-center gap-4">
                         {partners.map((partner) => (
                           <PartnerLogo key={partner} name={partner} />
                         ))}

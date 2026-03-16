@@ -21,7 +21,7 @@ export const SHOWCASE_PROJECTS = [
     href: "https://www.tiktok.com/@alex_intelligence",
     category: "Content Creation",
     metrics: "Partnered with Cursor, Replit, Kimi AI",
-    partners: ["Cursor", "Replit", "Kimi AI"],
+    partners: ["Cursor", "Replit", "Kimi AI", "TestSprite", "Vibe Code"],
     featured: true
   },
   {
