@@ -2,8 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { ChevronRight } from "lucide-react"
 import { PERSONAL_INFO, SHOWCASE_PROJECTS } from "@/lib/data/personal-info"
-import { EMAIL, RESUME_PATH } from "@/lib/data/social-links"
-import { ContactForm } from "@/components/contact-form"
+import { EMAIL, RESUME_PATH, SOCIAL_LINKS } from "@/lib/data/social-links"
 import { SocialIcons } from "@/components/social-icons"
 
 
@@ -68,45 +67,29 @@ export default function Home() {
 
         {/* Hero */}
         <section className="mb-14">
-          <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-[#f5f5f7] mb-4">
-            hi 👋🏽 I&apos;m alex
-          </h1>
-          <p className="text-lg md:text-xl text-[#86868b] leading-relaxed">
-            Software Engineer. Content Creator. AI Educator.
-          </p>
-          <p className="text-base text-[#48484a] mt-2">
-            Building software and teaching AI to 1.5M people.
-          </p>
-
-          <SocialIcons />
-        </section>
-
-        {/* Photos */}
-        <section className="mb-16">
-          <div className="flex items-end justify-center -space-x-4 -mx-6">
-            {[
-              { rotate: -4 },
-              { rotate: -1 },
-              { rotate:  2 },
-              { rotate:  5 },
-            ].map(({ rotate }, i) => (
-              <div
-                key={i}
-                className="photo-card w-[30%] flex-shrink-0"
-                style={{ "--rotate": `${rotate}deg` } as React.CSSProperties}
-              >
-                <div className="relative aspect-[3/4] rounded-xl overflow-hidden">
-                  <Image
-                    src={PERSONAL_INFO.profileImage}
-                    alt={`${PERSONAL_INFO.name} photo ${i + 1}`}
-                    fill
-                    priority={i < 2}
-                    sizes="30vw"
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-            ))}
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex-1">
+              <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-[#f5f5f7] mb-4">
+                hi 👋🏽 I&apos;m alex
+              </h1>
+              <p className="text-lg md:text-xl text-[#86868b] leading-relaxed">
+                Software Engineer. Content Creator. AI Educator.
+              </p>
+              <p className="text-base text-[#48484a] mt-2">
+                Building software and teaching AI to 1.5M people.
+              </p>
+              <SocialIcons />
+            </div>
+            <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden ring-1 ring-white/10 flex-shrink-0">
+              <Image
+                src={PERSONAL_INFO.profileImage}
+                alt={PERSONAL_INFO.name}
+                fill
+                priority
+                sizes="96px"
+                className="object-cover scale-110"
+              />
+            </div>
           </div>
         </section>
 
@@ -186,10 +169,36 @@ export default function Home() {
         {/* Contact */}
         <section className="mb-20">
           <h2 className="text-[13px] font-medium text-[#86868b] uppercase tracking-wider mb-8">
-            Send a message
+            Connect
           </h2>
 
-          <ContactForm />
+          <div className="space-y-2">
+            <a
+              href={`mailto:${EMAIL}`}
+              className="block text-[14px] text-[#86868b] hover:text-[#f5f5f7] transition-colors duration-150"
+            >
+              {EMAIL}
+            </a>
+            {Object.values(SOCIAL_LINKS).map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-[14px] text-[#86868b] hover:text-[#f5f5f7] transition-colors duration-150"
+              >
+                {link.label} — {link.username}
+              </a>
+            ))}
+            <a
+              href={RESUME_PATH}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-[14px] text-[#86868b] hover:text-[#f5f5f7] transition-colors duration-150 pt-2 border-t border-[#222] mt-4"
+            >
+              Resume
+            </a>
+          </div>
         </section>
 
         {/* Footer */}

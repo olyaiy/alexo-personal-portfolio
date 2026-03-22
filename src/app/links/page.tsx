@@ -91,26 +91,6 @@ const SHOWCASE_LINKS = [
     metrics: "1.5M+ Monthly Views"
   },
   {
-    title: "High Tide Digital",
-    description: "My full-stack web development agency",
-    href: "https://www.hightidedigital.ca",
-    icon: Briefcase,
-    gradient: "from-primary to-primary/70",
-    category: "Business",
-    featured: true,
-    metrics: "Founded 2024"
-  },
-  {
-    title: "Agent Vendor",
-    description: "I built a marketplace to discover and sell your AI agents",
-    href: "https://agentvendor.ca/",
-    icon: Code,
-    gradient: "from-purple-500 to-indigo-500",
-    category: "AI Project",
-    featured: false,
-    metrics: "React • Next.js"
-  },
-  {
     title: "ResumeLM",
     description: "Check out the AI-powered resume builder I built which landed me my internship",
     href: "https://resumelm.ca/",

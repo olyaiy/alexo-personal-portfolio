@@ -25,24 +25,6 @@ export const SHOWCASE_PROJECTS = [
     featured: true
   },
   {
-    title: "High Tide Digital",
-    description: "My full-stack web development agency",
-    href: "https://www.hightidedigital.ca",
-    category: "Business",
-    metrics: "Founded 2024",
-    partners: [],
-    featured: true
-  },
-  {
-    title: "Agent Vendor",
-    description: "I built a marketplace to discover and sell your AI agents",
-    href: "https://agentvendor.ca/",
-    category: "AI Project",
-    metrics: "React • Next.js",
-    partners: [],
-    featured: false
-  },
-  {
     title: "ResumeLM",
     description: "Check out the AI-powered resume builder I built which landed me my internship",
     href: "https://resumelm.ca/",
