@@ -1,10 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Send } from "lucide-react";
 import { submitContactMessage } from "@/lib/contact";
 
 type ContactFormStatus = "idle" | "sending" | "success" | "error"
@@ -53,70 +49,50 @@ export function ContactForm() {
   }
 
   return (
-    <section className="border-t border-white/5 pt-8">
-      <form onSubmit={onSubmit} className="space-y-4">
-        <div>
-          <Input
-            type="text"
-            name="name"
-            id="name"
-            required
-            className="bg-transparent border-white/5 text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:border-white/10 h-12"
-            placeholder="Name"
-          />
-        </div>
+    <form onSubmit={onSubmit} className="space-y-3">
+      <input
+        type="text"
+        name="name"
+        required
+        placeholder="Name"
+        className="w-full h-11 px-4 rounded-xl bg-[#2c2c2e] text-[15px] text-[#f5f5f7] placeholder:text-[#636366] border-0 outline-none focus:ring-2 focus:ring-[#0a84ff] transition-shadow duration-200"
+      />
+      <input
+        type="email"
+        name="email"
+        required
+        placeholder="Email"
+        className="w-full h-11 px-4 rounded-xl bg-[#2c2c2e] text-[15px] text-[#f5f5f7] placeholder:text-[#636366] border-0 outline-none focus:ring-2 focus:ring-[#0a84ff] transition-shadow duration-200"
+      />
+      <textarea
+        name="message"
+        required
+        rows={4}
+        placeholder="Message"
+        className="w-full px-4 py-3 rounded-xl bg-[#2c2c2e] text-[15px] text-[#f5f5f7] placeholder:text-[#636366] border-0 outline-none focus:ring-2 focus:ring-[#0a84ff] resize-none transition-shadow duration-200"
+      />
 
-        <div>
-          <Input
-            type="email"
-            name="email"
-            id="email"
-            required
-            className="bg-transparent border-white/5 text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:border-white/10 h-12"
-            placeholder="Email"
-          />
-        </div>
-
-        <div>
-          <Textarea
-            name="message"
-            id="message"
-            required
-            rows={4}
-            className="bg-transparent border-white/5 text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:border-white/10 resize-none"
-            placeholder="Message"
-          />
-        </div>
-
-        {message && (
-          <div
-            className={`text-sm ${
-              status === "success"
-                ? "text-emerald-400"
-                : status === "error"
-                ? "text-red-400"
-                : "text-white/60"
-            }`}
-          >
-            {message}
-          </div>
-        )}
-
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full bg-white text-black hover:bg-white/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed h-12"
+      {message && (
+        <p
+          className={`text-[13px] ${
+            status === "success"
+              ? "text-[#30d158]"
+              : status === "error"
+              ? "text-[#ff453a]"
+              : "text-[#86868b]"
+          }`}
         >
-          {isSubmitting ? (
-            "Sending..."
-          ) : (
-            <>
-              Send Message
-              <Send className="h-4 w-4" />
-            </>
-          )}
-        </Button>
-      </form>
-    </section>
+          {message}
+        </p>
+      )}
+
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="w-full h-11 rounded-xl bg-[#0a84ff] text-[15px] font-medium text-white hover:bg-[#0a84ff]/90 active:bg-[#0a84ff]/80 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-150"
+      >
+        {isSubmitting ? "Sending..." : "Send Message"}
+      </button>
+    </form>
   );
 }
