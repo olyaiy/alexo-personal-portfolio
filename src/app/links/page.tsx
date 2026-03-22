@@ -1,4 +1,4 @@
-import { Github, Linkedin, Twitter, Instagram, Code, Briefcase, Star, ArrowUpRight } from "lucide-react"
+import { Github, Linkedin, Twitter, Instagram, Star, ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 import { Metadata } from "next"
 import Image from "next/image"
