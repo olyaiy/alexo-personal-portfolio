@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, Mail, Code2, Video, GraduationCap, ExternalLink } from "lucide-react";
 import { ContactForm } from "@/components/contact-form";
