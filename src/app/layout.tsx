@@ -15,35 +15,37 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Alex Olyaiy | Engineer & AI Educator",
+  title: "Alex Intelligence Inc. | Software Engineering & AI Consulting",
   description:
-    "Full-stack engineer and AI educator reaching 1.5M people. Computer science student at UBC and founder of High Tide Digital.",
+    "Alex Intelligence Inc. — Software engineering, content creation, and AI consulting. Led by Alex Olyaiy, software engineer and AI educator based in Vancouver.",
   keywords: [
+    "Alex Intelligence Inc",
     "Alex Olyaiy",
-    "Software Engineer",
+    "Software Engineering",
+    "AI Consulting",
+    "Content Creator",
     "AI Educator",
-    "UBC",
-    "Computer Science",
-    "High Tide Digital",
-    "Full Stack Developer",
     "Vancouver",
+    "React",
+    "TypeScript",
+    "Full Stack Developer",
   ],
   authors: [{ name: "Alex Olyaiy" }],
   creator: "Alex Olyaiy",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://alexolyaiy.com",
-    title: "Alex Olyaiy | Engineer & AI Educator",
+    url: "https://alexintelligence.co",
+    title: "Alex Intelligence Inc. | Software Engineering & AI Consulting",
     description:
-      "Full-stack engineer and AI educator reaching 1.5M people. Computer science student at UBC and founder of High Tide Digital.",
-    siteName: "Alex Olyaiy",
+      "Software engineering, content creation, and AI consulting. Led by Alex Olyaiy, software engineer and AI educator based in Vancouver.",
+    siteName: "Alex Intelligence Inc.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alex Olyaiy | Engineer & AI Educator",
+    title: "Alex Intelligence Inc. | Software Engineering & AI Consulting",
     description:
-      "Full-stack engineer and AI educator reaching 1.5M people. Computer science student at UBC and founder of High Tide Digital.",
+      "Software engineering, content creation, and AI consulting. Led by Alex Olyaiy, software engineer and AI educator based in Vancouver.",
   },
 };
 
