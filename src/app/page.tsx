@@ -1,373 +1,211 @@
-"use client";
-
+import { Github, Linkedin, Twitter, Instagram, Star, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowRight, Mail, Code2, Video, GraduationCap, ExternalLink } from "lucide-react";
+import Image from "next/image";
 import { ContactForm } from "@/components/contact-form";
 
-const fadeIn = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] },
-};
-
-const staggerContainer = {
-  animate: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const PARTNER_LOGOS = [
-  { name: "Cursor", url: "https://cursor.com" },
-  { name: "Replit", url: "https://replit.com" },
-  { name: "Kimi AI", url: "https://kimi.moonshot.cn" },
-  { name: "Cognition", url: "https://cognition.ai" },
-  { name: "Perplexity", url: "https://perplexity.ai" },
-  { name: "TestSprite", url: "https://testsprite.com" },
-  { name: "Vibe Code", url: "https://vibecode.agency" },
-];
+function TikTokIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+      fill="currentColor"
+    >
+      <path d="M19.321 5.562a5.124 5.124 0 0 1-.443-.258 6.228 6.228 0 0 1-1.137-.966c-.849-.849-1.341-1.849-1.341-2.849V1h-3.073v13.57c0 2.006-1.635 3.641-3.641 3.641s-3.641-1.635-3.641-3.641 1.635-3.641 3.641-3.641c.378 0 .742.058 1.083.164V7.759a7.673 7.673 0 0 0-1.083-.076c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8V8.921a9.46 9.46 0 0 0 5.126 1.5v-3.073a5.997 5.997 0 0 1-3.49-1.786z" />
+    </svg>
+  );
+}
 
 const SOCIAL_LINKS = [
-  { name: "GitHub", handle: "@olyaiy", href: "https://github.com/olyaiy" },
-  { name: "LinkedIn", handle: "olyaiy", href: "https://linkedin.com/in/olyaiy" },
-  { name: "Twitter", handle: "@alexfromvan", href: "https://x.com/alexfromvan" },
-  { name: "Instagram", handle: "@alex_intelligence_", href: "https://instagram.com/alex_intelligence_" },
-  { name: "TikTok", handle: "@alex_intelligence", href: "https://tiktok.com/@alex_intelligence" },
-];
+  {
+    icon: Github,
+    href: "https://github.com/olyaiy",
+    label: "GitHub",
+    color: "hover:text-slate-300",
+  },
+  {
+    icon: Linkedin,
+    href: "https://www.linkedin.com/in/olyaiy/",
+    label: "LinkedIn",
+    color: "hover:text-blue-400",
+  },
+  {
+    icon: Twitter,
+    href: "https://x.com/alexfromvan",
+    label: "Twitter",
+    color: "hover:text-blue-400",
+  },
+  {
+    icon: Instagram,
+    href: "https://www.instagram.com/alex_intelligence_/",
+    label: "Instagram",
+    color: "hover:text-pink-400",
+  },
+  {
+    icon: TikTokIcon,
+    href: "https://www.tiktok.com/@alex_intelligence",
+    label: "TikTok",
+    color: "hover:text-red-400",
+  },
+] as const;
 
-const SERVICES = [
+const SHOWCASE_LINKS = [
   {
-    icon: Code2,
-    title: "Engineering Consulting",
+    title: "AI Educator",
     description:
-      "Software engineering for AI and tech startups. React, TypeScript, mobile development, and full-stack solutions.",
+      "Teaching AI concepts and tools to over 1.5 million monthly viewers across TikTok and Instagram",
+    href: "https://www.instagram.com/alex_intelligence_/",
+    icon: Star,
+    metrics: "1.5M+ Monthly Views",
   },
   {
-    icon: Video,
-    title: "Content & Creator Partnerships",
-    description:
-      "Sponsored content and brand partnerships for AI and tech companies. 1.5M+ monthly viewers across platforms.",
+    title: "ResumeLM",
+    description: "Check out the AI-powered resume builder I built which landed me my internship",
+    href: "https://resumelm.ca/",
+    icon: Star,
+    metrics: "TypeScript • AI",
   },
-  {
-    icon: GraduationCap,
-    title: "AI Education",
-    description:
-      "Breaking down AI tools, models, and workflows for a broad audience on TikTok and Instagram.",
-  },
-];
+] as const;
 
 export default function Home() {
-  const scrollToContact = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <main className="min-h-screen bg-black">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-6">
-        <motion.div
-          className="max-w-4xl mx-auto text-center"
-          initial="initial"
-          animate="animate"
-          variants={staggerContainer}
-        >
-          <motion.div variants={fadeIn} className="mb-6">
-            <span className="text-[13px] text-[#86868b] uppercase tracking-[0.15em] font-medium">
-              Software Engineering & AI Consulting
-            </span>
-          </motion.div>
-
-          <motion.h1
-            variants={fadeIn}
-            className="text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight text-[#f5f5f7] mb-6"
-          >
-            Alex Intelligence
-            <span className="text-[#86868b]">.</span>
-          </motion.h1>
-
-          <motion.p
-            variants={fadeIn}
-            className="text-lg md:text-xl text-[#86868b] max-w-2xl mx-auto mb-4 leading-relaxed"
-          >
-            Software Engineering, Content Creation, and AI Consulting
-          </motion.p>
-
-          <motion.p
-            variants={fadeIn}
-            className="text-base text-[#636366] max-w-xl mx-auto mb-10"
-          >
-            Led by Alex Olyaiy, software engineer and AI educator based in Vancouver.
-          </motion.p>
-
-          <motion.div variants={fadeIn}>
-            <button
-              onClick={scrollToContact}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#f5f5f7] text-black text-[15px] font-medium rounded-full hover:bg-[#e8e8ed] transition-colors duration-200"
-            >
-              Get in Touch
-              <ArrowRight className="h-4 w-4" />
-            </button>
-          </motion.div>
-
-          <motion.div
-            variants={fadeIn}
-            className="mt-8"
-          >
-            <a
-              href="mailto:hi@alexo.ca"
-              className="text-[13px] text-[#636366] hover:text-[#86868b] transition-colors inline-flex items-center gap-2"
-            >
-              <Mail className="h-3.5 w-3.5" />
-              hi@alexo.ca
-            </a>
-          </motion.div>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.5 }}
-        >
-          <motion.div
-            className="w-6 h-10 border border-[#333] rounded-full flex justify-center pt-2"
-            animate={{ y: [0, 5, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <div className="w-1 h-1.5 bg-[#86868b] rounded-full" />
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* What I Do Section */}
-      <section className="py-24 md:py-32 px-6 border-t border-[#1a1a1a]">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="mb-16"
-          >
-            <span className="text-[13px] text-[#636366] uppercase tracking-[0.15em] font-medium">
-              Services
-            </span>
-            <h2 className="text-3xl md:text-4xl font-semibold text-[#f5f5f7] mt-3">
-              What I Do
-            </h2>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {SERVICES.map((service, index) => (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group p-8 bg-[#0a0a0a] border border-[#1a1a1a] rounded-2xl hover:border-[#2a2a2a] transition-colors duration-300"
-              >
-                <div className="w-12 h-12 rounded-xl bg-[#111] border border-[#222] flex items-center justify-center mb-6 group-hover:border-[#333] transition-colors duration-300">
-                  <service.icon className="h-5 w-5 text-[#86868b]" />
-                </div>
-                <h3 className="text-xl font-medium text-[#f5f5f7] mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-[15px] text-[#86868b] leading-relaxed">
-                  {service.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
+      <div className="relative w-full aspect-[4/5] max-h-[85vh] -mt-[env(safe-area-inset-top)] pt-[env(safe-area-inset-top)]">
+        <div className="relative w-full h-full">
+          <Image
+            src="/alex.webp"
+            alt="Alex Olyaiy"
+            fill
+            priority
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black" />
         </div>
-      </section>
 
-      {/* Brands Section */}
-      <section className="py-20 px-6 border-t border-[#1a1a1a]">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-12"
-          >
-            <span className="text-[13px] text-[#636366] uppercase tracking-[0.15em] font-medium">
-              Trusted By
-            </span>
-          </motion.div>
+        <div className="absolute bottom-0 left-0 right-0 z-10 px-6 pb-0 -mb-8">
+          <div className="max-w-2xl mx-auto">
+            <div className="space-y-4">
+              <h1 className="text-5xl md:text-6xl font-light text-white tracking-tight leading-[0.95]">
+                Alex
+                <br />
+                Olyaiy
+              </h1>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6"
-          >
-            {PARTNER_LOGOS.map((brand) => (
-              <a
-                key={brand.name}
-                href={brand.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#636366] hover:text-[#86868b] transition-colors duration-200 text-[15px] font-medium"
-              >
-                {brand.name}
-              </a>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section className="py-24 md:py-32 px-6 border-t border-[#1a1a1a]">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="mb-16"
-          >
-            <span className="text-[13px] text-[#636366] uppercase tracking-[0.15em] font-medium">
-              Featured Work
-            </span>
-            <h2 className="text-3xl md:text-4xl font-semibold text-[#f5f5f7] mt-3">
-              Projects
-            </h2>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <Link
-              href="https://resumelm.ca"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group block p-8 md:p-10 bg-[#0a0a0a] border border-[#1a1a1a] rounded-2xl hover:border-[#2a2a2a] transition-colors duration-300"
-            >
-              <div className="flex items-start justify-between gap-4 mb-4">
-                <div>
-                  <h3 className="text-2xl md:text-3xl font-semibold text-[#f5f5f7] mb-2 group-hover:text-white transition-colors">
-                    ResumeLM
-                  </h3>
-                  <p className="text-[15px] text-[#636366]">
-                    TypeScript / AI
-                  </p>
-                </div>
-                <div className="w-10 h-10 rounded-full bg-[#111] border border-[#222] flex items-center justify-center group-hover:border-[#333] transition-colors duration-300">
-                  <ExternalLink className="h-4 w-4 text-[#86868b]" />
-                </div>
+              <div className="text-sm font-light tracking-wide space-y-1 text-white/70">
+                <p>Computer Science @ UBC</p>
+                <p>AI Educator</p>
+                <p>Builder of AI Tools</p>
               </div>
-              <p className="text-[15px] text-[#86868b] leading-relaxed max-w-2xl">
-                An AI-powered resume builder that helps job seekers create optimized, professional resumes. Built with TypeScript and modern AI technologies to deliver personalized resume suggestions and formatting.
-              </p>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-24 md:py-32 px-6 border-t border-[#1a1a1a]">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <span className="text-[13px] text-[#636366] uppercase tracking-[0.15em] font-medium">
-                Connect
-              </span>
-              <h2 className="text-3xl md:text-4xl font-semibold text-[#f5f5f7] mt-3 mb-6">
-                Get in Touch
-              </h2>
-              <p className="text-[15px] text-[#86868b] leading-relaxed mb-10">
-                Interested in working together? Have a question about AI, engineering, or content partnerships? Drop me a line.
-              </p>
-
-              <div className="space-y-4">
-                <a
-                  href="mailto:hi@alexo.ca"
-                  className="flex items-center gap-3 text-[15px] text-[#86868b] hover:text-[#f5f5f7] transition-colors duration-200"
-                >
-                  <Mail className="h-4 w-4" />
-                  hi@alexo.ca
-                </a>
-
-                <div className="pt-6 border-t border-[#1a1a1a]">
-                  <p className="text-[13px] text-[#636366] uppercase tracking-[0.15em] font-medium mb-4">
-                    Social
-                  </p>
-                  <div className="space-y-3">
-                    {SOCIAL_LINKS.map((link) => (
-                      <a
-                        key={link.name}
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-between text-[15px] text-[#86868b] hover:text-[#f5f5f7] transition-colors duration-200 group"
-                      >
-                        <span>{link.name}</span>
-                        <span className="text-[#636366] group-hover:text-[#86868b]">
-                          {link.handle}
-                        </span>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="bg-[#0a0a0a] border border-[#1a1a1a] rounded-2xl p-8"
-            >
-              <ContactForm />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-12 px-6 border-t border-[#1a1a1a]">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-2">
-              <span className="text-[15px] font-medium text-[#f5f5f7]">
-                Alex Intelligence Inc.
-              </span>
-              <span className="text-[13px] text-[#636366]">
-                &copy; 2026
-              </span>
             </div>
+          </div>
+        </div>
+      </div>
 
-            <div className="flex items-center gap-6">
-              {SOCIAL_LINKS.slice(0, 3).map((link) => (
+      <div className="relative bg-black px-6 pb-16 max-w-2xl mx-auto">
+        <section className="mb-8 pt-8">
+          <div className="flex items-center justify-center border-white/10 pt-6">
+            <div className="flex items-center gap-8">
+              {SOCIAL_LINKS.map(({ icon: Icon, href, label, color }) => (
                 <a
-                  key={link.name}
-                  href={link.href}
+                  key={label}
+                  href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[13px] text-[#636366] hover:text-[#86868b] transition-colors duration-200"
+                  className={`group transition-all duration-300 ${color}`}
+                  aria-label={label}
                 >
-                  {link.name}
+                  <Icon className="h-5 w-5 text-white/40 group-hover:text-white transition-colors duration-300" />
                 </a>
               ))}
             </div>
           </div>
+        </section>
+
+        <section className="mb-20">
+          <div className="mb-10">
+            <div className="flex items-center gap-4 mb-3">
+              <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
+              <h2 className="text-[10px] font-medium text-white/50 uppercase tracking-[0.3em]">
+                My Projects
+              </h2>
+              <div className="h-px flex-1 bg-gradient-to-l from-white/20 to-transparent" />
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            {SHOWCASE_LINKS.map(({ title, description, href, metrics }) => (
+              <Link
+                key={title}
+                href={href}
+                target={href.startsWith("http") ? "_blank" : undefined}
+                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="group block py-4 border-b border-white/5 hover:border-white/10 transition-colors"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-base font-normal text-white mb-1 group-hover:text-white/80 transition-colors">
+                      {title}
+                    </h3>
+                    <p className="text-sm text-white/40 leading-relaxed">
+                      {description}
+                    </p>
+                    {metrics && (
+                      <p className="text-xs text-white/30 mt-1.5">
+                        {metrics}
+                      </p>
+                    )}
+                  </div>
+                  <ArrowUpRight className="h-4 w-4 text-white/30 group-hover:text-white/50 transition-colors flex-shrink-0 mt-1" />
+                </div>
+              </Link>
+            ))}
+
+            <a
+              href="mailto:hi@alexo.ca"
+              className="group block py-4 border-b border-white/5 hover:border-white/10 transition-colors"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base font-normal text-white mb-1 group-hover:text-white/80 transition-colors">
+                    Email
+                  </h3>
+                  <p className="text-sm text-white/40">hi@alexo.ca</p>
+                </div>
+                <ArrowUpRight className="h-4 w-4 text-white/30 group-hover:text-white/50 transition-colors flex-shrink-0 mt-1" />
+              </div>
+            </a>
+
+            <a
+              href="/alex-resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block py-4 border-b border-white/5 hover:border-white/10 transition-colors"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base font-normal text-white mb-1 group-hover:text-white/80 transition-colors">
+                    Resume
+                  </h3>
+                  <p className="text-sm text-white/40">
+                    View my experience & skills
+                  </p>
+                </div>
+                <ArrowUpRight className="h-4 w-4 text-white/30 group-hover:text-white/50 transition-colors flex-shrink-0 mt-1" />
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <div className="mt-12">
+          <ContactForm />
         </div>
-      </footer>
+
+        <footer className="mt-16 pt-6 border-t border-white/5 text-center">
+          <p className="text-xs text-white/30">
+            Made with love in Vancouver, BC
+          </p>
+        </footer>
+      </div>
     </main>
   );
 }

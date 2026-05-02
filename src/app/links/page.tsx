@@ -6,17 +6,17 @@ import { ContactForm } from "@/components/contact-form"
 
 export const metadata: Metadata = {
   title: "Alex Olyaiy - Links",
-  description: "Connect with Alex Olyaiy - Computer Science student at UBC and co-founder of High Tide Digital. Links to my projects, social media, and professional work.",
-  keywords: ["Alex Olyaiy", "links", "portfolio", "web developer", "computer science", "UBC", "High Tide Digital"],
+  description: "Connect with Alex Olyaiy - Computer Science student at UBC, AI educator, and builder of AI tools. Links to my projects, social media, and professional work.",
+  keywords: ["Alex Olyaiy", "links", "portfolio", "web developer", "computer science", "UBC", "AI educator"],
   openGraph: {
     title: "Alex Olyaiy - Links",
-    description: "Connect with Alex Olyaiy - Computer Science student at UBC and co-founder of High Tide Digital",
+    description: "Connect with Alex Olyaiy - Computer Science student at UBC, AI educator, and builder of AI tools",
     type: "profile",
   },
   twitter: {
     card: "summary_large_image",
     title: "Alex Olyaiy - Links",
-    description: "Connect with Alex Olyaiy - Computer Science student at UBC and co-founder of High Tide Digital",
+    description: "Connect with Alex Olyaiy - Computer Science student at UBC, AI educator, and builder of AI tools",
   }
 }
 
@@ -70,9 +70,9 @@ const SOCIAL_LINKS = [
   },
   {
     icon: TikTokIcon,
-    href: "https://www.tiktok.com/@ai_with_alexan",
+    href: "https://www.tiktok.com/@alex_intelligence",
     label: "TikTok",
-    username: "@ai_with_alexan",
+    username: "@alex_intelligence",
     color: "hover:text-red-400",
     bgColor: "hover:bg-red-900/30"
   },
@@ -131,7 +131,7 @@ export default function LinksPage() {
               <div className="text-sm font-light tracking-wide space-y-1 text-white/70">
                 <p>Computer Science @ UBC</p>
                 <p>AI Educator</p>
-                <p>Founder @ High Tide Digital</p>
+                <p>Builder of AI Tools</p>
               </div>
             </div>
           </div>

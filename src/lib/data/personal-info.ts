@@ -6,10 +6,8 @@ export const PERSONAL_INFO = {
     "Content Creator",
     "AI/ML Enthusiast"
   ],
-  bio: "Computer Science student at UBC and co-founder of High Tide Digital. Building modern web experiences with cutting-edge technologies.",
+  bio: "Computer Science student at UBC, AI educator, and builder of modern web experiences with cutting-edge technologies.",
   school: "UBC",
-  company: "High Tide Digital",
-  companyUrl: "https://www.hightidedigital.ca",
   location: "Vancouver, BC",
   profileImage: "/alex.webp"
 } as const
