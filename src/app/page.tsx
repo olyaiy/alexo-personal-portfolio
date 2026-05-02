@@ -51,7 +51,7 @@ const SOCIAL_LINKS = [
 
 const SHOWCASE_LINKS = [
   {
-    title: "AI Educator",
+    title: "Content Creator",
     description:
       "Teaching AI concepts and tools to over 1.5 million monthly viewers across TikTok and Instagram",
     href: "https://www.instagram.com/alex_intelligence_/",
@@ -93,8 +93,7 @@ export default function Home() {
 
               <div className="text-sm font-light tracking-wide space-y-1 text-white/70">
                 <p>Computer Science @ UBC</p>
-                <p>AI Educator</p>
-                <p>Builder of AI Tools</p>
+                <p>AI Engineer and Content Creator</p>
               </div>
             </div>
           </div>

@@ -14,7 +14,7 @@ export const PERSONAL_INFO = {
 
 export const SHOWCASE_PROJECTS = [
   {
-    title: "AI Educator",
+    title: "Content Creator",
     description: "Breaking down AI tools, models, and workflows for 1.5M+ monthly viewers on TikTok and Instagram.",
     href: "https://www.tiktok.com/@alex_intelligence",
     category: "Content Creation",
