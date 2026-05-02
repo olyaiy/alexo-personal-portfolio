@@ -13,14 +13,15 @@ export async function submitContactMessage(input: ContactMessageInput): Promise<
   const formData = new FormData()
 
   const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY
-  if (accessKey) {
-    formData.set('access_key', accessKey)
+  if (!accessKey) {
+    throw new Error('Contact form is not configured.')
   }
 
   const name = (input.name || '').trim()
   const email = (input.email || '').trim()
   const message = (input.message || '').trim()
 
+  formData.set('access_key', accessKey)
   formData.set('name', name)
   formData.set('email', email)
   formData.set('message', message)
@@ -29,12 +30,15 @@ export async function submitContactMessage(input: ContactMessageInput): Promise<
   formData.set('subject', `New portfolio message${name ? ` from ${name}` : ''}`)
   formData.set('botcheck', '')
 
-  const response = await fetch('/api/contact', {
+  const response = await fetch('https://api.web3forms.com/submit', {
     method: 'POST',
+    headers: {
+      Accept: 'application/json',
+    },
     body: formData,
   })
 
-  const data = await response.json().catch(() => null)
+  const data = await response.json().catch(() => null) as ContactMessageResponse | null
 
   if (!response.ok || !data?.success) {
     const errorMessage =
