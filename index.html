@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Alex Olyaiy</title>
+    <meta
+      name="description"
+      content="Alex Olyaiy. Product focused engineer and creator based in Vancouver."
+    />
+    <meta property="og:title" content="Alex Olyaiy" />
+    <meta
+      property="og:description"
+      content="Product focused engineer and creator based in Vancouver."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://alexintelligence.co" />
+    <link rel="icon" href="alex.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f7f6f3;
+        --ink: #0a0a0a;
+        --grey: #c9c9c9;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      html::-webkit-scrollbar {
+        display: none;
+      }
+
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: start center;
+        padding: 2rem;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+        text-align: center;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      main {
+        margin-top: 22vh;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 5vw, 3.75rem);
+        font-weight: 700;
+        letter-spacing: -0.035em;
+        line-height: 1.05;
+      }
+
+      h1 .dim {
+        color: #8a8a8a;
+        font-weight: 500;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.28em;
+        padding: 0.26em 0.42em 0.32em;
+        border-radius: 999px;
+        line-height: 1;
+        cursor: pointer;
+        box-shadow:
+          0 0 0 5px var(--bg),
+          0 4px 14px rgba(0, 0, 0, 0.06);
+        transition:
+          transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
+          box-shadow 200ms ease;
+      }
+
+      .pill-indigo {
+        background: linear-gradient(135deg, oklch(0.96 0.02 285), oklch(0.92 0.04 285));
+        color: oklch(0.52 0.19 285);
+      }
+
+      .pill-amber {
+        background: linear-gradient(135deg, oklch(0.96 0.02 75), oklch(0.92 0.04 75));
+        color: oklch(0.52 0.19 75);
+      }
+
+      .pill-red {
+        background: linear-gradient(135deg, oklch(0.96 0.02 25), oklch(0.92 0.04 25));
+        color: oklch(0.52 0.19 25);
+      }
+
+      .pill:hover {
+        transform: translateY(-3px);
+        box-shadow:
+          0 0 0 5px var(--bg),
+          0 10px 24px rgba(0, 0, 0, 0.1);
+      }
+
+      .pill:active {
+        transform: translateY(-1px) scale(0.97);
+        transition-duration: 80ms;
+      }
+
+      .pill svg {
+        width: 0.85em;
+        height: 0.85em;
+        flex-shrink: 0;
+        transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .pill:hover svg {
+        transform: scale(1.15);
+      }
+
+      .bio {
+        margin: 2.5rem auto 0;
+        max-width: 34rem;
+        font-size: 1.05rem;
+        line-height: 1.7;
+        color: #6b6b6b;
+        text-align: center;
+        text-wrap: balance;
+      }
+
+      .links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.75rem;
+        margin-top: 2.5rem;
+        font-size: 0.95rem;
+        font-weight: 500;
+      }
+
+      .links a {
+        color: var(--ink);
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        transition: border-color 150ms ease, color 150ms ease;
+      }
+
+      .links a:hover {
+        border-color: var(--ink);
+      }
+
+      .timeline {
+        position: relative;
+        display: grid;
+        gap: 3rem;
+        margin: 4rem auto 0;
+        max-width: 26rem;
+        text-align: left;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 1.25rem;
+        top: 1.25rem;
+        height: calc(100% - 5rem);
+        width: 0;
+        border-left: 2px dotted #d4d2cd;
+      }
+
+      .timeline-item {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        cursor: pointer;
+      }
+
+      .timeline-logo {
+        position: relative;
+        z-index: 1;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.6rem;
+        object-fit: cover;
+        flex-shrink: 0;
+        background: #fff;
+        box-shadow: 0 0 0 4px var(--bg), 0 2px 8px rgba(0, 0, 0, 0.06);
+        transition: transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1),
+          box-shadow 250ms ease;
+      }
+
+      .timeline-item:hover .timeline-logo {
+        transform: scale(1.08) rotate(-3deg);
+        box-shadow: 0 0 0 4px var(--bg), 0 8px 20px rgba(0, 0, 0, 0.12);
+      }
+
+      .timeline-logo.circle {
+        border-radius: 999px;
+      }
+
+      .timeline-text {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .timeline-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .timeline-title {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--ink);
+        transition: color 200ms ease;
+      }
+
+      .timeline-item:hover .timeline-title {
+        color: #4f46e5;
+      }
+
+      .timeline-note {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        color: #6b6b6b;
+        opacity: 0.85;
+        transform: translateY(0);
+        transition: opacity 200ms ease, transform 200ms ease;
+      }
+
+      .timeline-item:hover .timeline-note {
+        opacity: 1;
+        transform: translateY(1px);
+      }
+
+      .timeline-years {
+        font-size: 0.8rem;
+        color: #9a9a9a;
+        flex-shrink: 0;
+      }
+
+      .timeline-role {
+        margin-top: 0.15rem;
+        font-size: 0.85rem;
+        color: #8a8a8a;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>
+        Product focused
+        <span class="pill pill-indigo"
+          ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Engineer</span
+        ><br />
+        <span class="dim">and</span>
+        <span class="pill pill-amber"
+          ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>Creator</span
+        >
+        <span class="dim">based in</span><br />
+        <span class="pill pill-red"
+          ><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1.75 14 6l2-1v5l3-2v1.5l3 .5-1 3 1 1-4 3v2l-5.333-1.887a2 2 0 0 0-1.334 0L6 19v-2l-4-3 1-1-1-3 3-.5V8l3 2V5l2 1z"/><path d="M12 17v5"/></svg>Vancouver.</span
+        >
+      </h1>
+
+      <p class="bio">
+        I study computer science at UBC and build software. I also teach AI
+        tools to a large audience on TikTok and Instagram.
+      </p>
+
+      <nav class="links" aria-label="Links">
+        <a href="https://github.com/olyaiy" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/olyaiy/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://www.instagram.com/alex_intelligence_/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.tiktok.com/@alex_intelligence" target="_blank" rel="noopener noreferrer">TikTok</a>
+        <a href="alex-resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+        <a href="mailto:hi@alexo.ca">Email</a>
+      </nav>
+
+      <section class="timeline" aria-label="Experience">
+        <div class="timeline-item">
+          <img class="timeline-logo" src="logos/ubc.jpg" alt="UBC logo" />
+          <div class="timeline-text">
+            <div class="timeline-head">
+              <p class="timeline-title">UBC</p>
+              <span class="timeline-years">Present</span>
+            </div>
+            <p class="timeline-role">Computer Science</p>
+            <p class="timeline-note">
+              Finishing my degree. Focused on software and AI.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <img class="timeline-logo circle" src="logos/alex-intelligence.jpg" alt="Alex Intelligence logo" />
+          <div class="timeline-text">
+            <div class="timeline-head">
+              <p class="timeline-title">Alex Intelligence</p>
+              <span class="timeline-years">Present</span>
+            </div>
+            <p class="timeline-role">Social Media</p>
+            <p class="timeline-note">
+              Teaching AI tools and workflows on TikTok and Instagram.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <img class="timeline-logo" src="logos/obvious.jpg" alt="Obvious logo" />
+          <div class="timeline-text">
+            <div class="timeline-head">
+              <p class="timeline-title">Obvious</p>
+              <span class="timeline-years">2025 – 2026</span>
+            </div>
+            <p class="timeline-role">Software Engineer</p>
+            <p class="timeline-note">
+              Built product features and shipped web experiences.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <img class="timeline-logo" src="logos/plug.jpg" alt="The Plug logo" />
+          <div class="timeline-text">
+            <div class="timeline-head">
+              <p class="timeline-title">The Plug</p>
+              <span class="timeline-years">2024 – 2026</span>
+            </div>
+            <p class="timeline-role">Creator</p>
+            <p class="timeline-note">
+              Made content and grew an audience around tech and AI.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
