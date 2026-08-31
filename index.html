@@ -456,20 +456,29 @@
         .links {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          justify-items: center;
+          justify-items: stretch;
+          align-items: center;
           margin-top: 2.25rem;
-          gap: 1.1rem 0.5rem;
+          gap: 1.15rem 0.4rem;
           font-size: 0.8rem;
+          line-height: 1;
         }
 
         .links a,
         .links button {
-          gap: 0.35rem;
+          width: 100%;
+          justify-content: flex-start;
+          align-items: center;
+          gap: 0.4rem;
+          padding: 0;
+          line-height: 1;
         }
 
         .links svg {
           width: 0.9rem;
           height: 0.9rem;
+          flex: 0 0 0.9rem;
+          display: block;
         }
 
         .timeline {
