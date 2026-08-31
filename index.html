@@ -392,11 +392,28 @@
 
       @media (max-width: 44rem) {
         main {
-          margin-top: 3.5rem;
+          width: calc(100% - 1.25rem);
+          margin-top: 0;
+          padding: 0 0.6rem 3rem;
+        }
+
+        .hero {
+          min-height: 100vh;
+          min-height: 100svh;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .hero .eyebrow {
+          margin-top: auto;
+        }
+
+        .hero .links {
+          margin-bottom: auto;
         }
 
         .eyebrow {
-          margin-bottom: 1.1rem;
+          margin-bottom: 1.5rem;
           font-size: 0.72rem;
           letter-spacing: 0.18em;
         }
@@ -407,9 +424,9 @@
         }
 
         h1 {
-          font-size: clamp(1.45rem, 6.2vw, 2.1rem);
-          line-height: 1.2;
-          letter-spacing: -0.03em;
+          font-size: clamp(2.1rem, 10.5vw, 3.1rem);
+          line-height: 1.14;
+          letter-spacing: -0.035em;
         }
 
         .h1-line {
@@ -430,9 +447,9 @@
         }
 
         .bio {
-          margin-top: 1.5rem;
-          font-size: 0.95rem;
-          padding: 0 0.25rem;
+          margin-top: 2.25rem;
+          font-size: 1rem;
+          padding: 0 0.5rem;
         }
 
         .links {
@@ -440,9 +457,9 @@
           grid-template-columns: repeat(2, max-content);
           flex-wrap: wrap;
           justify-content: center;
-          margin-top: 1.5rem;
-          gap: 0.9rem 1.6rem;
-          font-size: 0.88rem;
+          margin-top: 2.5rem;
+          gap: 1.1rem 1.9rem;
+          font-size: 0.92rem;
         }
 
         .links a,
@@ -458,8 +475,8 @@
         .timeline {
           width: 100%;
           max-width: 22.5rem;
-          gap: 2rem;
-          margin-top: 2.5rem;
+          gap: 2.75rem;
+          margin-top: 4rem;
         }
 
         .timeline::before {
@@ -487,14 +504,15 @@
         }
 
         h1 {
-          font-size: clamp(1.4rem, 7vw, 1.75rem);
-          line-height: 1.24;
+          font-size: clamp(1.9rem, 10vw, 2.3rem);
+          line-height: 1.18;
         }
       }
     </style>
   </head>
   <body>
     <main>
+      <section class="hero">
       <span class="eyebrow"><img class="eyebrow-photo" src="profile.jpg" alt="" aria-hidden="true" />Alex Olyaiy</span>
       <h1>
         <span class="h1-line"
@@ -534,6 +552,7 @@
           <span class="copy-label">Email</span>
         </button>
       </nav>
+      </section>
 
       <section class="timeline" aria-label="Experience">
         <div class="timeline-item">
