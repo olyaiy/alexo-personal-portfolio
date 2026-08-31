@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Resume — Alex Olyaiy</title>
+    <meta
+      name="description"
+      content="Resume for Alex Olyaiy, product focused engineer and creator in Vancouver."
+    />
+    <meta property="og:title" content="Resume — Alex Olyaiy" />
+    <meta
+      property="og:description"
+      content="Resume for Alex Olyaiy, product focused engineer and creator in Vancouver."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://alexo.ca/resume.html" />
+    <meta property="og:image" content="https://alexo.ca/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://alexo.ca/og.jpg" />
+    <link rel="canonical" href="https://alexo.ca/resume.html" />
+    <link rel="icon" href="alex.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @view-transition {
+        navigation: auto;
+      }
+
+      :root {
+        --bg: #fafaf9;
+        --ink: #111;
+        --muted: #444;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      html::-webkit-scrollbar {
+        display: none;
+      }
+
+      body {
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background-image: radial-gradient(circle, #d8d5d0 1px, transparent 1px);
+        background-size: 28px 28px;
+        opacity: 0.5;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .bar {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+        padding: 1rem 0 2.75rem;
+        background: linear-gradient(
+          to bottom,
+          var(--bg) 0%,
+          var(--bg) 42%,
+          transparent 100%
+        );
+        pointer-events: none;
+      }
+
+      .bar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: min(8.5in, calc(100% - 2rem));
+        margin: 0 auto;
+        pointer-events: none;
+      }
+
+      .bar a {
+        pointer-events: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+        color: #6b6b6b;
+      }
+
+      .bar a:hover {
+        color: var(--ink);
+      }
+
+      .bar svg {
+        width: 1rem;
+        height: 1rem;
+      }
+
+      .sheet {
+        width: min(8.5in, calc(100% - 2rem));
+        margin: 0 auto 3rem;
+        padding: 0.7in 0.75in 0.8in;
+        background: #fff;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+        font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+        font-size: 10.5pt;
+        line-height: 1.35;
+        text-align: left;
+        overflow-wrap: anywhere;
+      }
+
+      .sheet header {
+        text-align: center;
+        margin-bottom: 0.55rem;
+      }
+
+      h1 {
+        font-size: 22pt;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .meta {
+        margin-top: 0.25rem;
+        font-size: 10pt;
+      }
+
+      .meta a,
+      .meta button {
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        text-decoration: none;
+      }
+
+      .meta a:hover,
+      .meta button:hover {
+        text-decoration: underline;
+      }
+
+      .meta button.copied {
+        color: #16a34a;
+        text-decoration: none;
+      }
+
+      h2 {
+        margin: 0.7rem 0 0.35rem;
+        padding-bottom: 0.12rem;
+        border-bottom: 1.5px solid var(--ink);
+        font-size: 11pt;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .skills p {
+        margin-bottom: 0.15rem;
+      }
+
+      .skills b {
+        font-weight: 700;
+      }
+
+      .job {
+        margin-bottom: 0.55rem;
+      }
+
+      .job-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: baseline;
+      }
+
+      .job-head h3 {
+        font-size: 11pt;
+        font-weight: 700;
+      }
+
+      .job-head time {
+        font-size: 10pt;
+        font-style: italic;
+        white-space: nowrap;
+      }
+
+      .org {
+        font-style: italic;
+      }
+
+      .stack {
+        font-size: 9.5pt;
+        font-style: italic;
+      }
+
+      ul {
+        margin: 0.15rem 0 0 1.1rem;
+      }
+
+      li {
+        margin-bottom: 0.12rem;
+      }
+
+      @media (max-width: 40rem) {
+        .bar {
+          padding: 0.85rem 0 2.25rem;
+        }
+
+        .bar-inner,
+        .sheet {
+          width: calc(100% - 1.25rem);
+        }
+
+        .sheet {
+          padding: 1.15rem 1rem 1.75rem;
+          font-size: 10pt;
+        }
+
+        h1 {
+          font-size: 16pt;
+          letter-spacing: 0.02em;
+        }
+
+        .meta {
+          font-size: 9pt;
+          line-height: 1.5;
+        }
+
+        .job-head {
+          flex-direction: column;
+          gap: 0.1rem;
+        }
+
+        .job-head time {
+          white-space: normal;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="bar">
+      <div class="bar-inner">
+        <a href="index.html">← Back</a>
+        <a href="alex-resume.pdf" download
+          ><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</a>
+      </div>
+    </nav>
+
+    <article class="sheet">
+      <header>
+        <h1>Alex Olyaiy</h1>
+        <p class="meta">
+          Vancouver BC ·
+          <button type="button" data-copy="hi@alexo.ca"><span class="copy-label">hi@alexo.ca</span></button> ·
+          <a href="https://www.linkedin.com/in/olyaiy/" target="_blank" rel="noopener noreferrer">linkedin.com/in/olyaiy</a>
+          ·
+          <a href="https://github.com/olyaiy" target="_blank" rel="noopener noreferrer">github.com/olyaiy</a>
+        </p>
+      </header>
+
+      <section class="skills">
+        <h2>Skills</h2>
+        <p>
+          <b>Programming Languages:</b> TypeScript, JavaScript, Python, C++, C,
+          Java, SQL, HTML/CSS, BASH
+        </p>
+        <p>
+          <b>Frameworks / Libraries:</b> React, Next.js, Express.js, Node.js,
+          Mongoose, GraphQL, Tailwind, Vite, Framer Motion
+        </p>
+        <p>
+          <b>Developer Tools:</b> Git, Docker, AWS (S3, EC2, ECS, Lambda),
+          Linux, MSSQL, PostgreSQL, NGINX, REST APIs, Vercel
+        </p>
+      </section>
+
+      <section>
+        <h2>Experience</h2>
+
+        <div class="job">
+          <div class="job-head">
+            <h3>Member of Technical Staff</h3>
+            <time>December 2025 – June 2026</time>
+          </div>
+          <p class="org">Obvious · Contract, Full-time</p>
+          <ul>
+            <li>
+              Built agent feedback and task-routing workflows for Obvious's
+              autonomous development loop, enabling agents to act on PR
+              feedback, triage Autobuild issues, and connect changes back to
+              trackable work.
+            </li>
+            <li>
+              Developed AI image and video generation features end to end,
+              spanning generation and editing UI, persistent media artifacts,
+              playback, and model provider integrations (Veo 3.1).
+            </li>
+            <li>
+              Contributed to Product Atlas, Obvious's agent-facing product
+              memory layer, building semantic retrieval and context injection
+              for agents and pipelines that turned merged PRs into timelines
+              and product-area summaries.
+            </li>
+            <li>
+              Shipped core surfaces across an AI-native workspace, including
+              Gallery View, onboarding, artifact viewers, and agent chat /
+              tool-call UX, spanning React frontends and API services.
+            </li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="job-head">
+            <h3>Founder and Owner</h3>
+            <time>July 2024 – Present</time>
+          </div>
+          <p class="org">Hightide Digital</p>
+          <ul>
+            <li>
+              Architected and deployed 12+ high-performance web applications
+              using Next.js, React, and Tailwind CSS, achieving sub-1s load
+              times and 90+ Lighthouse scores across client sites.
+            </li>
+            <li>
+              Engineered custom headless CMS solutions integrating with AWS S3
+              and Supabase, reducing content management time by 60% for
+              clients while maintaining enterprise-grade security.
+            </li>
+            <li>
+              Orchestrated successful project deliveries through balanced
+              timeline management and technical excellence, shipping
+              production-ready code while meeting all client deadlines.
+            </li>
+          </ul>
+        </div>
+
+        <div class="job">
+          <div class="job-head">
+            <h3>Full Stack Developer</h3>
+            <time>August 2022 – Present</time>
+          </div>
+          <p class="org">Plug Vancouver</p>
+          <ul>
+            <li>
+              Architected and deployed a high-performance full-stack website
+              using Next.js, React, and Tailwind CSS, achieving 100% Core Web
+              Vitals scores and reducing load times by 40% through
+              server-side rendering and Vercel edge optimization.
+            </li>
+            <li>
+              Engineered a scalable content management system (CMS) with
+              PostgreSQL database (Supabase), implementing role-based access
+              control and a custom React editor interface, resulting in 70%
+              reduction in content update time for non-technical staff.
+            </li>
+            <li>
+              Developed and deployed an AI content generation system using
+              OpenAI's GPT-4 API, implementing custom prompt engineering that
+              increased content production by 300% while maintaining 95%
+              brand voice accuracy.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Projects</h2>
+
+        <div class="job">
+          <div class="job-head">
+            <h3>
+              <a href="https://resumelm.ca/" target="_blank" rel="noopener noreferrer">ResumeLM</a>
+            </h3>
+            <a href="https://resumelm.ca/" target="_blank" rel="noopener noreferrer">resumelm.ca</a>
+          </div>
+          <p class="stack">
+            Next.js 15, React 19, TypeScript, OpenAI GPT-4, Vercel AI SDK,
+            Supabase, Shadcn UI, Tailwind CSS, React PDF, Vercel
+          </p>
+          <ul>
+            <li>
+              Architected and deployed a production-grade AI resume builder
+              using Next.js 15 and React 19, implementing enterprise-grade
+              security with Supabase Row Level Security (RLS) and TypeScript,
+              achieving 95% user satisfaction rate and 40% faster resume
+              creation time.
+            </li>
+            <li>
+              Engineered an AI content recommendation engine using OpenAI's
+              GPT-4 and Vercel AI SDK for efficient streaming responses,
+              resulting in 60% improvement in resume quality scores and 80%
+              reduction in revision cycles while maintaining sub-200ms
+              response times.
+            </li>
+            <li>
+              Developed a mobile-first design system using Shadcn UI and
+              Tailwind CSS, implementing responsive PDF generation with React
+              PDF for professional resume exports, deployed and optimized on
+              Vercel for global edge performance.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2>Education</h2>
+        <div class="job">
+          <div class="job-head">
+            <h3>University of British Columbia</h3>
+            <time>Expected 2026</time>
+          </div>
+          <p class="org">
+            Combined Major of Science (Computer Science, Physics, Earth and
+            Ocean Sciences)
+          </p>
+        </div>
+      </section>
+    </article>
+    <script>
+      document.querySelectorAll("[data-copy]").forEach((el) => {
+        const label = el.querySelector(".copy-label");
+        const original = label.textContent;
+        el.addEventListener("click", async () => {
+          await navigator.clipboard.writeText(el.dataset.copy);
+          el.classList.add("copied");
+          label.textContent = "Copied";
+          setTimeout(() => {
+            el.classList.remove("copied");
+            label.textContent = original;
+          }, 1600);
+        });
+      });
+    </script>
+  </body>
+</html>

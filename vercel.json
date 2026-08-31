@@ -1,0 +1,24 @@
+{
+  "redirects": [
+    {
+      "source": "/ig",
+      "destination": "https://www.instagram.com/alex_intelligence_/",
+      "permanent": true
+    },
+    {
+      "source": "/instagram",
+      "destination": "https://www.instagram.com/alex_intelligence_/",
+      "permanent": true
+    },
+    {
+      "source": "/tt",
+      "destination": "https://www.tiktok.com/@alex_intelligence",
+      "permanent": true
+    },
+    {
+      "source": "/tiktok",
+      "destination": "https://www.tiktok.com/@alex_intelligence",
+      "permanent": true
+    }
+  ]
+}
