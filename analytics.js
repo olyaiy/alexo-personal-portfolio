@@ -1,3 +1,7 @@
+if (location.pathname.endsWith("/index.html")) {
+  history.replaceState(null, "", "./");
+}
+
 !function (t, e) {
   var o, n, p, r;
   e.__SV ||
