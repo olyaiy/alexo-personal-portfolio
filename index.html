@@ -227,14 +227,24 @@
         display: inline-flex;
         align-items: center;
         gap: 0.4rem;
+        margin: 0;
+        padding: 0;
         color: var(--ink);
         text-decoration: none;
         background: none;
         border: 0;
         font: inherit;
+        line-height: 1;
         white-space: nowrap;
         cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
         transition: transform 150ms ease, color 150ms ease;
+      }
+
+      .links .link-label {
+        display: block;
+        line-height: 1;
       }
 
       .links a:hover,
@@ -245,7 +255,9 @@
       .links svg {
         width: 1rem;
         height: 1rem;
-        flex-shrink: 0;
+        flex: 0 0 1rem;
+        display: block;
+        overflow: visible;
         color: #8a8a8a;
         transition: color 150ms ease, transform 150ms ease;
       }
@@ -455,21 +467,24 @@
 
         .links {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          justify-items: stretch;
-          align-items: center;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          justify-items: start;
+          align-items: start;
           margin-top: 2.25rem;
-          gap: 1.15rem 0.4rem;
+          gap: 1.15rem 0.55rem;
           font-size: 0.8rem;
           line-height: 1;
         }
 
         .links a,
         .links button {
-          width: 100%;
-          justify-content: flex-start;
+          display: grid;
+          grid-template-columns: 0.9rem auto;
           align-items: center;
-          gap: 0.4rem;
+          column-gap: 0.35rem;
+          width: auto;
+          height: 1.15rem;
+          margin: 0;
           padding: 0;
           line-height: 1;
         }
@@ -477,8 +492,13 @@
         .links svg {
           width: 0.9rem;
           height: 0.9rem;
-          flex: 0 0 0.9rem;
           display: block;
+        }
+
+        .links .link-label {
+          display: block;
+          line-height: 1;
+          transform: translateY(0.04em);
         }
 
         .timeline {
@@ -550,15 +570,15 @@
       </p>
 
       <nav class="links" aria-label="Links">
-        <a href="https://github.com/olyaiy" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>GitHub</a>
-        <a href="https://www.linkedin.com/in/olyaiy/" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V8h4v2a6 6 0 0 1 2-2z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a>
-        <a href="https://www.instagram.com/alex_intelligence_/" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram</a>
-        <a href="https://www.tiktok.com/@alex_intelligence" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>TikTok</a>
-        <a href="resume.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Resume</a>
+        <a href="https://github.com/olyaiy" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg><span class="link-label">GitHub</span></a>
+        <a href="https://www.linkedin.com/in/olyaiy/" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4V8h4v2a6 6 0 0 1 2-2z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg><span class="link-label">LinkedIn</span></a>
+        <a href="https://www.instagram.com/alex_intelligence_/" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><span class="link-label">Instagram</span></a>
+        <a href="https://www.tiktok.com/@alex_intelligence" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg><span class="link-label">TikTok</span></a>
+        <a href="resume.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span class="link-label">Resume</span></a>
         <button type="button" data-copy="hi@alexo.ca">
           <svg class="mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <span class="copy-label">Email</span>
+          <span class="link-label copy-label">Email</span>
         </button>
       </nav>
       </section>
