@@ -55,6 +55,7 @@ function destinationFromHref(href) {
   if (href.indexOf("linkedin.com") !== -1) return "linkedin";
   if (href.indexOf("instagram.com") !== -1) return "instagram";
   if (href.indexOf("tiktok.com") !== -1) return "tiktok";
+  if (href.indexOf("goodreads.com") !== -1) return "goodreads";
   if (href.indexOf("resumelm") !== -1) return "resumelm";
   return "other";
 }
