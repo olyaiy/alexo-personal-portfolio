@@ -1,3 +1,16 @@
+(function () {
+  var host = location.hostname;
+  if (
+    host === "alexo.ca" ||
+    host === "www.alexo.ca" ||
+    host === "localhost" ||
+    host === "127.0.0.1"
+  ) {
+    return;
+  }
+  location.replace("https://alexo.ca/");
+})();
+
 if (location.pathname.endsWith("/index.html")) {
   history.replaceState(null, "", "./");
 }
