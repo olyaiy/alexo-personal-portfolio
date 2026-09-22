@@ -407,6 +407,70 @@
         flex-shrink: 0;
       }
 
+      .accounts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+      }
+
+      .account {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.3rem 0.75rem;
+        border: 1px solid #e6e4df;
+        border-radius: 999px;
+        background: #fff;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--ink);
+        text-decoration: none;
+        transition: border-color 200ms ease, transform 200ms ease;
+      }
+
+      .logo-stack {
+        position: relative;
+        z-index: 1;
+        width: 2.5rem;
+        height: 2.5rem;
+        flex-shrink: 0;
+        transition: transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .logo-stack img {
+        position: absolute;
+        width: 1.75rem;
+        height: 1.75rem;
+        border-radius: 999px;
+        object-fit: cover;
+        box-shadow: 0 0 0 3px var(--bg), 0 2px 8px rgba(0, 0, 0, 0.08);
+        transition: transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .logo-stack img:first-child {
+        top: 0;
+        left: 0;
+      }
+
+      .logo-stack img:last-child {
+        top: 1rem;
+        left: 1rem;
+      }
+
+      .timeline-item:hover .logo-stack img:first-child {
+        transform: translate(-2px, -2px) rotate(-4deg);
+      }
+
+      .timeline-item:hover .logo-stack img:last-child {
+        transform: translate(2px, 2px) rotate(4deg);
+      }
+
+      .account:hover {
+        border-color: #4f46e5;
+        transform: translateY(-1px);
+      }
+
       .timeline-role {
         margin-top: 0.15rem;
         font-size: 0.85rem;
@@ -625,9 +689,9 @@
           <div class="timeline-text">
             <div class="timeline-head">
               <p class="timeline-title">UBC</p>
-              <span class="timeline-years">Present</span>
+              <span class="timeline-years">Graduating April 2027</span>
             </div>
-            <p class="timeline-role">Computer Science</p>
+            <p class="timeline-role">Combined Major in Computer Science, Physics, Earth and Ocean Sciences</p>
             <p class="timeline-note">
               Finishing my degree. Focused on software and AI.
             </p>
@@ -635,16 +699,27 @@
         </div>
 
         <div class="timeline-item">
-          <img class="timeline-logo circle" src="logos/alex-intelligence.jpg" alt="Alex Intelligence logo" />
+          <div class="logo-stack" aria-hidden="true">
+            <img src="logos/ig-alex-intelligence.jpg" alt="" />
+            <img src="logos/ig-alex-combinator.jpg" alt="" />
+          </div>
           <div class="timeline-text">
             <div class="timeline-head">
-              <p class="timeline-title">Alex Intelligence</p>
+              <p class="timeline-title">Creator</p>
               <span class="timeline-years">Present</span>
             </div>
             <p class="timeline-role">Social Media</p>
             <p class="timeline-note">
               Teaching AI tools and workflows on TikTok and Instagram.
             </p>
+            <div class="accounts">
+              <a class="account" href="https://www.instagram.com/alex_intelligence_/" target="_blank" rel="noopener noreferrer">
+                <span>@alex_intelligence_</span>
+              </a>
+              <a class="account" href="https://www.instagram.com/alexcombinator/" target="_blank" rel="noopener noreferrer">
+                <span>@alexcombinator</span>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -655,7 +730,7 @@
               <p class="timeline-title">Obvious</p>
               <span class="timeline-years">2025 – 2026</span>
             </div>
-            <p class="timeline-role">Software Engineer</p>
+            <p class="timeline-role">Technical Staff</p>
             <p class="timeline-note">
               Built product features and shipped web experiences.
             </p>
@@ -663,15 +738,15 @@
         </div>
 
         <div class="timeline-item">
-          <img class="timeline-logo" src="logos/plug.jpg" alt="The Plug logo" />
+          <img class="timeline-logo" src="logos/plug.jpg" alt="Plug Vancouver logo" />
           <div class="timeline-text">
             <div class="timeline-head">
-              <p class="timeline-title">The Plug</p>
+              <p class="timeline-title">Plug Vancouver</p>
               <span class="timeline-years">2024 – 2026</span>
             </div>
-            <p class="timeline-role">Creator</p>
+            <p class="timeline-role">Full Stack Developer</p>
             <p class="timeline-note">
-              Made content and grew an audience around tech and AI.
+              Built the web platform for a Vancouver, BC digital media and news outlet.
             </p>
           </div>
         </div>
